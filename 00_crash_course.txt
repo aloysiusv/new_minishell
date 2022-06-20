@@ -1,0 +1,40 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    00_crash_course.txt                                :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/06/17 18:35:19 by lrandria          #+#    #+#              #
+#    Updated: 2022/06/17 19:46:29 by lrandria         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+STRUCTURE MINISHELL
+
+I/ PARSING
+    1 - Tokenize (with doubly-linked lists, after trimming front-end spaces):
+        a. Identify chars / assign types and quotes
+        b. Split by units (words, operators, in-quotes) /!\ KEEP SPACES /!\
+        c. Re-assign types
+    2 - Classify words
+        a. files = after < or >; 
+        b. limiter = after <<;
+        b. commands = first word. Else, first word after pipes;
+        c. built-ins = ft_strcmp(node->word, char *built-in);
+    3 - Handle expansions if "$"
+        a. if [echo $?]
+            return (last command's exit status);
+        b. else if [echo $USER] or [echo "$USER"]
+            return (lrandria);
+        c. else if [echo "$    USER"]
+            return ($   USER);
+        d. else if [echo '$USER']
+            return ($USER); 
+        e. else if [echo $ blabla]
+            return ($ blabla);
+        f. else if [echo $notfound]
+            return (empty line);
+        g. else if [echo $$] or [echo "$$"]
+            return (pid of current process) /!\ Not explicitly demanded by subject
+    
