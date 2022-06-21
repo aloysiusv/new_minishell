@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:56:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/21 03:34:50 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/21 04:13:23 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static char	*create_word(t_node *current, int type)
 		return (NULL);
 	iterator = current;
 	i = 0;
+	printf("size = [%zu]\n", size);
 	while (i < size)
 	{
 		word[i] = iterator->charac;
@@ -94,6 +95,7 @@ static char	*create_word(t_node *current, int type)
 		i++;
 	}
 	word[i] = '\0';
+	printf("word created is [%s]\n", word);
 	return (word);
 }
 
@@ -126,11 +128,11 @@ static void	set_qflags_and_skip_chars(t_node **src, t_node **head)
 	to_skip = ft_strlen((*head)->word);
 	if (to_skip > 1 )
 	{
-		while (to_skip)
+		while (to_skip--)
 		{
 			if (*src)
 				*src = (*src)->next;
-			to_skip--;
+			// to_skip--;
 		}
 	}
 }
@@ -144,10 +146,12 @@ t_node *stock_words_to_lst(t_node *src, t_node **head)
 	*head = init_word(src, NULL, FIRST_WORD);
 	set_qflags_and_skip_chars(&src, head);
 	curr = *head;
-	while (src->next)
+	printf("src->char = [%c]\n", src->charac);
+	while (src)
 	{
 		curr->next = init_word(src, curr, NEXT_WORD);
 		set_qflags_and_skip_chars(&src, &curr->next);
+		// else
 		src = src->next;
 		curr = curr->next;
 	}
@@ -185,7 +189,7 @@ static void	words_to_lst(t_node *src, t_node **dest, t_node **iterator)
 
 int main(void)
 {
-	char	*cmdline = " COUCOU LZA\"COOOL\"CO |||| '<<<' > ";
+	char	*cmdline = "  COOOL CO |||| \\ ? <<<' > ";
 	t_node  *iterator;
 	t_node	*src;
 	t_node	*dest;
