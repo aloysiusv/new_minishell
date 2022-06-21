@@ -6,28 +6,28 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/20 21:17:40 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/21 03:34:31 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_lstsize(t_lst *lst)
-{
-	size_t	size;
-    t_node  *iterator;
+// size_t	ft_lstsize(t_lst *lst)
+// {
+// 	size_t	size;
+//     t_node  *iterator;
 
-	if (!lst->head)
-		return (0);
-    iterator = lst->head;
-	size = 0;
-	while (iterator)
-	{
-		iterator = iterator->next;
-		size++;
-	}
-	return (size);
-}
+// 	if (!lst->head)
+// 		return (0);
+//     iterator = lst->head;
+// 	size = 0;
+// 	while (iterator)
+// 	{
+// 		iterator = iterator->next;
+// 		size++;
+// 	}
+// 	return (size);
+// }
 
 void	delete_node(t_node *node)
 {
@@ -40,24 +40,23 @@ void	delete_node(t_node *node)
 		free(node);
 }
 
-void	delete_lst(t_lst *lst)
+void	delete_lst(t_node **head)
 {
 	t_node	*tmp;
-	size_t	size;
+	// size_t	size;
 
-	size = ft_lstsize(lst);
-	if (!lst->head)
+	// size = ft_lstsize(lst);
+	if (!(*head))
 		return ;
 	// printf("size = [%zu]\n", size);
-	while (size)
+	while (*head)
 	{
-		tmp = lst->head;
-		lst->head = lst->head->next;
+		tmp = *head;
+		*head = (*head)->next;
 		delete_node(tmp);
-		size--;
+		// size--;
 	}
-	free(lst->head);
-	free(lst);
+	// free(head);
 }
 
 t_node	*create_node(char my_char, char *my_word, int my_type)

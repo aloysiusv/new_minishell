@@ -6,13 +6,13 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:03:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/20 23:05:23 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/21 03:19:42 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*remove_spaces(char const *str)
+static char	*remove_spaces(char const *str)
 {
 	char	*new_s;
 	size_t	i;
@@ -30,7 +30,7 @@ char	*remove_spaces(char const *str)
 	return (new_s);
 }
 
-t_node	*init_first_node(char *str)
+static t_node	*init_first_node(char *str)
 {
 	if (str[0] == '\'')
 		return(create_node('\'', NULL, SQUOTE));

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:56:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/20 23:29:56 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/21 03:34:50 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ static void	set_qflags_and_skip_chars(t_node **src, t_node **head)
 	}
 }
 
-t_node *word_to_lst(t_node *src, t_node **head)
+t_node *stock_words_to_lst(t_node *src, t_node **head)
 {
 	t_node	*curr;
 
@@ -154,11 +154,11 @@ t_node *word_to_lst(t_node *src, t_node **head)
 	return (*head);
 }
 
-static void	characters_to_lst(char *cmdline, t_lst **src, t_node **iterator)
+static void	characters_to_lst(char *cmdline, t_node **src, t_node **iterator)
 {
-    (*src)->head = cmdline_to_lst(cmdline, (*src)->head);
-	set_subflags((*src)->head);
-    *iterator = (*src)->head;
+    *src = cmdline_to_lst(cmdline, src);
+	set_subflags(src);
+    *iterator = *src;
 	while (*iterator)
     {
         printf("[%c] => in_squotes [%d] || in_dquotes [%d]\n", (*iterator)->charac, (*iterator)->in_squotes, (*iterator)->in_dquotes);
@@ -166,20 +166,20 @@ static void	characters_to_lst(char *cmdline, t_lst **src, t_node **iterator)
     }
 }
 
-static void	words_to_lst(t_lst *src, t_lst **dest, t_node **iterator)
+static void	words_to_lst(t_node *src, t_node **dest, t_node **iterator)
 {
-	(*dest)->head = word_to_lst(src->head, (*dest)->head);
-    *iterator = (*dest)->head;
+	*dest = stock_words_to_lst(src, dest);
+    *iterator = *dest;
 	while (*iterator)
     {
         printf("[%s] => in_squotes [%d] || in_dquotes [%d]\n", (*iterator)->word, (*iterator)->in_squotes, (*iterator)->in_dquotes);
 		*iterator = (*iterator)->next;
     }
-	while ((*dest)->head) 
+	while ((*dest)) 
 	{
-		printf("freeing [%s]\n", (*dest)->head->word);
-		free((*dest)->head->word);
-		(*dest)->head = (*dest)->head->next;
+		printf("freeing [%s]\n", (*dest)->word);
+		free((*dest)->word);
+		*dest = (*dest)->next;
 	}
 }
 
@@ -187,21 +187,21 @@ int main(void)
 {
 	char	*cmdline = " COUCOU LZA\"COOOL\"CO |||| '<<<' > ";
 	t_node  *iterator;
-	t_lst	*src;
-	t_lst	*dest;
+	t_node	*src;
+	t_node	*dest;
 
-	src = (t_lst *)malloc(sizeof(t_lst));
-	dest = (t_lst *)malloc(sizeof(t_lst));
-	if (!src || !dest)
-	{
-		if (src)
-			free(src);
+	src = (t_node *)malloc(sizeof(t_node));
+	if (!src)
 		return (-1);
-	}
+	dest = (t_node *)malloc(sizeof(t_node));
+	if (!dest)
+		return (free(src), -1);
 	characters_to_lst(cmdline, &src, &iterator);
 	printf("==================================================================\n");
 	words_to_lst(src, &dest, &iterator);
-	delete_lst(src);
-	delete_lst(dest);
+	delete_lst(&src);
+	delete_lst(&dest);
+	free(src);
+	free(dest);
 	return (0);
 }
