@@ -6,57 +6,11 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:56:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/21 04:13:23 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/21 21:21:27 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	set_literals(t_node **head)
-{
-	t_node	*iterator;
-
-	iterator = *head;
-	while (iterator)
-	{
-		if (iterator->in_squotes || iterator->in_dquotes)
-			iterator->type = LITERAL;
-		if (iterator)
-			iterator = iterator->next;
-	}
-}
-
-static void	set_quote_flags(t_node **iterator, char quote)
-{
-	*iterator = (*iterator)->next;
-	while (*iterator && (*iterator)->charac != quote)
-	{
-		if (quote == '\'')
-			(*iterator)->in_squotes = true;
-		else if (quote == '\"')
-			(*iterator)->in_dquotes = true;
-		*iterator = (*iterator)->next;
-	}
-	if (*iterator)
-		(*iterator) = (*iterator)->next;
-}
-
-void	set_subflags(t_node **head)
-{
-	t_node	*iterator;
-
-	iterator = *head;
-	while (iterator)
-	{
-		if (iterator->charac == '\'')
-			set_quote_flags(&iterator, '\'');
-		else if (iterator->charac == '\"')
-			set_quote_flags(&iterator, '\"');
-		if (iterator)
-			iterator = iterator->next;
-	}
-	set_literals(head);
-}
 
 static size_t	get_word_size(t_node *current, int type)
 {
@@ -128,69 +82,52 @@ static void	set_qflags_and_skip_chars(t_node **src, t_node **head)
 	to_skip = ft_strlen((*head)->word);
 	if (to_skip > 1 )
 	{
-		while (to_skip--)
+		while (to_skip)
 		{
 			if (*src)
 				*src = (*src)->next;
-			// to_skip--;
+			to_skip--;
 		}
 	}
 }
 
-t_node *stock_words_to_lst(t_node *src, t_node **head)
+t_node *stock_words_to_lst(t_node **src, t_node **head)
 {
 	t_node	*curr;
 
 	if (!src)
 		return (NULL);
-	*head = init_word(src, NULL, FIRST_WORD);
-	set_qflags_and_skip_chars(&src, head);
+	*head = init_word(*src, NULL, FIRST_WORD);
+	set_qflags_and_skip_chars(src, head);
+	printf("src->char = [%c]\n",(*src)->charac);
 	curr = *head;
-	printf("src->char = [%c]\n", src->charac);
-	while (src)
+	while (*src)
 	{
-		curr->next = init_word(src, curr, NEXT_WORD);
-		set_qflags_and_skip_chars(&src, &curr->next);
+		curr->next = init_word(*src, curr, NEXT_WORD);
+		set_qflags_and_skip_chars(src, &curr->next);
 		// else
-		src = src->next;
+		(*src) = (*src)->next;
 		curr = curr->next;
 	}
 	return (*head);
 }
 
-static void	characters_to_lst(char *cmdline, t_node **src, t_node **iterator)
+void	get_lst_words(t_node **src, t_node **dest)
 {
-    *src = cmdline_to_lst(cmdline, src);
-	set_subflags(src);
-    *iterator = *src;
-	while (*iterator)
-    {
-        printf("[%c] => in_squotes [%d] || in_dquotes [%d]\n", (*iterator)->charac, (*iterator)->in_squotes, (*iterator)->in_dquotes);
-		*iterator = (*iterator)->next;
-    }
-}
+	t_node	*iterator;
 
-static void	words_to_lst(t_node *src, t_node **dest, t_node **iterator)
-{
 	*dest = stock_words_to_lst(src, dest);
-    *iterator = *dest;
-	while (*iterator)
+    iterator = *dest;
+	while (iterator)
     {
-        printf("[%s] => in_squotes [%d] || in_dquotes [%d]\n", (*iterator)->word, (*iterator)->in_squotes, (*iterator)->in_dquotes);
-		*iterator = (*iterator)->next;
+        printf("[%s] => in_squotes [%d] || in_dquotes [%d]\n", iterator->word, iterator->in_squotes, iterator->in_dquotes);
+		iterator = iterator->next;
     }
-	while ((*dest)) 
-	{
-		printf("freeing [%s]\n", (*dest)->word);
-		free((*dest)->word);
-		*dest = (*dest)->next;
-	}
 }
 
 int main(void)
 {
-	char	*cmdline = "  COOOL CO |||| \\ ? <<<' > ";
-	t_node  *iterator;
+	char	*cmdline = "  \"COOOL\" CO '||'|| \\ ? <<<' >   ";
 	t_node	*src;
 	t_node	*dest;
 
@@ -200,9 +137,9 @@ int main(void)
 	dest = (t_node *)malloc(sizeof(t_node));
 	if (!dest)
 		return (free(src), -1);
-	characters_to_lst(cmdline, &src, &iterator);
+	get_lst_chars(cmdline, &src);
 	printf("==================================================================\n");
-	words_to_lst(src, &dest, &iterator);
+	get_lst_words(&src, &dest);
 	delete_lst(&src);
 	delete_lst(&dest);
 	free(src);

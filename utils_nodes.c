@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/21 03:34:31 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:27:04 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,28 @@
 // 	return (size);
 // }
 
-void	delete_node(t_node *node)
+void	delete_node(t_node **node)
 {
-	if (node->word)
+	if ((*node)->word)
 	{
-		printf("word[%s] is freed\n", node->word);
-		free(node->word);
+		printf("word[%s] is freed\n", (*node)->word);
+		free((*node)->word);
 	}
-	if (node)
-		free(node);
+	if (*node)
+		free(*node);
 }
 
 void	delete_lst(t_node **head)
 {
 	t_node	*tmp;
-	// size_t	size;
 
-	// size = ft_lstsize(lst);
 	if (!(*head))
 		return ;
-	// printf("size = [%zu]\n", size);
 	while (*head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
-		delete_node(tmp);
-		// size--;
+		delete_node(&tmp);
 	}
 	// free(head);
 }
@@ -94,4 +90,20 @@ t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type)
 		bottom->next = NULL;
 	}
 	return (bottom);
+}
+
+t_node	*add_top_node(t_node *current_top, char value, char *word, int type)
+{
+	t_node	*top;
+
+	top = create_node(value, word, type);
+	if (!top)
+		return (NULL);
+	if (current_top)
+	{
+		current_top->prev = top;
+		top->next = current_top;
+		top->prev = NULL;
+	}
+	return (top);
 }

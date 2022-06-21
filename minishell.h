@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/21 03:31:52 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/21 21:21:46 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,17 @@ size_t	ft_strlen(const char *s);
 
 /* utils_nodes.c */
 // size_t	ft_lstsize(t_lst *lst);
-void	delete_node(t_node *node);
+void	delete_node(t_node **node);
 void	delete_lst(t_node **node);
 t_node	*create_node(char my_char, char *my_word, int my_type);
 t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type);
 
 /* 0_cmdline_to_lst.c */
 // t_node	*init_first_node(char *str);
-t_node	*cmdline_to_lst(char *str, t_node **head);
+t_node 	*create_lst_chars(char *cmdline, t_node **head);
+void	get_lst_chars(char *cmdline, t_node **src);
+void	get_lst_words(t_node **src, t_node **dest)
+
+
 
 #endif
