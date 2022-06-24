@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1_cmdline_to_lst.c                                 :+:      :+:    :+:   */
+/*   1_get_lst_chars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/11 18:03:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 01:51:59 by lrandria         ###   ########.fr       */
+/*   Created: 2022/06/24 06:43:26 by lrandria          #+#    #+#             */
+/*   Updated: 2022/06/24 07:27:02 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*remove_spaces(char const *str)
+static char	*trim_spaces(char const *str)
 {
 	char	*new_s;
 	size_t	i;
@@ -30,7 +30,7 @@ static char	*remove_spaces(char const *str)
 	return (new_s);
 }
 
-static t_node	*init_first_node(char *str)
+static t_node	*get_first_char(char *str)
 {
 	if (str[0] == '\'')
 		return(create_node('\'', NULL, SQUOTE));
@@ -50,21 +50,19 @@ static t_node	*init_first_node(char *str)
 		return(create_node(str[0], NULL, LITERAL));
 }
 
-t_node *cmdline_to_lst(char *s, t_node **head)
+t_node *cmdline_to_lst(char *line, t_node **head)
 {
 	size_t	i;
-	size_t	size;
 	t_node	*curr;
 	char	*str;
 
-	if (!s)
+	if (!line)
 		return (NULL);
-	str = remove_spaces(s);
-	*head = init_first_node(str);
+	str = trim_spaces(line);
+	*head = get_first_char(str);
 	curr = *head;
 	i = 1;
-	size = ft_strlen(str);
-	while (size)
+	while (str[i])
 	{
 		if (str[i] == '\'')
 			curr->next = add_bottom_node(curr, '\'', NULL, SQUOTE);
@@ -85,7 +83,6 @@ t_node *cmdline_to_lst(char *s, t_node **head)
 		else
 			curr->next = add_bottom_node(curr, str[i], NULL, LITERAL);
 		curr = curr->next;
-		size--;
 		i++;
 	}
 	free(str);
@@ -100,7 +97,12 @@ static void	set_literals(t_node **head)
 	while (iterator)
 	{
 		if (iterator->in_squotes || iterator->in_dquotes)
-			iterator->type = LITERAL;
+		{
+			if (iterator->type == DOLLAR && iterator->in_dquotes)
+				iterator->type = DOLLAR;
+			else
+				iterator->type = LITERAL;
+		}
 		if (iterator)
 			iterator = iterator->next;
 	}

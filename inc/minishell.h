@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 03:59:43 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 06:59:29 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,54 +25,13 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
+# include "execution.h"
+# include "parsing.h"
 
 # define WHITE_SPACES " 	\n\t\v\f\r"
 
-/* Modes to specify when creating word nodes */
-# define FIRST_WORD		0
-# define NEXT_WORD		1
-
-enum e_type
-{
-	LITERAL,
-	WORD,
-	BUILTIN,
-	FILENAME,
-	COMMAND,
-	LIMITER,
-	PATH,
-	ENV_VAR,
-	BLANK,
-	SQUOTE,
-	DQUOTE,
-	RD_INPUT,
-	RD_OUTPUT,
-	APPEND,
-	HRDOC,
-	PIPE,
-	DOLLAR,
-	EQUAL,
-};
-
-typedef struct		s_node
-{
-	char			charac;
-	char			*word;
-	int				type;
-	bool			in_squotes;
-	bool			in_dquotes;
-	struct s_node	*prev;
-	struct s_node	*next;
-}                   t_node;
-
-/* Linked lists monitor, might not be used */
-typedef struct		s_lst
-{
-	size_t			size;
-	t_node			*head;
-	t_node			*tail;
-}					t_lst;
+extern int	g_exit_code;
 
 typedef struct		s_shell
 {
@@ -83,12 +42,8 @@ typedef struct		s_shell
 	t_node			*env_var;
 }					t_shell;
 
-/* utils_libft.c */
-// char	*ft_substr(char const *s, unsigned int start, size_t len);
-// int		ft_strncmp(const char *s1, const char *s2, size_t n);
+/* utils_extra_libft.c */
 int		ft_isset(char c, char const *my_set);
-// size_t	ft_strlcpy(char *dst, const	char *src, size_t size);
-// size_t	ft_strlen(const char *s);
 
 /* utils_nodes.c */
 size_t	ft_lstsize_2(t_node *head);
@@ -97,9 +52,4 @@ void	delete_lst(t_node **head);
 t_node	*create_node(char my_char, char *my_word, int my_type);
 t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type);
 
-/* 0_cmdline_to_lst.c */
-// t_node	*init_first_node(char *str);
-t_node	*cmdline_to_lst(char *str, t_node **head);
-void	characters_to_lst(char *cmdline, t_node **src);
-void	words_to_lst(t_node *src, t_node **dest);
 #endif

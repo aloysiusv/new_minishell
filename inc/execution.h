@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_malloc.c                                     :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/17 20:06:28 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/17 20:32:51 by lrandria         ###   ########.fr       */
+/*   Created: 2022/06/24 06:00:50 by lrandria          #+#    #+#             */
+/*   Updated: 2022/06/24 07:27:46 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
-int my_mallocator(void *content, const size_t size)
-{
-    *(void **)content = malloc(size);
-    if (!(*(void **)content))
-        return (EXIT_FAILURE);
-    memset(*(void **)content, 0, size);
-    return (EXIT_SUCCESS);
-}
+# include "minishell.h"
 
-void    my_freetator(void *content)
+typedef struct 			s_command
 {
-    if (*(void **)content)
-    {
-        free(*(void **)content);
-        *(void **)content = NULL;
-    }
-}
+	char				**command;
+	char				*cmd_path;
+	int					fdin;
+	int					fdout;
+	int					redir;
+	struct 	s_command	*next;
+}						t_command;
+
+typedef struct s_hdoc
+{
+	int		fdin;
+	int		fdout;
+	int		fds[2];
+	char	*limiter;
+	char	*line;
+}				t_hdoc;
+#endif

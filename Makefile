@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 19:09:23 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/24 04:00:46 by lrandria         ###   ########.fr        #
+#    Updated: 2022/06/24 06:50:44 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,13 @@ NAME		=	minishell
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror -g3
 OBJS		=	$(SRCS:.c=.o)
-HDR			=	./minishell.h
+HDR			=	./inc/minishell.h
 LFT			= 	libft/libft.a
-INC			=	-I ./
+INC			=	-I ./inc
 LIBS		=	-L ./libft -lft -L -lreadline
-SRCS		=	1_cmdline_to_lst.c 2_word_to_lst.c 3_syntax_errors.c \
-				utils_libft.c utils_nodes.c
+SRCS		=	1_get_lst_chars.c  2_get_lst_tokens.c  3_syntax_errors.c \
+				4_expansions.c \
+				utils_extra_libft.c utils_nodes.c utils_free.c
 
 all:			$(LFT) $(NAME)
 

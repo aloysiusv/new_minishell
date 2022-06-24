@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/21 17:26:20 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 06:43:17 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@ void    mini_loop(t_shell *sh)
 
     while (1)
 	{
-		signal(SIGINT, handle_sigs);
-		signal(SIGQUIT, handle_sigs);
+		// signal(SIGINT, handle_sigs);
+		// signal(SIGQUIT, handle_sigs);
         sh->cmdline = readline("pls_validate_minishell$> ");
         if (!sh->cmdline)
             free(sh->cmdline);
         if (sh->cmdline && ft_strlen(sh->cmdline) > 0)
 			add_history(sh->cmdline);
-        if (mini_parsing(sh, sh->cmdline) == -1)
-            return ;
-        if (check_syntax_error(sh)== -1)
+        if (parsing(sh, sh->cmdline) == -1)
             return ;
     }
 }
