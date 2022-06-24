@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 03:00:42 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 08:02:14 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ size_t	ft_lstsize_2(t_node *head)
 void	delete_node(t_node *node)
 {
 	if (node->word)
-	{
-		// printf("word[%s] is freed\n", node->word);
 		free(node->word);
-	}
 	if (node)
 		free(node);
 }
@@ -50,14 +47,9 @@ void	delete_lst(t_node **head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
-		if (tmp->charac)
-			printf("deleting = [%c]\n", tmp->charac);
-		else
-			printf("deleting = [%s]\n", tmp->word);
 		delete_node(tmp);
 		tmp = NULL;
 	}
-	printf("=============================================\n");
 }
 
 t_node	*create_node(char my_char, char *my_word, int my_type)

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 07:29:20 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 07:45:37 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_expansions(t_node **tokens)
 
 int main(void)
 {
-	char	*cmdline = "  \"COOOL\" CO |\"$USER\" '||' \\ ? > ";
+	char	*cmdline = "  \"COOOL\" CO |>>>\"$USER\" '||' \\ ? > ";
 	t_node	*src;
 	t_node	*dest;
 

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 07:13:54 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 08:01:38 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void		words_to_lst(t_node *src, t_node **dest)
 	iterator = *dest;
 	while (iterator)
 	{
-		printf("[%s] => in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
+		printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
 			iterator->word, iterator->in_squotes,
 				iterator->in_dquotes, iterator->type);
 		iterator = iterator->next;
