@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:56:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 02:43:19 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:16:21 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static char		*create_word(t_node *current, int type)
 		return (NULL);
 	iterator = current;
 	i = 0;
-	// printf("size = [%zu]\n", size);
 	while (i < size)
 	{
 		word[i] = iterator->charac;
@@ -49,7 +48,6 @@ static char		*create_word(t_node *current, int type)
 		i++;
 	}
 	word[i] = '\0';
-	// printf("word created is [%s]\n", word);
 	return (word);
 }
 
@@ -113,10 +111,12 @@ void		words_to_lst(t_node *src, t_node **dest)
 	t_node	*iterator;
 
 	*dest = stock_words_to_lst(src, dest);
-    iterator = *dest;
+	iterator = *dest;
 	while (iterator)
-    {
-        printf("[%s] => in_squotes [%d] || in_dquotes [%d]\n", iterator->word, iterator->in_squotes, iterator->in_dquotes);
+	{
+		printf("[%s] => in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
+			iterator->word, iterator->in_squotes,
+				iterator->in_dquotes, iterator->type);
 		iterator = iterator->next;
 	}
 }

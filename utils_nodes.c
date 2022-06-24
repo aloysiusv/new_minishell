@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 02:18:32 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 03:00:42 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	delete_lst(t_node **head)
 		delete_node(tmp);
 		tmp = NULL;
 	}
+	printf("=============================================\n");
 }
 
 t_node	*create_node(char my_char, char *my_word, int my_type)

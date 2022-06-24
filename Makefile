@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 19:09:23 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/24 02:15:25 by lrandria         ###   ########.fr        #
+#    Updated: 2022/06/24 04:00:46 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HDR			=	./minishell.h
 LFT			= 	libft/libft.a
 INC			=	-I ./
 LIBS		=	-L ./libft -lft -L -lreadline
-SRCS		=	1_cmdline_to_lst.c 2_word_to_lst.c \
+SRCS		=	1_cmdline_to_lst.c 2_word_to_lst.c 3_syntax_errors.c \
 				utils_libft.c utils_nodes.c
 
 all:			$(LFT) $(NAME)

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 02:43:39 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 03:59:43 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,5 @@ t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type);
 // t_node	*init_first_node(char *str);
 t_node	*cmdline_to_lst(char *str, t_node **head);
 void	characters_to_lst(char *cmdline, t_node **src);
-void		words_to_lst(t_node *src, t_node **dest);
+void	words_to_lst(t_node *src, t_node **dest);
 #endif
