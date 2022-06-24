@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/21 21:21:46 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 02:43:39 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include "libft/libft.h"
 
-# define WHITE_SPACES " 	\0\n\t\v\f\r"
+# define WHITE_SPACES " 	\n\t\v\f\r"
 
+/* Modes to specify when creating word nodes */
 # define FIRST_WORD		0
 # define NEXT_WORD		1
 
@@ -39,6 +41,8 @@ enum e_type
 	FILENAME,
 	COMMAND,
 	LIMITER,
+	PATH,
+	ENV_VAR,
 	BLANK,
 	SQUOTE,
 	DQUOTE,
@@ -62,41 +66,40 @@ typedef struct		s_node
 	struct s_node	*next;
 }                   t_node;
 
+/* Linked lists monitor, might not be used */
 typedef struct		s_lst
 {
-	size_t	size;
-	t_node	*head;
-	t_node	*tail;
+	size_t			size;
+	t_node			*head;
+	t_node			*tail;
 }					t_lst;
 
 typedef struct		s_shell
 {
-	char	*cmdline;
-	char	**envp;
-	size_t	nb_cmds;
-	size_t	nb_redir;
+	char			*cmdline;
+	char			**envp;
+	size_t			nb_cmds;
+	size_t			nb_redir;
+	t_node			*env_var;
 }					t_shell;
 
 /* utils_libft.c */
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
+// char	*ft_substr(char const *s, unsigned int start, size_t len);
+// int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_isset(char c, char const *my_set);
-size_t	ft_strlcpy(char *dst, const	char *src, size_t size);
-size_t	ft_strlen(const char *s);
+// size_t	ft_strlcpy(char *dst, const	char *src, size_t size);
+// size_t	ft_strlen(const char *s);
 
 /* utils_nodes.c */
-// size_t	ft_lstsize(t_lst *lst);
-void	delete_node(t_node **node);
-void	delete_lst(t_node **node);
+size_t	ft_lstsize_2(t_node *head);
+void	delete_node(t_node *node);
+void	delete_lst(t_node **head);
 t_node	*create_node(char my_char, char *my_word, int my_type);
 t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type);
 
 /* 0_cmdline_to_lst.c */
 // t_node	*init_first_node(char *str);
-t_node 	*create_lst_chars(char *cmdline, t_node **head);
-void	get_lst_chars(char *cmdline, t_node **src);
-void	get_lst_words(t_node **src, t_node **dest)
-
-
-
+t_node	*cmdline_to_lst(char *str, t_node **head);
+void	characters_to_lst(char *cmdline, t_node **src);
+void		words_to_lst(t_node *src, t_node **dest);
 #endif

@@ -6,35 +6,39 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 19:09:23 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/21 21:22:36 by lrandria         ###   ########.fr        #
+#    Updated: 2022/06/24 02:15:25 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -g3
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	./minishell.h
-LIB			=	-lreadline
-SRCS		=	1_a_parse_lst_chars.c 1_b_parse_subflags.c \
-				
+LFT			= 	libft/libft.a
+INC			=	-I ./
+LIBS		=	-L ./libft -lft -L -lreadline
+SRCS		=	1_cmdline_to_lst.c 2_word_to_lst.c \
 				utils_libft.c utils_nodes.c
 
-all:			$(NAME)
+all:			$(LFT) $(NAME)
 
 $(NAME):		$(OBJS)
-				$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIB)
+				$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBS)
 
-mandatory:		$(NAME)
+$(LFT):
+			make -C ./libft
 
 %.o:		%.c $(HDR)
-			$(CC) $(CFLAGS) -c -o $@ $< 
+			$(CC) $(CFLAGS) $(INC) -c -o $@ $< 
 
 clean:
 			rm -rf $(OBJS)
+			make -C ./libft clean
 
 fclean:		clean
 			rm -rf $(NAME)
+			make -C ./libft fclean
 
 re:			fclean all
 

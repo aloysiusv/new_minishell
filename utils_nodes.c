@@ -6,38 +6,38 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/21 20:27:04 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 02:18:32 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// size_t	ft_lstsize(t_lst *lst)
-// {
-// 	size_t	size;
-//     t_node  *iterator;
-
-// 	if (!lst->head)
-// 		return (0);
-//     iterator = lst->head;
-// 	size = 0;
-// 	while (iterator)
-// 	{
-// 		iterator = iterator->next;
-// 		size++;
-// 	}
-// 	return (size);
-// }
-
-void	delete_node(t_node **node)
+size_t	ft_lstsize_2(t_node *head)
 {
-	if ((*node)->word)
+	size_t	size;
+    t_node  *iterator;
+
+	if (!head)
+		return (0);
+    iterator = head;
+	size = 0;
+	while (iterator)
 	{
-		printf("word[%s] is freed\n", (*node)->word);
-		free((*node)->word);
+		iterator = iterator->next;
+		size++;
 	}
-	if (*node)
-		free(*node);
+	return (size);
+}
+
+void	delete_node(t_node *node)
+{
+	if (node->word)
+	{
+		// printf("word[%s] is freed\n", node->word);
+		free(node->word);
+	}
+	if (node)
+		free(node);
 }
 
 void	delete_lst(t_node **head)
@@ -50,9 +50,13 @@ void	delete_lst(t_node **head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
-		delete_node(&tmp);
+		if (tmp->charac)
+			printf("deleting = [%c]\n", tmp->charac);
+		else
+			printf("deleting = [%s]\n", tmp->word);
+		delete_node(tmp);
+		tmp = NULL;
 	}
-	// free(head);
 }
 
 t_node	*create_node(char my_char, char *my_word, int my_type)
@@ -90,20 +94,4 @@ t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type)
 		bottom->next = NULL;
 	}
 	return (bottom);
-}
-
-t_node	*add_top_node(t_node *current_top, char value, char *word, int type)
-{
-	t_node	*top;
-
-	top = create_node(value, word, type);
-	if (!top)
-		return (NULL);
-	if (current_top)
-	{
-		current_top->prev = top;
-		top->next = current_top;
-		top->prev = NULL;
-	}
-	return (top);
 }
