@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 10:38:57 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 11:09:24 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 18:01:25 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@ void	oops_crash(t_shell *shell, char *error_message, int exit_code)
 	ft_putstr_fd("minishell: error: ", 2);
 	ft_putstr_fd(error_message, 2);
 	free_shell(shell);
-	exit(exit_code);
+	g_exit_code = exit_code;
+	exit(g_exit_code);
 }

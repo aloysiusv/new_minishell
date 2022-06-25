@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_nodes.c                                      :+:      :+:    :+:   */
+/*   utils_nodes_tokens.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 08:02:14 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:10:24 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	delete_lst(t_node **head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
+		if (tmp->word)
+			printf("In 'delete_lst': about to delete [%s]\n", tmp->word);
 		delete_node(tmp);
 		tmp = NULL;
 	}

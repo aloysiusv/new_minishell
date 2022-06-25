@@ -6,25 +6,25 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 15:31:12 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/11 16:37:45 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 21:47:52 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_isset(char c, char const *my_set)
-{
-	size_t	i;
+// static int	ft_isset(char c, char const *my_set)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (my_set[i])
-	{
-		if (c == my_set[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (my_set[i])
+// 	{
+// 		if (c == my_set[i])
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {

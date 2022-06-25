@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 13:17:12 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:22:14 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ static int     check_valid_operators(t_node *head)
 		while (++i < 5)
 			if (iterator->type == list[i].type)
 				if (is_it_valid(iterator->word, list[i].ope) == -1)
-					return (printf("minishell: error: syntax error near operator `%c'\n",
-						list[i].ope), -1);
+					return (-1);
+		/*printf("minishell: error: syntax error near operator `%c'\n", list[i].ope),*/
         iterator = iterator->next;
     }
 	return (0);
@@ -96,8 +96,10 @@ static int	check_closing_quotes(t_node *head)
 {
 	t_node  *iterator;
 
+	if (!head)
+		return (-1);
 	iterator = head;
-	while (iterator->next)
+	while (iterator)
 		iterator = iterator->next;
 	if (iterator->in_squotes || iterator->in_dquotes)
 		return (-1);
@@ -107,14 +109,15 @@ static int	check_closing_quotes(t_node *head)
 void	syntax_errors(t_shell *sh, t_node *tokens)
 {
 	if (check_closing_quotes(tokens) == -1)
-		oops_crash(sh, "minishell: error: unclosed quotes\n", 2);
+		oops_crash(sh, "unclosed quotes\n", 2);
 	if (check_valid_operators(tokens) == -1)
-		g_exit_code = 2;
+		oops_crash(sh, "invalid operator\n", 2);
 }
 
 // int main(void)
 // {
 // 	char	*cmdline = "  \"COOOL\" CO | '||' \\ ? > ";
+// 	t_shell	*sh;
 // 	t_node	*src;
 // 	t_node	*dest;
 
@@ -123,15 +126,13 @@ void	syntax_errors(t_shell *sh, t_node *tokens)
 // 	characters_to_lst(cmdline, &src);
 // 	printf("==================================================================\n");
 // 	words_to_lst(src, &dest);
-// 	if (check_closing_quotes(dest) == -1)
-// 		return (printf("minishell: error: unclosed quotes\n"), -1);
-// 	if (check_valid_operators(dest) == -1)
-// 		return (-1);
-// 	//do expansions (convert dollars)
-// 	if (assign_word_types(&dest) == -1)
-// 		return (-1);
-// 	if (check_redirs_args(dest) == -1)
-// 		return (-1);
+// 	check_closing_quotes(dest);
+// 	check_valid_operators(dest);
+//	// do expansions (convert dollars)
+// 	// if (assign_word_types(&dest) == -1)
+// 	// 	return (-1);
+// 	// if (check_redirs_args(dest) == -1)
+// 	// 	return (-1);
 // 	delete_lst(&src);
 // 	delete_lst(&dest);
 // 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 08:04:56 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 12:35:31 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 23:39:34 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ static void	set_subflags(t_node **head)
 
 void	get_lst_chars(char *cmdline, t_node **src)
 {
-    *src = chars_to_lst(cmdline, src);
+    if (!cmdline || !*cmdline)
+		return ;
+	*src = chars_to_lst(cmdline, src);
 	set_subflags(src);
     /* debug
 	t_node	*iterator = *src;

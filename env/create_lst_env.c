@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_env.c                                       :+:      :+:    :+:   */
+/*   create_lst_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:02:23 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 11:01:52 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:36:29 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static t_env	*init_var(char *var, t_env *curr, int mode)
 	return (NULL);
 }
 
-t_env		*create_env_lst(char **env)
+t_env		*create_lst_env(char **env)
 {
 	size_t		i;
 	t_env	*head;
@@ -87,8 +87,8 @@ t_env		*create_env_lst(char **env)
 	while (env[i])
 	{
 		curr->next = init_var(env[i], curr, NEXT);
-		if (!curr->next)
-			return (delete_lst_var(head), NULL);
+		// if (!curr->next)
+		// 	return (delete_lst_var(&head), NULL);
 		i++;
 		curr = curr->next;
 	}

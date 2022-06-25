@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 10:36:23 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 10:36:43 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 21:20:27 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_isset(char c, char const *my_set)
 	size_t	i;
 
 	i = 0;
+	if (!my_set)
+		return (0);
 	while (my_set[i])
 	{
 		if (c == my_set[i])

@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_tokens.h                                       :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/24 05:56:12 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 12:54:08 by lrandria         ###   ########.fr       */
+/*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
+/*   Updated: 2022/06/25 21:44:31 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LST_TOKENS_H
-# define LST_TOKENS_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-# include "minishell.h"
+# include <stdlib.h>
 
+/* ENV VARIABLES */
+
+typedef struct		s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*prev;
+	struct s_env	*next;
+}                   t_env;
+
+/* TOKENISATION */
 enum e_type
 {
 	LITERAL,
@@ -53,21 +64,41 @@ typedef struct		s_node
 	struct s_node	*next;
 }                   t_node;
 
-/* 1_get_lst_chars */
-void	get_lst_chars(char *cmdline, t_node **src);
-/* 1_get_lst_chars2.c */
-t_node *chars_to_lst(char *line, t_node **head);
-/* 2_get_lst_tokens.c */
-void	get_lst_tokens(t_node *src, t_node **dest);
-/* 3_syntax_errors.c */
-void	syntax_errors(t_shell *sh, t_node *tokens);
-/* 4_expansions */
-void	handle_expands(t_node **tokens, t_env *vars);
+/* EXECUTION */
 
-/* utils_nodes.c */
-size_t	ft_lstsize_2(t_node *head);
-void	delete_node(t_node *node);
-void	delete_lst(t_node **head);
-t_node	*create_node(char my_char, char *my_word, int my_type);
-t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type);
+typedef struct 			s_command
+{
+	char				**command;
+	char				*full_line;
+	char				*exec_path;
+	char				*redir;
+	int					fdin;
+	int					fdout;
+	struct s_command	*next;
+}						t_command;
+
+typedef struct s_hdoc
+{
+	int		fdin;
+	int		fdout;
+	int		fds[2];
+	char	*limiter;
+	char	*line;
+}				t_hdoc;
+
+/* SHELL DATA */
+
+typedef struct	s_shell
+{
+	char		*cmdline;
+	char		**envp;
+	char		**all_paths;
+	t_env		*env_var;
+	t_node		*chars;
+	t_node		*tokens;
+	t_command	*cmds;
+	size_t		nb_cmds;
+	size_t		nb_redir;
+}				t_shell;
+
 #endif
