@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 04:07:33 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 04:51:18 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,29 @@ void	delete_node_var(t_env_var *node)
 		free(node->value);
 	if (node)
 		free(node);
+}
+
+void	delete_specific_node_var(t_env_var **head, char *key)
+{
+	t_env_var	*iterator;
+
+	iterator = *head;
+	while (iterator)
+	{
+		if (ft_strncmp(iterator->key, key, ft_strlen(key)) == 0)
+		{
+			if (iterator->prev && iterator->next)
+			{
+				iterator->prev->next = iterator->next;
+				iterator->next->prev = iterator->prev;
+			}
+			else if (iterator->prev && !iterator->next)
+				iterator->prev->next = NULL;
+			delete_node_var(iterator);
+			return ;
+		}
+		iterator = iterator->next;
+	}
 }
 
 void	delete_lst_var(t_env_var **head)
@@ -72,18 +95,18 @@ t_env_var	*add_bottom_node_var(char **keyvalue, t_env_var *current_last)
 	return (bottom);
 }
 
-t_env_var	*add_top_node_var(char **keyvalue, t_env_var *current_top)
-{
-	t_env_var	*top;
+// t_env_var	*add_top_node_var(char **keyvalue, t_env_var *current_top)
+// {
+// 	t_env_var	*top;
 
-	top = create_node_var(keyvalue);
-	if (!top)
-		return (NULL);
-	if (current_top)
-	{
-		current_top->prev = top;
-		top->next = current_top;
-		top->prev = NULL;
-	}
-	return (top);
-}
+// 	top = create_node_var(keyvalue);
+// 	if (!top)
+// 		return (NULL);
+// 	if (current_top)
+// 	{
+// 		current_top->prev = top;
+// 		top->next = current_top;
+// 		top->prev = NULL;
+// 	}
+// 	return (top);
+// }

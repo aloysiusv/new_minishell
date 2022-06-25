@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 04:31:01 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 04:38:47 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    mini_loop(t_shell *sh)
 		// signal(SIGINT, handle_sigs);
 		// signal(SIGQUIT, handle_sigs);
         tokens = NULL;
-        sh->cmdline = readline("pls_validate_minishell$> ");
+        sh->cmdline = readline("~pls_validate_minishell$ ");
         if (!sh->cmdline)
             free(sh->cmdline);
         if (sh->cmdline && ft_strlen(sh->cmdline) > 0)
