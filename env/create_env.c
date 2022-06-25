@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:02:23 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 04:49:33 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 05:10:06 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,30 +94,30 @@ t_env_var		*create_env_lst(char **env, t_env_var **head)
 	return (*head);
 }
 
-int main(int ac, char *av[], char *envp[])
-{
-	t_env_var 	*head;
-	t_env_var 	*iterator;
+// int main(int ac, char *av[], char *envp[])
+// {
+// 	t_env_var 	*head;
+// 	t_env_var 	*iterator;
 
-	(void)ac;
-	(void)av;
-	head = NULL;
-	iterator = NULL;
-	head = create_env_lst(envp, &head);
-	iterator = head;
-	while (iterator)
-	{
-		printf("%s=%s\n", iterator->key, iterator->value);
-		iterator = iterator->next;
-	}
-	delete_specific_node_var(&head, "LS_COLORS");
-	printf("=========AFTER DELETING LS COLORS=========\n");
-	iterator = head;
-	while (iterator)
-	{
-		printf("%s=%s\n", iterator->key, iterator->value);
-		iterator = iterator->next;
-	}
-	delete_lst_var(&head);
-	return (0);
-}
+// 	(void)ac;
+// 	(void)av;
+// 	head = NULL;
+// 	iterator = NULL;
+// 	head = create_env_lst(envp, &head);
+// 	iterator = head;
+// 	while (iterator)
+// 	{
+// 		printf("%s=%s\n", iterator->key, iterator->value);
+// 		iterator = iterator->next;
+// 	}
+// 	delete_specific_node_var(&head, "LS_COLORS");
+// 	printf("=========AFTER DELETING LS COLORS=========\n");
+// 	iterator = head;
+// 	while (iterator)
+// 	{
+// 		printf("%s=%s\n", iterator->key, iterator->value);
+// 		iterator = iterator->next;
+// 	}
+// 	delete_lst_var(&head);
+// 	return (0);
+// }

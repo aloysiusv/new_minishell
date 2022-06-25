@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 05:56:12 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 17:49:57 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 05:12:09 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	words_to_lst(t_node *src, t_node **dest);
 /* 3_syntax_errors.c */
 int	syntax_errors(t_node *tokens);
 /* 4_expansions */
-void	handle_expands(t_node **tokens);
+void	handle_expands(t_node **tokens, t_env_var *vars);
 
 /* utils_nodes.c */
 size_t	ft_lstsize_2(t_node *head);
