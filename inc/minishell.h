@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 23:32:02 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 12:39:50 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@
 # include "../libft/libft.h"
 # include "lst_env.h"
 # include "lst_tokens.h"
-# include "lst_cmd.h"
+# include "lst_commands.h"
+
+# define PROMPT "\033[1;35m~mini$hell~>\033[m "
 
 /* Modes to specify when creating nodes */
 # define FIRST		0
@@ -38,18 +40,21 @@
 
 extern int	g_exit_code;
 
-typedef struct		s_shell
+typedef struct	s_shell
 {
-	char			*cmdline;
-	char			**envp;
-	char			**all_paths;
-	size_t			nb_cmds;
-	size_t			nb_redir;
-	t_node			*env_var;
-}					t_shell;
+	char		*cmdline;
+	char		**envp;
+	char		**all_paths;
+	t_env		*env_var;
+	t_node		*chars;
+	t_node		*tokens;
+	t_command	*cmds;
+	size_t		nb_cmds;
+	size_t		nb_redir;
+}				t_shell;
 
-/* utils_extra_libft.c */
-int		ft_isset(char c, char const *my_set);
+/* utils_signals.c */
+void	handle_signals(int sig);
 
 /* utils_free.c */
 void	free_tab(char **tab);

@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1_b_get_lst_chars.c                                :+:      :+:    :+:   */
+/*   1_get_lst_chars2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 08:04:06 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 08:36:33 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 12:36:44 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*trim_spaces(char const *str)
+static void	get_next_char(char *str, size_t *i, t_node **curr)
 {
-	char	*new_s;
-	size_t	i;
-	size_t	j;
-
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (str[i] && ft_isset(str[i], WHITE_SPACES) == 1)
-		i++;
-	j = ft_strlen(str) - 1;
-	while (ft_isset(str[j], WHITE_SPACES) == 1)
-		j--;
-	new_s = ft_substr(str, i, j + 1 - i);
-	return (new_s);
+	if (str[*i] == '\'')
+		(*curr)->next = add_bottom_node(*curr, '\'', NULL, SQUOTE);
+	else if (str[*i] == '\"')
+		(*curr)->next = add_bottom_node(*curr, '\"',NULL,  DQUOTE);
+	else if (str[*i] == '<')
+		(*curr)->next = add_bottom_node(*curr, '<', NULL, RD_INPUT);
+	else if (str[*i] == '>')
+		(*curr)->next = add_bottom_node(*curr, '>', NULL, RD_OUTPUT);
+	else if (str[*i] == '|')
+		(*curr)->next = add_bottom_node(*curr, '|', NULL, PIPE);
+	else if (str[*i] == '$')
+		(*curr)->next = add_bottom_node(*curr, '$', NULL, DOLLAR);
+	else if (str[*i] == '=')
+		(*curr)->next = add_bottom_node(*curr, '=', NULL, EQUAL);
+	else if (ft_isset(str[*i], WHITE_SPACES) == 1)
+		(*curr)->next = add_bottom_node(*curr, ' ', NULL, BLANK);
+	else
+		(*curr)->next = add_bottom_node(*curr, str[*i], NULL, LITERAL);
 }
 
 static t_node	*get_first_char(char *str)
@@ -50,29 +54,25 @@ static t_node	*get_first_char(char *str)
 		return(create_node(str[0], NULL, LITERAL));
 }
 
-void	get_next_char(char *str, size_t *i, t_node **curr)
+static char	*trim_spaces(char const *str)
 {
-	if (str[*i] == '\'')
-		(*curr)->next = add_bottom_node(*curr, '\'', NULL, SQUOTE);
-	else if (str[*i] == '\"')
-		(*curr)->next = add_bottom_node(*curr, '\"',NULL,  DQUOTE);
-	else if (str[*i] == '<')
-		(*curr)->next = add_bottom_node(*curr, '<', NULL, RD_INPUT);
-	else if (str[*i] == '>')
-		(*curr)->next = add_bottom_node(*curr, '>', NULL, RD_OUTPUT);
-	else if (str[*i] == '|')
-		(*curr)->next = add_bottom_node(*curr, '|', NULL, PIPE);
-	else if (str[*i] == '$')
-		(*curr)->next = add_bottom_node(*curr, '$', NULL, DOLLAR);
-	else if (str[*i] == '=')
-		(*curr)->next = add_bottom_node(*curr, '=', NULL, EQUAL);
-	else if (ft_isset(str[*i], WHITE_SPACES) == 1)
-		(*curr)->next = add_bottom_node(*curr, ' ', NULL, BLANK);
-	else
-		(*curr)->next = add_bottom_node(*curr, str[*i], NULL, LITERAL);
+	char	*new_s;
+	size_t	i;
+	size_t	j;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i] && ft_isset(str[i], WHITE_SPACES) == 1)
+		i++;
+	j = ft_strlen(str) - 1;
+	while (ft_isset(str[j], WHITE_SPACES) == 1)
+		j--;
+	new_s = ft_substr(str, i, j + 1 - i);
+	return (new_s);
 }
 
-t_node *cmdline_to_lst(char *line, t_node **head)
+t_node *chars_to_lst(char *line, t_node **head)
 {
 	size_t	i;
 	t_node	*curr;

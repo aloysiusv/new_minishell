@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 17:26:22 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 12:42:18 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +106,18 @@ t_node			*stock_words_to_lst(t_node *src, t_node **head)
 	return (*head);
 }
 
-void		words_to_lst(t_node *src, t_node **dest)
+void		get_lst_tokens(t_node *src, t_node **dest)
 {
-	t_node	*iterator;
-
 	*dest = stock_words_to_lst(src, dest);
-	iterator = *dest;
+	/* debug
+	t_node *iterator = *dest;
 	while (iterator)
 	{
 		printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
 			iterator->word, iterator->in_squotes,
 				iterator->in_dquotes, iterator->type);
 		iterator = iterator->next;
-	}
+	} */
 }
 
 // int main(void)

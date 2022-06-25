@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1_a_get_lst_chars.c                                :+:      :+:    :+:   */
+/*   1_get_lst_chars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 08:04:56 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 08:05:45 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 12:35:31 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	set_quote_flags(t_node **iterator, char quote)
 		(*iterator) = (*iterator)->next;
 }
 
-void	set_subflags(t_node **head)
+static void	set_subflags(t_node **head)
 {
 	t_node	*iterator;
 
@@ -63,18 +63,17 @@ void	set_subflags(t_node **head)
 	set_literals(head);
 }
 
-void	characters_to_lst(char *cmdline, t_node **src)
+void	get_lst_chars(char *cmdline, t_node **src)
 {
-	t_node	*iterator;
-
-    *src = cmdline_to_lst(cmdline, src);
+    *src = chars_to_lst(cmdline, src);
 	set_subflags(src);
-    iterator = *src;
+    /* debug
+	t_node	*iterator = *src;
 	while (iterator)
     {
         printf("[%c] => in_squotes [%d] || in_dquotes [%d]\n", iterator->charac, iterator->in_squotes, iterator->in_dquotes);
 		iterator = iterator->next;
-    }
+    } */
 }
 
 // int main(void)

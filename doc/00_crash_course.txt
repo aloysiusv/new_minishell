@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 18:35:19 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/24 06:42:07 by lrandria         ###   ########.fr        #
+#    Updated: 2022/06/25 10:28:08 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,3 +66,15 @@ int main(int ac, char **av) {
 ➜  minishell ./a.out "$USER'$USER'"
 -> lrandria'lrandria' 
 */
+
+CODE CASCADE
+
+Every main functions returns void and takes appropriate args.
+
+MAIN (init_minishell)
+||
+V
+getline_loop => split_cmdline => tokenise
+                                    => do_expansions => get_t_cmd => exec
+
+void    readline_loop();

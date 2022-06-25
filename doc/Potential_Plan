@@ -1,0 +1,15 @@
+PARSING
+
+1) get_lst_chars
+
+2) get_lst_tokens
+	delete lst chars
+
+3) check unclosed quotes and invalid operators
+	- invalid operators = ex: "||" or "<<<"
+
+4) create final lst_tokens2 without $ and without quotes
+	delete_lst_tokens1
+	- assign word type?
+
+5) create lst_cmds

@@ -6,15 +6,15 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 05:14:39 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 12:57:34 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*find_matching_var(t_node **iterator, t_env_var *vars)
+static char	*find_matching_var(t_node **iterator, t_env *vars)
 {
-	t_env_var	*env_var;
+	t_env	*env_var;
 	char		*expanded;
 
 	expanded = NULL;
@@ -33,7 +33,7 @@ char	*find_matching_var(t_node **iterator, t_env_var *vars)
 	return (expanded);
 }
 
-void	handle_expands(t_node **tokens, t_env_var *vars)
+void	handle_expands(t_node **tokens, t_env *vars)
 {
 	t_node	*iterator;
 	char	*to_print;
@@ -44,33 +44,33 @@ void	handle_expands(t_node **tokens, t_env_var *vars)
 		if (iterator->type == DOLLAR)
 		{
 			to_print = find_matching_var(&iterator, vars);
-			printf("[%s]\n", to_print);
+			printf("from $USER to [%s]\n", to_print);
 			return ;
 		}
 		iterator = iterator->next;
 	}
 }
 
-int main(int ac, char *av[], char *envp[])
-{
-	char	*cmdline = "  \"COOOL\" CO |>>>\"$USER\" '||' \\ ? > ";
-	t_node	*src;
-	t_node	*dest;
-	t_env_var 	*env;
+// int main(int ac, char *av[], char *envp[])
+// {
+// 	char	*cmdline = "  \"COOOL\" CO |'$>'>>\"$USER\" '||' \\ ? > ";
+// 	t_node	*src;
+// 	t_node	*dest;
+// 	t_env 	*env;
 
-	(void)ac;
-	(void)av;
-	src = NULL;
-	characters_to_lst(cmdline, &src);
-	printf("==================================================================\n");
-	dest = NULL;
-	words_to_lst(src, &dest);
-	syntax_errors(dest);
-	env = NULL;
-	env = create_env_lst(envp, &env);
-	handle_expands(&dest, env);
-	delete_lst(&src);
-	delete_lst(&dest);
-	delete_lst_var(&env);
-	return (0);
-}
+// 	(void)ac;
+// 	(void)av;
+// 	src = NULL;
+// 	characters_to_lst(cmdline, &src);
+// 	printf("==================================================================\n");
+// 	dest = NULL;
+// 	words_to_lst(src, &dest);
+// 	syntax_errors(dest);
+// 	env = NULL;
+// 	env = create_env_lst(envp, &env);
+// 	handle_expands(&dest, env);
+// 	delete_lst(&src);
+// 	delete_lst(&dest);
+// 	delete_lst_var(&env);
+// 	return (0);
+// }

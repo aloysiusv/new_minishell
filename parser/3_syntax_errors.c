@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 07:28:57 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 13:17:12 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int     check_valid_operators(t_node *head)
 	return (0);
 }
 
-static int		check_closing_quotes(t_node *head)
+static int	check_closing_quotes(t_node *head)
 {
 	t_node  *iterator;
 
@@ -104,13 +104,12 @@ static int		check_closing_quotes(t_node *head)
 	return (0);
 }
 
-int	syntax_errors(t_node *tokens)
+void	syntax_errors(t_shell *sh, t_node *tokens)
 {
 	if (check_closing_quotes(tokens) == -1)
-		return (printf("minishell: error: unclosed quotes\n"), -1);
+		oops_crash(sh, "minishell: error: unclosed quotes\n", 2);
 	if (check_valid_operators(tokens) == -1)
-		return (-1);
-	return (0);
+		g_exit_code = 2;
 }
 
 // int main(void)

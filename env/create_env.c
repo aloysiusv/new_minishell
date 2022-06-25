@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:02:23 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 05:10:06 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 11:01:52 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	**split_var(char const *s, char c)
 	return (new_arr);
 }
 
-static t_env_var	*init_var(char *var, t_env_var *curr, int mode)
+static t_env	*init_var(char *var, t_env *curr, int mode)
 {
 	char	**keyvalue;
 
@@ -73,15 +73,16 @@ static t_env_var	*init_var(char *var, t_env_var *curr, int mode)
 	return (NULL);
 }
 
-t_env_var		*create_env_lst(char **env, t_env_var **head)
+t_env		*create_env_lst(char **env)
 {
 	size_t		i;
-	t_env_var	*curr;
+	t_env	*head;
+	t_env	*curr;
 
 	if (!env)
 		return (NULL);
-	*head = init_var(env[0], NULL, FIRST);
-	curr = *head;
+	head = init_var(env[0], NULL, FIRST);
+	curr = head;
 	i = 1;
 	while (env[i])
 	{
@@ -91,13 +92,13 @@ t_env_var		*create_env_lst(char **env, t_env_var **head)
 		i++;
 		curr = curr->next;
 	}
-	return (*head);
+	return (head);
 }
 
 // int main(int ac, char *av[], char *envp[])
 // {
-// 	t_env_var 	*head;
-// 	t_env_var 	*iterator;
+// 	t_env 	*head;
+// 	t_env 	*iterator;
 
 // 	(void)ac;
 // 	(void)av;

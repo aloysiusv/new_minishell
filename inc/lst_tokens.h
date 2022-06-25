@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 05:56:12 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 05:12:09 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 12:54:08 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ typedef struct		s_node
 	struct s_node	*next;
 }                   t_node;
 
-/* 1_a_get_lst_chars */
-t_node 	*cmdline_to_lst(char *line, t_node **head);
-/* 1_b_get_lst_chars.c */
-void	characters_to_lst(char *cmdline, t_node **src);
+/* 1_get_lst_chars */
+void	get_lst_chars(char *cmdline, t_node **src);
+/* 1_get_lst_chars2.c */
+t_node *chars_to_lst(char *line, t_node **head);
 /* 2_get_lst_tokens.c */
-void	words_to_lst(t_node *src, t_node **dest);
+void	get_lst_tokens(t_node *src, t_node **dest);
 /* 3_syntax_errors.c */
-int	syntax_errors(t_node *tokens);
+void	syntax_errors(t_shell *sh, t_node *tokens);
 /* 4_expansions */
-void	handle_expands(t_node **tokens, t_env_var *vars);
+void	handle_expands(t_node **tokens, t_env *vars);
 
 /* utils_nodes.c */
 size_t	ft_lstsize_2(t_node *head);

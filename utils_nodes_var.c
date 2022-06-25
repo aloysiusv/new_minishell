@@ -6,13 +6,13 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 04:51:18 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 10:29:29 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	delete_node_var(t_env_var *node)
+void	delete_node_var(t_env *node)
 {
 	if (node->key)
 		free(node->key);
@@ -22,9 +22,9 @@ void	delete_node_var(t_env_var *node)
 		free(node);
 }
 
-void	delete_specific_node_var(t_env_var **head, char *key)
+void	delete_specific_node_var(t_env **head, char *key)
 {
-	t_env_var	*iterator;
+	t_env	*iterator;
 
 	iterator = *head;
 	while (iterator)
@@ -45,9 +45,9 @@ void	delete_specific_node_var(t_env_var **head, char *key)
 	}
 }
 
-void	delete_lst_var(t_env_var **head)
+void	delete_lst_var(t_env **head)
 {
-	t_env_var	*tmp;
+	t_env	*tmp;
 
 	if (!(*head))
 		return ;
@@ -60,11 +60,11 @@ void	delete_lst_var(t_env_var **head)
 	}
 }
 
-t_env_var	*create_node_var(char **keyvalue)
+t_env	*create_node_var(char **keyvalue)
 {
-	t_env_var	*new;
+	t_env	*new;
 
-	new = (t_env_var *)malloc(sizeof(t_env_var));
+	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
 	new->key = ft_strdup(keyvalue[0]);
@@ -79,9 +79,9 @@ t_env_var	*create_node_var(char **keyvalue)
 	return (new);
 }
 
-t_env_var	*add_bottom_node_var(char **keyvalue, t_env_var *current_last)
+t_env	*add_bottom_node_var(char **keyvalue, t_env *current_last)
 {
-	t_env_var	*bottom;
+	t_env	*bottom;
 
 	bottom = create_node_var(keyvalue);
 	if (!bottom)
@@ -95,9 +95,9 @@ t_env_var	*add_bottom_node_var(char **keyvalue, t_env_var *current_last)
 	return (bottom);
 }
 
-// t_env_var	*add_top_node_var(char **keyvalue, t_env_var *current_top)
+// t_env	*add_top_node_var(char **keyvalue, t_env *current_top)
 // {
-// 	t_env_var	*top;
+// 	t_env	*top;
 
 // 	top = create_node_var(keyvalue);
 // 	if (!top)
