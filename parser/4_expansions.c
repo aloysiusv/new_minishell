@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 07:45:37 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 23:20:58 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ void	handle_expansions(t_node **tokens)
 	}
 }
 
-int main(void)
-{
-	char	*cmdline = "  \"COOOL\" CO |>>>\"$USER\" '||' \\ ? > ";
-	t_node	*src;
-	t_node	*dest;
+// int main(void)
+// {
+// 	char	*cmdline = "  \"COOOL\" CO |>>>\"$USER\" '||' \\ ? > ";
+// 	t_node	*src;
+// 	t_node	*dest;
 
-	src = NULL;
-	dest = NULL;
-	characters_to_lst(cmdline, &src);
-	printf("==================================================================\n");
-	words_to_lst(src, &dest);
-	syntax_errors(dest);
-	handle_expansions(&dest);
-	delete_lst(&src);
-	delete_lst(&dest);
-	return (0);
-}
+// 	src = NULL;
+// 	dest = NULL;
+// 	characters_to_lst(cmdline, &src);
+// 	printf("==================================================================\n");
+// 	words_to_lst(src, &dest);
+// 	syntax_errors(dest);
+// 	handle_expansions(&dest);
+// 	delete_lst(&src);
+// 	delete_lst(&dest);
+// 	return (0);
+// }

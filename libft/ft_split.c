@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 19:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/05/18 00:40:24 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/25 01:35:57 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static char	*word_cpy(char const **s, char sep)
 	while ((*s)[i] && (*s)[i] != sep)
 		i++;
 	word = (char *)malloc(sizeof(char) * (i + 1));
-	if (word == 0)
-		return (0);
+	if (!word)
+		return (NULL);
 	ft_strlcpy(word, *s, i + 1);
 	*s = *s + i;
 	return (word);
@@ -70,16 +70,16 @@ char	**ft_split(char const *s, char c)
 		return (0);
 	size = word_count(s, c);
 	new_arr = (char **)malloc(sizeof(char *) * (size + 1));
-	if (new_arr == 0)
-		return (0);
+	if (!new_arr)
+		return (NULL);
 	i = 0;
 	while (i < size)
 	{
 		new_arr[i] = word_cpy(&s, c);
-		if (new_arr[i] == 0)
+		if (!new_arr[i])
 			return (free_words(new_arr, i));
 		i++;
 	}
-	new_arr[i] = 0;
+	new_arr[i] = NULL;
 	return (new_arr);
 }

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 08:01:38 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:26:22 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static t_node	*init_word(t_node *src, t_node *curr, int mode)
 		src->type = HRDOC;
 	else if (ft_strncmp(word, ">>", 3) == 0)
 		src->type = APPEND;
-	if (mode == FIRST_WORD)
+	if (mode == FIRST)
 		return (create_node(0, word, src->type));
-	else if (mode == NEXT_WORD)
+	else if (mode == NEXT)
 		return(add_bottom_node(curr, 0, word, src->type));
 	return (NULL);
 }
@@ -92,13 +92,13 @@ t_node			*stock_words_to_lst(t_node *src, t_node **head)
 
 	if (!src)
 		return (NULL);
-	*head = init_word(src, NULL, FIRST_WORD);
+	*head = init_word(src, NULL, FIRST);
 	set_qflags_and_skip_chars(&src, head);
 	src = src->next;
 	curr = *head;
 	while (src)
 	{
-		curr->next = init_word(src, curr, NEXT_WORD);
+		curr->next = init_word(src, curr, NEXT);
 		set_qflags_and_skip_chars(&src, &curr->next);
 		src = src->next;
 		curr = curr->next;

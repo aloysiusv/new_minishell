@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   lst_tokens.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 05:56:12 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/24 08:10:10 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:49:57 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef LST_TOKENS_H
+# define LST_TOKENS_H
 
 # include "minishell.h"
-
-/* Modes to specify when creating word nodes */
-# define FIRST_WORD		0
-# define NEXT_WORD		1
 
 enum e_type
 {
@@ -68,4 +64,10 @@ int	syntax_errors(t_node *tokens);
 /* 4_expansions */
 void	handle_expands(t_node **tokens);
 
+/* utils_nodes.c */
+size_t	ft_lstsize_2(t_node *head);
+void	delete_node(t_node *node);
+void	delete_lst(t_node **head);
+t_node	*create_node(char my_char, char *my_word, int my_type);
+t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type);
 #endif
