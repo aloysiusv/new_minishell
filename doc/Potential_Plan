@@ -3,7 +3,7 @@ PARSING
 1) get_lst_chars
 
 2) get_lst_tokens
-	delete lst chars
+	delete lst charss
 
 3) check unclosed quotes and invalid operators
 	- invalid operators = ex: "||" or "<<<"

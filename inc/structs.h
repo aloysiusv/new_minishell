@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 21:44:31 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:46:17 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdlib.h>
 
 /* ENV VARIABLES */
-
 typedef struct		s_env
 {
 	char			*key;
@@ -65,7 +64,6 @@ typedef struct		s_node
 }                   t_node;
 
 /* EXECUTION */
-
 typedef struct 			s_command
 {
 	char				**command;
@@ -87,7 +85,6 @@ typedef struct s_hdoc
 }				t_hdoc;
 
 /* SHELL DATA */
-
 typedef struct	s_shell
 {
 	char		*cmdline;

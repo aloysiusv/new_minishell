@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 23:17:15 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:14:16 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void	delete_lst_var(t_env **head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
-		if (tmp->key)
-			printf("In 'delete_lst_var': about to delete key [%s]\n", tmp->key);
 		delete_node_var(tmp);
 		tmp = NULL;
 	}
@@ -77,7 +75,7 @@ t_env	*create_node_var(char **keyvalue)
 		return (free(new->key), NULL);
 	new->prev = NULL;
 	new->next = NULL;
-	// free_tab(keyvalue);
+	free_tab(keyvalue);
 	return (new);
 }
 

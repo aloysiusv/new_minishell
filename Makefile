@@ -6,13 +6,13 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 19:09:23 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/25 23:10:18 by lrandria         ###   ########.fr        #
+#    Updated: 2022/06/26 02:08:46 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -g3
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	./inc/minishell.h
 LFT			= 	libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:34:47 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 23:00:59 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:14:37 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	free_tab(char **tab)
 		return ;
 	i = 0;
 	while (tab[i])
-	{
-		printf("About to delete [%s]\n", tab[i]);
+	// {
+	// 	printf("About to delete [%s]\n", tab[i]);
 		free(tab[i++]);
-	}
+	// }
 	free(tab);
 }
 

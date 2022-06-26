@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 00:20:15 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:51:08 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	mini_loop(t_shell *sh)
 		if (!*sh->cmdline || only_blanks(sh->cmdline) == 1)
 		{
 			free(sh->cmdline);
-			// ft_putchar_fd('\n', 1);
 			continue ;
 		}
 		if (ft_strlen(sh->cmdline) > 0)
@@ -68,9 +67,6 @@ static void	mini_loop(t_shell *sh)
 			break ;
 		free(sh->cmdline);
 	}
-	// delete_lst(&sh->tokens);
-	// delete_lst(&sh->chars);
-	// free(sh->cmdline);
 }
 
 int		main(int ac, char *av[], char *envp[])

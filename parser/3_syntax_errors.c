@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 00:22:14 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:40:28 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ static int	check_closing_quotes(t_node *head)
 
 void	syntax_errors(t_shell *sh, t_node *tokens)
 {
+	if (!tokens)
+		return ;
 	if (check_closing_quotes(tokens) == -1)
 		oops_crash(sh, "unclosed quotes\n", 2);
 	if (check_valid_operators(tokens) == -1)
