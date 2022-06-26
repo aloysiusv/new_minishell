@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 00:40:28 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 03:08:42 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	check_closing_quotes(t_node *head)
 	if (!head)
 		return (-1);
 	iterator = head;
-	while (iterator)
+	while (iterator->next)
 		iterator = iterator->next;
 	if (iterator->in_squotes || iterator->in_dquotes)
 		return (-1);

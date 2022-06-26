@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 00:11:20 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:42:57 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	get_lst_tokens(t_node *src, t_node **dest);
 /* utils_nodes.c */
 size_t	ft_lstsize_2(t_node *head);
 void	delete_node(t_node *node);
+void	delete_specific_node(t_node **head, int type);
 void	delete_lst(t_node **head);
 t_node	*create_node(char my_char, char *my_word, int my_type);
 t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type);
@@ -66,7 +67,7 @@ void	handle_signals(int sig);
 
 /* Mixed functions */
 void	syntax_errors(t_shell *sh, t_node *tokens);
-void	handle_expands(t_node **tokens, t_env *vars);
+void	get_expands(t_node **tokens, t_env *vars);
 
 /* utils_errors.c */
 void	oops_crash(t_shell *shell, char *error_message, int exit_code);

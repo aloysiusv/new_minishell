@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4_expansions.c                                     :+:      :+:    :+:   */
+/*   4_get_expands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 18:30:54 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 03:31:42 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*find_matching_var(t_node **iterator, t_env *vars)
+static char	*find_matching_var(t_node *iterator, t_env *vars)
 {
 	t_env	*env_var;
-	char		*expanded;
+	char	*expanded;
 
 	expanded = NULL;
-	(*iterator) = (*iterator)->next;
 	env_var = vars;
 	while (env_var)
 	{
-		if (ft_strncmp((*iterator)->word, env_var->key,
-				ft_strlen((*iterator)->word)) == 0)
+		if (ft_strncmp(iterator->word, env_var->key,
+			ft_strlen(iterator->word)) == 0)
 		{
-			expanded = env_var->value;
+			expanded = ft_strdup(env_var->value);
 			break ;
 		}
 		env_var = env_var->next;
@@ -33,7 +32,7 @@ static char	*find_matching_var(t_node **iterator, t_env *vars)
 	return (expanded);
 }
 
-void	handle_expands(t_node **tokens, t_env *vars)
+void	get_expands(t_node **tokens, t_env *vars)
 {
 	t_node	*iterator;
 	char	*to_print;
@@ -43,8 +42,15 @@ void	handle_expands(t_node **tokens, t_env *vars)
 	{
 		if (iterator->type == DOLLAR)
 		{
-			to_print = find_matching_var(&iterator, vars);
-			printf("from $USER to [%s]\n", to_print);
+			iterator = iterator->next;
+			to_print = find_matching_var(iterator, vars);
+			if (to_print)
+			{
+				free(iterator->word);
+				iterator->word = ft_strdup(to_print);
+				delete_specific_node(tokens, DOLLAR);
+				free(to_print);
+			}
 			return ;
 		}
 		iterator = iterator->next;

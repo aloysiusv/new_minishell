@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 00:51:08 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:58:31 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,17 @@ static void	parsing(t_shell *sh)
 	get_lst_chars(sh->cmdline, &sh->chars);
 	get_lst_tokens(sh->chars, &sh->tokens);
 	syntax_errors(sh, sh->tokens);
-	// expansions(sh);
+	get_expands(&sh->tokens, sh->env_var);
+	// /* debug
+	t_node *iterator = sh->tokens;
+	// printf("iterator->word = [%s]\n", iterator->word);
+	while (iterator)
+	{
+		printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
+			iterator->word, iterator->in_squotes,
+				iterator->in_dquotes, iterator->type);
+		iterator = iterator->next;
+	}
 	// get_lst_cmds(sh);
 }
 
@@ -58,6 +68,7 @@ static void	mini_loop(t_shell *sh)
 		if (ft_strlen(sh->cmdline) > 0)
 		{
 			add_history(sh->cmdline);
+			printf("about to parse\n");
 			parsing(sh);
 			// execute(sh);
 			delete_lst(&sh->chars);

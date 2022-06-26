@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:02:23 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 22:36:29 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:16:59 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,9 @@ t_env		*create_lst_env(char **env)
 	while (env[i])
 	{
 		curr->next = init_var(env[i], curr, NEXT);
-		// if (!curr->next)
-		// 	return (delete_lst_var(&head), NULL);
 		i++;
-		curr = curr->next;
+		if (curr)
+			curr = curr->next;
 	}
 	return (head);
 }

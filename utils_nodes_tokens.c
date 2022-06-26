@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 00:56:18 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:36:32 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,29 @@ void	delete_node(t_node *node)
 		free(node);
 }
 
+void	delete_specific_node(t_node **head, int type)
+{
+	t_node	*iterator;
+
+	iterator = *head;
+	while (iterator)
+	{
+		if (iterator->type == type)
+		{
+			if (iterator->prev && iterator->next)
+			{
+				iterator->prev->next = iterator->next;
+				iterator->next->prev = iterator->prev;
+			}
+			else if (iterator->prev && !iterator->next)
+				iterator->prev->next = NULL;
+			delete_node(iterator);
+			return ;
+		}
+		iterator = iterator->next;
+	}
+}
+
 void	delete_lst(t_node **head)
 {
 	t_node	*tmp;
@@ -47,8 +70,6 @@ void	delete_lst(t_node **head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
-		if (tmp->word)
-			printf("In 'delete_lst': about to delete [%s]\n", tmp->word);
 		delete_node(tmp);
 		tmp = NULL;
 	}

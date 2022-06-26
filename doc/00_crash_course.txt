@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 18:35:19 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/25 10:28:08 by lrandria         ###   ########.fr        #
+#    Updated: 2022/06/26 03:49:54 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,16 @@ int main(int ac, char **av) {
 -> lrandria'lrandria' 
 */
 
+echo "$45jlj"
+5jlj
+➜  minishell git:(master) ✗ echo "$USER toto"
+lrandria toto
+➜  minishell git:(master) ✗ echo "$USER* toto"
+lrandria* toto
+➜  minishell git:(master) ✗ echo "$USER7 toto"
+ toto
+➜  minishell git:(master) ✗ echo "$USER7 toto"
+ toto
 CODE CASCADE
 
 Every main functions returns void and takes appropriate args.

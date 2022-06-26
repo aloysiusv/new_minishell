@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 19:09:23 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/26 02:08:46 by lrandria         ###   ########.fr        #
+#    Updated: 2022/06/26 02:44:17 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS		=	0_main.c \
 				parser/1_get_lst_chars.c parser/1_get_lst_chars2.c \
 				parser/2_get_lst_tokens.c \
 				parser/3_syntax_errors.c \
-				parser/4_expansions.c \
+				parser/4_get_expands.c \
 				env/create_lst_env.c \
 				signals.c \
 				utils_nodes_tokens.c utils_nodes_var.c \

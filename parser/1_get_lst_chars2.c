@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 08:04:06 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/25 23:05:24 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/26 03:39:24 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,15 @@ static char	*trim_spaces(char const *str)
 static int	check_if_only_blanks(char const *str)
 {
 	size_t	i;
-	size_t	count;
 
 	i = 0;
 	while (str[i])
 	{
-		count = 0;
-		if (ft_isset(str[i], WHITE_SPACES) == 1)
-			count++;
+		if (ft_isset(str[i], WHITE_SPACES) == 0)
+			return (1);
 		i++;
 	}
-	if (count == ft_strlen(str))
-		return (0);
-	return (count);
+	return (0);
 }
 
 t_node *chars_to_lst(char *line, t_node **head)
@@ -95,6 +91,7 @@ t_node *chars_to_lst(char *line, t_node **head)
 	size_t	i;
 	t_node	*curr;
 	char	*str;
+
 
 	if (!line || !*line)
 		return (NULL);
