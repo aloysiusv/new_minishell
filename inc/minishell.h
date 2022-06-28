@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 02:42:57 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:54:10 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,41 @@
 # define FIRST		0
 # define NEXT		1
 
-# define WHITE_SPACES "     \x20\x08\x09\x0a\x0b\x0c\x0d"
+# define WHITE_SPACES " 	\x20\x08\x09\x0a\x0b\x0c\x0d"
 
 extern int	g_exit_code;
 
-/* create_env.c */
+/*=================================PARSING=================================== */
+
+int			get_lst_chars(char *cmdline, t_node **chars);
+t_node		*chars_to_lst(char *line, t_node **head);
+void		get_lst_tokens(t_node *chars, t_node **tokens);
+void		get_expands(t_node **tokens, t_env *vars);
+void		get_final_lst(t_node **tokens);
+int			syntax_errors(t_node *tokens);
+
+/*=================================ENV======================================== */
+	
 t_env		*create_lst_env(char **env);
+char		**get_envp(char **env);
+
+/*=================================EXEC======================================= */
+
+void	exec_builtin(t_node *tokens, t_env *env);
+
+/*=================================BUILT-INS================================== */
+
+void	ft_echo(t_node *tokens);
+
+/*=================================NODES====================================== */
+
+/* utils_nodes.c */
+size_t		ft_lstsize_2(t_node *head);
+void		delete_node(t_node *node);
+void		delete_specific_node(t_node **head, int type);
+void		delete_lst(t_node **head);
+t_node		*create_node(char my_char, char *my_word, int my_type);
+t_node		*add_bottom_node(t_node *current_last, char value, char *word, int type);
 /* utils_nodes_var.c */
 void		delete_node_var(t_env *node);
 void		delete_specific_node_var(t_env **head, char *key);
@@ -48,35 +77,24 @@ t_env		*create_node_var(char **keyvalue);
 t_env		*add_bottom_node_var(char **keyvalue, t_env *current_last);
 t_env		*add_top_node_var(char **keyvalue, t_env *current_top);
 
-/* 1_get_lst_chars */
-void	get_lst_chars(char *cmdline, t_node **src);
-/* 1_get_lst_chars2.c */
-t_node *chars_to_lst(char *line, t_node **head);
-/* 2_get_lst_tokens.c */
-void	get_lst_tokens(t_node *src, t_node **dest);
-/* utils_nodes.c */
-size_t	ft_lstsize_2(t_node *head);
-void	delete_node(t_node *node);
-void	delete_specific_node(t_node **head, int type);
-void	delete_lst(t_node **head);
-t_node	*create_node(char my_char, char *my_word, int my_type);
-t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type);
+/*=================================UTILS====================================== */
 
-/* utils_signals.c */
-void	handle_signals(int sig);
-
-/* Mixed functions */
-void	syntax_errors(t_shell *sh, t_node *tokens);
-void	get_expands(t_node **tokens, t_env *vars);
-
+/* utils.c */
+size_t	get_tab_size(char **tab);
+char	**lst_to_tab(t_node *lst);
 /* utils_errors.c */
 void	oops_crash(t_shell *shell, char *error_message, int exit_code);
+int		print_error(char *error_message, int exit_code);
+/* utils_free.c */
+void	free_tab(char **tab);
+void	free_prev(char **tab, size_t nb_words);
+void	free_shell(t_shell *sh);
+
+/*=================================MISC======================================= */
 
 /* signals.c */
 void	handle_signals(int sig);
-
-/* utils_free.c */
-void	free_tab(char **tab);
-void	free_shell(t_shell *sh);
+/* Mixed functions */
+void	get_expands(t_node **tokens, t_env *vars);
 
 #endif

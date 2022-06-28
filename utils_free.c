@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:34:47 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 02:21:14 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:36:21 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ void	free_tab(char **tab)
 	i = 0;
 	while (tab[i])
 		free(tab[i++]);
+	free(tab);
+}
+
+void    free_prev(char **tab, size_t nb_words)
+{
+    size_t	i;
+
+	i = 0;
+    if (!tab)
+    {
+        return ;
+    }
+	while (i < nb_words)
+		free(tab[i]);
 	free(tab);
 }
 

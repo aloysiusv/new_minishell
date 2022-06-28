@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 08:04:06 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 03:39:24 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 14:45:20 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	get_next_char(char *str, size_t *i, t_node **curr)
 	else if (str[*i] == '=')
 		(*curr)->next = add_bottom_node(*curr, '=', NULL, EQUAL);
 	else if (ft_isset(str[*i], WHITE_SPACES) == 1)
-		(*curr)->next = add_bottom_node(*curr, ' ', NULL, BLANK);
+		(*curr)->next = add_bottom_node(*curr, ' ', NULL, USELESS);
 	else
 		(*curr)->next = add_bottom_node(*curr, str[*i], NULL, LITERAL);
 }
@@ -72,21 +72,7 @@ static char	*trim_spaces(char const *str)
 	return (new_s);
 }
 
-static int	check_if_only_blanks(char const *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_isset(str[i], WHITE_SPACES) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-t_node *chars_to_lst(char *line, t_node **head)
+t_node *chars_to_lst(char *line, t_node **chars)
 {
 	size_t	i;
 	t_node	*curr;
@@ -95,11 +81,9 @@ t_node *chars_to_lst(char *line, t_node **head)
 
 	if (!line || !*line)
 		return (NULL);
-	if (check_if_only_blanks(line) == 0)
-		return (NULL);
 	str = trim_spaces(line);
-	*head = get_first_char(str);
-	curr = *head;
+	*chars = get_first_char(str);
+	curr = *chars;
 	i = 1;
 	while (str[i])
 	{
@@ -108,5 +92,5 @@ t_node *chars_to_lst(char *line, t_node **head)
 		i++;
 	}
 	free(str);
-	return (*head);
+	return (*chars);
 }

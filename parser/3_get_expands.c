@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4_get_expands.c                                    :+:      :+:    :+:   */
+/*   3_get_expands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 03:31:42 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:13:48 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*find_matching_var(t_node *iterator, t_env *vars)
 
 	expanded = NULL;
 	env_var = vars;
-	while (env_var)
+	while (iterator && env_var)
 	{
 		if (ft_strncmp(iterator->word, env_var->key,
 			ft_strlen(iterator->word)) == 0)
@@ -27,7 +27,8 @@ static char	*find_matching_var(t_node *iterator, t_env *vars)
 			expanded = ft_strdup(env_var->value);
 			break ;
 		}
-		env_var = env_var->next;
+		if (env_var->next)
+			env_var = env_var->next;
 	}
 	return (expanded);
 }
@@ -38,11 +39,16 @@ void	get_expands(t_node **tokens, t_env *vars)
 	char	*to_print;
 
 	iterator = *tokens;
+	if (!iterator->next)
+		return ;
 	while (iterator)
 	{
 		if (iterator->type == DOLLAR)
 		{
 			iterator = iterator->next;
+			// printf("[%s]\n", iterator->word);
+			if (iterator->next->type == BLANK)
+				break ;
 			to_print = find_matching_var(iterator, vars);
 			if (to_print)
 			{
@@ -51,9 +57,9 @@ void	get_expands(t_node **tokens, t_env *vars)
 				delete_specific_node(tokens, DOLLAR);
 				free(to_print);
 			}
-			return ;
 		}
-		iterator = iterator->next;
+		if (iterator->next)
+			iterator = iterator->next;
 	}
 }
 

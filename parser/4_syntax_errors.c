@@ -1,52 +1,81 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3_syntax_errors.c                                  :+:      :+:    :+:   */
+/*   4_syntax_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 03:08:42 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 13:00:42 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static int		check_redirs_args(t_node *head)
-// {
-// 	t_node	*iterator;
+static int		check_redirs_args(t_node *head)
+{
+	t_node	*iterator;
 
-// 	iterator = head;
-// 	while (iterator)
-// 	{
-// 		if (iterator->type == RD_INPUT || iterator->type == RD_OUTPUT
-// 			|| iterator->type == APPEND || iterator->type == HRDOC)
-// 			if (!iterator->next || iterator->next->type != LITERAL)
-// 				return (printf("error: invalid token `%s'\n", iterator->next->word), -1);
-// 		iterator = iterator->next;
-// 	}
-// 	return (0);
-// }
+	iterator = head;
+	while (iterator)
+	{
+		if (iterator->type == RD_INPUT || iterator->type == RD_OUTPUT
+			|| iterator->type == APPEND || iterator->type == HRDOC)
+		{
+			if (!iterator->next || (iterator->next->type != LITERAL
+				&& iterator->next->type != BLANK))
+				return (-1);
+			else if (iterator->next && iterator->type == BLANK)
+			{
+				iterator = iterator->next;
+				if (iterator->type != LITERAL)
+					return (-1);
+			}
+		}
+		iterator = iterator->next;
+	}
+	return (0);
+}
 
-// static int		assign_word_types(t_node **head)
-// {
-// 	t_node	*iterator;
+static int		assign_word_types(t_node *head)
+{
+	t_node	*iterator;
 
-// 	iterator = *head;
-// 	while (iterator)
-// 	{
-// 		if (iterator->type == LITERAL)
-// 		{
-// 			if (iterator->prev && (iterator->prev->type == RD_INPUT
-// 				|| iterator->prev->type == RD_OUTPUT
-// 				|| iterator->prev->type == APPEND))
-// 				iterator->type = FILENAME;
-// 			else if (iterator->prev && iterator->prev->type == HRDOC)
-// 				iterator->type = LIMITER;
-// 		}
-// 	}
-// 	return (0);
-// }
+	iterator = head;
+	while (iterator)
+	{
+		if (iterator->type == RD_INPUT)
+		{
+			iterator = iterator->next;
+			while (iterator->type == BLANK)
+				iterator = iterator->next;
+			iterator->type = INFILE;
+		}
+		else if (iterator->type == RD_OUTPUT)
+		{
+			iterator = iterator->next;
+			while (iterator->type == BLANK)
+				iterator = iterator->next;
+			iterator->type = OUTFILE;
+		}
+		else if (iterator->type == APPEND)
+		{
+			iterator = iterator->next;
+			while (iterator->type == BLANK)
+				iterator = iterator->next;
+			iterator->type = OUTFILE_A;
+		}
+		else if (iterator->type == HRDOC)
+		{
+			iterator = iterator->next;
+			while (iterator->type == BLANK)
+				iterator = iterator->next;
+			iterator->type = LIMITER;
+		}
+		iterator = iterator->next;
+	}
+	return (0);
+}
 
 static int		is_it_valid(char *operator, char ope)
 {
@@ -74,7 +103,6 @@ static int     check_valid_operators(t_node *head)
   		{RD_INPUT, '<'},
 		{RD_OUTPUT, '>'},
 		{PIPE, '|'},
-		{DOLLAR, '$'},
 		{EQUAL, '='}
 	};
 
@@ -82,11 +110,10 @@ static int     check_valid_operators(t_node *head)
     while (iterator)
     {
 		i = -1;
-		while (++i < 5)
+		while (++i < 4)
 			if (iterator->type == list[i].type)
 				if (is_it_valid(iterator->word, list[i].ope) == -1)
 					return (-1);
-		/*printf("minishell: error: syntax error near operator `%c'\n", list[i].ope),*/
         iterator = iterator->next;
     }
 	return (0);
@@ -106,14 +133,28 @@ static int	check_closing_quotes(t_node *head)
 	return (0);
 }
 
-void	syntax_errors(t_shell *sh, t_node *tokens)
+int	syntax_errors(t_node *tokens)
 {
 	if (!tokens)
-		return ;
+		return (-1);
 	if (check_closing_quotes(tokens) == -1)
-		oops_crash(sh, "unclosed quotes\n", 2);
+	{
+		print_error("unclosed quotes\n", 2);
+		return (-1);
+	}
 	if (check_valid_operators(tokens) == -1)
-		oops_crash(sh, "invalid operator\n", 2);
+	{
+		print_error("invalid token\n", 2);
+		return (-1);
+	}
+	if (check_redirs_args(tokens) == -1)
+	{
+		print_error("invalid filename\n", 2);
+		return (-1);
+	}
+	assign_word_types(tokens);
+	return (0);
+
 }
 
 // int main(void)

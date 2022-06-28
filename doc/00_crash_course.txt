@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 18:35:19 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/26 03:49:54 by lrandria         ###   ########.fr        #
+#    Updated: 2022/06/27 13:22:55 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,3 +88,14 @@ getline_loop => split_cmdline => tokenise
                                     => do_expansions => get_t_cmd => exec
 
 void    readline_loop();
+
+EXPAND CLEAR
+- A partir que commence un $ : il va considere comme variable tous les char = lettres(maj et min) + chiffres + underscore
+    MAIS    si chiffre juste apres $ = la reconnaissance s'arrete
+    MAIS    dont forget l'effet quotes
+    MAIS    dont forget les $$$ a la suite
+    echo $$$$$ -> $$$$$
+    echo $$$USER -> $$woissila
+    echo $$$USER$$$ -> $$woissila$$$ 
+
+    echo $USER

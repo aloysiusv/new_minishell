@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 02:58:31 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:31:28 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int g_exit_code = 0;
 
 static void	parsing(t_shell *sh)
 {
-	get_lst_chars(sh->cmdline, &sh->chars);
+	if (get_lst_chars(sh->cmdline, &sh->chars) == -1)
+		return ;
 	get_lst_tokens(sh->chars, &sh->tokens);
-	syntax_errors(sh, sh->tokens);
 	get_expands(&sh->tokens, sh->env_var);
-	// /* debug
+	if (syntax_errors(sh->tokens) == -1)
+		return ;
 	t_node *iterator = sh->tokens;
-	// printf("iterator->word = [%s]\n", iterator->word);
 	while (iterator)
 	{
 		printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
@@ -30,7 +30,6 @@ static void	parsing(t_shell *sh)
 				iterator->in_dquotes, iterator->type);
 		iterator = iterator->next;
 	}
-	// get_lst_cmds(sh);
 }
 
 static int	only_blanks(char *cmdline)
@@ -68,9 +67,10 @@ static void	mini_loop(t_shell *sh)
 		if (ft_strlen(sh->cmdline) > 0)
 		{
 			add_history(sh->cmdline);
-			printf("about to parse\n");
 			parsing(sh);
-			// execute(sh);
+			exec_builtin(sh->tokens, sh->env_var);
+			// exec_simple_cmd(sh->tokens);
+			// exec_multi_cmds(sh->tokens);
 			delete_lst(&sh->chars);
 			delete_lst(&sh->tokens);
 		}
@@ -83,12 +83,14 @@ static void	mini_loop(t_shell *sh)
 int		main(int ac, char *av[], char *envp[])
 {
 	t_shell	*sh;
+
 	(void)av;
 	if (ac > 1)
 		oops_crash(NULL, "Too many arguments.\n", 127);
 	sh = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	if (!sh)
 		return (EXIT_FAILURE);
+	// sh->envp = get_envp(envp);
 	sh->env_var = create_lst_env(envp);
 	mini_loop(sh);
 	free_shell(sh);
