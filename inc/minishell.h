@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 15:54:10 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 23:52:28 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,26 @@
 # define FIRST		0
 # define NEXT		1
 
-# define WHITE_SPACES " 	\x20\x08\x09\x0a\x0b\x0c\x0d"
+/* Modes to specify when deleting nodes */
+# define HEAD		0
+# define TAIL		1
+
+# define ALL_SPACES " 	\x20\x08\x09\x0a\x0b\x0c\x0d"
 
 extern int	g_exit_code;
 
 /*=================================PARSING=================================== */
 
-int			get_lst_chars(char *cmdline, t_node **chars);
-t_node		*chars_to_lst(char *line, t_node **head);
+void		get_lst_chars(char *cmdline, t_node **chars);
 void		get_lst_tokens(t_node *chars, t_node **tokens);
-void		get_expands(t_node **tokens, t_env *vars);
+void	    get_lst_expanded(t_node **expanded, t_node **tokens, t_env *vars);
 void		get_final_lst(t_node **tokens);
+void		set_chars_subflags(t_node **chars);
+void		set_expansion_flags(t_node **head);
+void    	set_tokens_subflags(t_node **tokens);
 int			syntax_errors(t_node *tokens);
+char		*create_word(t_node *current, int type);
+void		delete_useless_tokens(t_node **tokens);
 
 /*=================================ENV======================================== */
 	
@@ -64,17 +72,18 @@ void	ft_echo(t_node *tokens);
 
 /* utils_nodes.c */
 size_t		ft_lstsize_2(t_node *head);
+t_node		*get_lst_tail(t_node *head);
 void		delete_node(t_node *node);
-void		delete_specific_node(t_node **head, int type);
+void		delete_specific_node(t_node **head, t_node *to_delete);
 void		delete_lst(t_node **head);
 t_node		*create_node(char my_char, char *my_word, int my_type);
-t_node		*add_bottom_node(t_node *current_last, char value, char *word, int type);
+t_node		*add_bottom_node(t_node *last, char value, char *word, int type);
 /* utils_nodes_var.c */
 void		delete_node_var(t_env *node);
 void		delete_specific_node_var(t_env **head, char *key);
 void		delete_lst_var(t_env **head);
 t_env		*create_node_var(char **keyvalue);
-t_env		*add_bottom_node_var(char **keyvalue, t_env *current_last);
+t_env		*add_bottom_node_var(char **keyvalue, t_env *last);
 t_env		*add_top_node_var(char **keyvalue, t_env *current_top);
 
 /*=================================UTILS====================================== */

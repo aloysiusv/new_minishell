@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 15:31:28 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 23:35:14 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ int g_exit_code = 0;
 
 static void	parsing(t_shell *sh)
 {
-	if (get_lst_chars(sh->cmdline, &sh->chars) == -1)
-		return ;
+	get_lst_chars(sh->cmdline, &sh->chars);
 	get_lst_tokens(sh->chars, &sh->tokens);
-	get_expands(&sh->tokens, sh->env_var);
-	if (syntax_errors(sh->tokens) == -1)
-		return ;
-	t_node *iterator = sh->tokens;
+	get_lst_expanded(&sh->expanded, &sh->tokens, sh->env_var);
+	t_node *iterator = sh->expanded;
 	while (iterator)
 	{
 		printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
@@ -30,6 +27,8 @@ static void	parsing(t_shell *sh)
 				iterator->in_dquotes, iterator->type);
 		iterator = iterator->next;
 	}
+	// if (syntax_errors(sh->tokens) == -1)
+	// 	return ;
 }
 
 static int	only_blanks(char *cmdline)
@@ -43,7 +42,7 @@ static int	only_blanks(char *cmdline)
 		return (1);
 	while (cmdline && cmdline[i])
 	{
-		if (ft_isset(cmdline[i], WHITE_SPACES) == 1)
+		if (ft_isset(cmdline[i], ALL_SPACES) == 1)
 			count++;
 		i++;
 	}
@@ -68,11 +67,12 @@ static void	mini_loop(t_shell *sh)
 		{
 			add_history(sh->cmdline);
 			parsing(sh);
-			exec_builtin(sh->tokens, sh->env_var);
+			// exec_builtin(sh->tokens, sh->env_var);
 			// exec_simple_cmd(sh->tokens);
 			// exec_multi_cmds(sh->tokens);
 			delete_lst(&sh->chars);
 			delete_lst(&sh->tokens);
+			delete_lst(&sh->expanded);
 		}
 		if (sh->cmdline[0] == 'q')
 			break ;

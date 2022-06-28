@@ -6,11 +6,21 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/27 12:55:54 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 21:14:06 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_node	*get_lst_tail(t_node *head)
+{
+	t_node	*tail;
+
+	tail = head;
+	while (tail->next)
+		tail = tail->next;
+	return (tail);
+}
 
 size_t	ft_lstsize_2(t_node *head)
 {
@@ -27,37 +37,6 @@ size_t	ft_lstsize_2(t_node *head)
 		size++;
 	}
 	return (size);
-}
-
-void	delete_node(t_node *node)
-{
-	if (node->word)
-		free(node->word);
-	if (node)
-		free(node);
-}
-
-void	delete_specific_node(t_node **head, int type)
-{
-	t_node	*iterator;
-
-	iterator = *head;
-	while (iterator)
-	{
-		if (iterator->type == type)
-		{
-			if (iterator->prev && iterator->next)
-			{
-				iterator->prev->next = iterator->next;
-				iterator->next->prev = iterator->prev;
-			}
-			else if (iterator->prev && !iterator->next)
-				iterator->prev->next = NULL;
-			delete_node(iterator);
-			return ;
-		}
-		iterator = iterator->next;
-	}
 }
 
 void	delete_lst(t_node **head)

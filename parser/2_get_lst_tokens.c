@@ -6,52 +6,13 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 14:37:09 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 23:26:38 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	get_word_size(t_node *current, int type)
-{
-	size_t	size;
-	t_node	*iterator;
-
-	size = 0;
-	iterator = current;
-	while (iterator && iterator->type == type)
-	{
-		iterator = iterator->next;
-		size++;
-	}
-	return (size);
-}
-
-static char		*create_word(t_node *current, int type)
-{
-	size_t	i;
-	size_t	size;
-	char	*word;
-	t_node	*iterator;
-
-	size = get_word_size(current, type);
-	word = (char *)malloc(sizeof(char) * (size + 1));
-	if (!word)
-		return (NULL);
-	iterator = current;
-	i = 0;
-	while (i < size)
-	{
-		word[i] = iterator->charac;
-		if (iterator)
-			iterator = iterator->next;
-		i++;
-	}
-	word[i] = '\0';
-	return (word);
-}
-
-static t_node	*init_word(t_node *src, t_node *curr, int mode)
+t_node	*init_word(t_node *src, t_node *curr, int mode)
 {
 	char	*word;
 
@@ -86,40 +47,25 @@ static void		set_qflags_and_skip_chars(t_node **src, t_node **head)
 	}
 }
 
-t_node			*stock_words_to_lst(t_node *src, t_node **head)
+void	get_lst_tokens(t_node *chars, t_node **tokens)
 {
 	t_node	*curr;
 
-	if (!src)
-		return (NULL);
-	*head = init_word(src, NULL, FIRST);
-	set_qflags_and_skip_chars(&src, head);
-	src = src->next;
-	curr = *head;
-	while (src)
-	{
-		curr->next = init_word(src, curr, NEXT);
-		set_qflags_and_skip_chars(&src, &curr->next);
-		src = src->next;
-		curr = curr->next;
-	}
-	return (*head);
-}
-
-void		get_lst_tokens(t_node *chars, t_node **tokens)
-{
 	if (!chars)
 		return ;
-	*tokens = stock_words_to_lst(chars, tokens);
-
-	// t_node *iterator = *dest;
-	// while (iterator)
-	// {
-	// 	printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
-	// 		iterator->word, iterator->in_squotes,
-	// 			iterator->in_dquotes, iterator->type);
-	// 	iterator = iterator->next;
-	// }
+	*tokens = init_word(chars, NULL, FIRST);
+	set_qflags_and_skip_chars(&chars, tokens);
+	chars = chars->next;
+	curr = *tokens;
+	while (chars)
+	{
+		curr->next = init_word(chars, curr, NEXT);
+		if (ft_lstsize_2(*tokens) == 1)
+			return ;
+		set_qflags_and_skip_chars(&chars, &curr->next);
+		chars = chars->next;
+		curr = curr->next;
+	}
 }
 
 // int main(void)

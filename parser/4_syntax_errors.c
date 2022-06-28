@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 13:00:42 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:44:40 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,45 +37,6 @@ static int		check_redirs_args(t_node *head)
 	return (0);
 }
 
-static int		assign_word_types(t_node *head)
-{
-	t_node	*iterator;
-
-	iterator = head;
-	while (iterator)
-	{
-		if (iterator->type == RD_INPUT)
-		{
-			iterator = iterator->next;
-			while (iterator->type == BLANK)
-				iterator = iterator->next;
-			iterator->type = INFILE;
-		}
-		else if (iterator->type == RD_OUTPUT)
-		{
-			iterator = iterator->next;
-			while (iterator->type == BLANK)
-				iterator = iterator->next;
-			iterator->type = OUTFILE;
-		}
-		else if (iterator->type == APPEND)
-		{
-			iterator = iterator->next;
-			while (iterator->type == BLANK)
-				iterator = iterator->next;
-			iterator->type = OUTFILE_A;
-		}
-		else if (iterator->type == HRDOC)
-		{
-			iterator = iterator->next;
-			while (iterator->type == BLANK)
-				iterator = iterator->next;
-			iterator->type = LIMITER;
-		}
-		iterator = iterator->next;
-	}
-	return (0);
-}
 
 static int		is_it_valid(char *operator, char ope)
 {

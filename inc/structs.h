@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 14:50:22 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/28 22:16:22 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@
 enum e_type
 {
 	USELESS,
+	BLANK,
 	LITERAL,
+	CMD,
+	ARGS,
 	INFILE,
 	LIMITER,
 	OUTFILE,
 	OUTFILE_A,
-	BLANK,
 	SQUOTE,
 	DQUOTE,
 	RD_INPUT,
@@ -33,6 +35,9 @@ enum e_type
 	HRDOC,
 	PIPE,
 	DOLLAR,
+	DOLLAR_HDOC,
+	DOLLAR_TRAIL,
+	DOLLAR_SPECIAL,
 	EQUAL,
 };
 
@@ -66,35 +71,36 @@ typedef struct		s_env
 
 							/* EXECUTION */
 
-typedef struct 		s_path
-{
-	char			**envp;
-	char			*find_path;
-	char			**option_cmd;
-	char			**my_path;
-}					t_path;
-
-typedef struct 		s_exec
-{
-	size_t			i;
-	size_t			j;
-	int				count;
-	int				**fd;
-	int				fdin;
-	int				fdout;
-	t_node			*tokens;
-}					t_exec;
-
-// typedef struct 			s_command
+// typedef struct 		s_path
 // {
-// 	char				**command;
-// 	char				*full_line;
-// 	char				*exec_path;
-// 	char				**redirs;
-// 	int					fdin;
-// 	int					fdout;
-// 	struct s_command	*next;
-// }						t_command;
+// 	char			**envp;
+// 	char			*find_path;
+// 	char			**option_cmd;
+// 	char			**my_path;
+// }					t_path;
+
+// typedef struct 		s_exec
+// {
+// 	size_t			i;
+// 	size_t			j;
+// 	int				count;
+// 	int				**fd;
+// 	int				fdin;
+// 	int				fdout;
+// 	t_node			*tokens;
+// }					t_exec;
+
+typedef struct 			s_command
+{
+	char				**command;
+	char				*full_line;
+	char				*exec_path;
+	char				**outfiles;
+	int					fdin;
+	int					fdout;
+	// t_bool				is_piped;
+	struct s_command	*next;
+}						t_command;
 
 							/* SHELL DATA */
 
@@ -107,7 +113,8 @@ typedef struct		s_shell
 	t_env			*env_var;
 	t_node			*chars;
 	t_node			*tokens;
-	t_exec			*cmds;
+	t_node			*expanded;
+	// t_exec			*cmds;
 	size_t			nb_cmds;
 	size_t			nb_redir;
 }					t_shell;
