@@ -1,58 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_nodes_tokens.c                               :+:      :+:    :+:   */
+/*   utils_lst_nodes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 21:14:06 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 21:01:03 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_node	*get_lst_tail(t_node *head)
-{
-	t_node	*tail;
-
-	tail = head;
-	while (tail->next)
-		tail = tail->next;
-	return (tail);
-}
-
-size_t	ft_lstsize_2(t_node *head)
-{
-	size_t	size;
-    t_node  *iterator;
-
-	if (!head)
-		return (0);
-    iterator = head;
-	size = 0;
-	while (iterator)
-	{
-		iterator = iterator->next;
-		size++;
-	}
-	return (size);
-}
-
-void	delete_lst(t_node **head)
-{
-	t_node	*tmp;
-
-	if (!(*head))
-		return ;
-	while (*head)
-	{
-		tmp = *head;
-		*head = (*head)->next;
-		delete_node(tmp);
-		tmp = NULL;
-	}
-}
 
 t_node	*create_node(char my_char, char *my_word, int my_type)
 {

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 17:17:20 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 22:57:49 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@
 # include "../libft/libft.h"
 # include "structs.h"
 
-# define PROMPT "\x1b[1;35m~mini$hell~>\x1b[m "
+// # define PROMPT "\x1b[1;35m~mini$hell~>\x1b[m "
+# define PROMPT "~mini$hell~> "
+
 
 /* Modes to specify when creating nodes */
 # define FIRST		0
@@ -46,8 +48,9 @@ void	    get_lst_expanded(t_node **tokens, t_env *vars);
 void		set_chars_subflags(t_node **chars);
 void		set_expansion_flags(t_node **head);
 void    	set_tokens_subflags(t_node **tokens);
+void		get_lst_cmds(t_cmd **cmds, t_node **tokens, t_shell *sh);
 int			syntax_errors(t_node *tokens);
-char		*create_word(t_node *current, int type);
+void		delete_cmds_tab(t_cmd *cmds, size_t nb_cmds);
 
 /*=================================ENV======================================== */
 	
@@ -72,6 +75,7 @@ void		delete_specific_node(t_node **head, t_node *to_delete);
 void		delete_lst(t_node **head);
 t_node		*create_node(char my_char, char *my_word, int my_type);
 t_node		*add_bottom_node(t_node *last, char value, char *word, int type);
+void		push(t_node **pushing, t_node **receiving);
 /* utils_nodes_var.c */
 void		delete_node_var(t_env *node);
 void		delete_specific_node_var(t_env **head, char *key);

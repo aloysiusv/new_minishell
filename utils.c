@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 11:39:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 02:49:24 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:22:09 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,33 @@ char	**lst_to_tab(t_node *lst)
 	}
 	tab[i] = NULL;
 	return (tab);
+}
+
+t_node	*get_lst_tail(t_node *head)
+{
+	t_node	*tail;
+
+	tail = head;
+	while (tail->next)
+		tail = tail->next;
+	return (tail);
+}
+
+size_t	ft_lstsize_2(t_node *head)
+{
+	size_t	size;
+    t_node  *iterator;
+
+	if (!head)
+		return (0);
+    iterator = head;
+	size = 0;
+	while (iterator)
+	{
+		iterator = iterator->next;
+		size++;
+	}
+	return (size);
 }
 
 int	is_valid_input(char const *str)

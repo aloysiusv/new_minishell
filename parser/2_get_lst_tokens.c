@@ -6,11 +6,50 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 11:56:09 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 22:35:19 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static size_t	get_word_size(t_node *current, int type)
+{
+	size_t	size;
+	t_node	*iterator;
+
+	size = 0;
+	iterator = current;
+	while (iterator && iterator->type == type)
+	{
+		iterator = iterator->next;
+		size++;
+	}
+	return (size);
+}
+
+static char		*create_word(t_node *current, int type)
+{
+	size_t	i;
+	size_t	size;
+	char	*word;
+	t_node	*iterator;
+
+	size = get_word_size(current, type);
+	word = (char *)malloc(sizeof(char) * (size + 1));
+	if (!word)
+		return (NULL);
+	iterator = current;
+	i = 0;
+	while (i < size)
+	{
+		word[i] = iterator->charac;
+		if (iterator)
+			iterator = iterator->next;
+		i++;
+	}
+	word[i] = '\0';
+	return (word);
+}
 
 t_node	*init_word(t_node *src, t_node *curr, int mode)
 {
@@ -66,4 +105,5 @@ void	get_lst_tokens(t_node *chars, t_node **tokens)
 		chars = chars->next;
 		curr = curr->next;
 	}
+	// delete_lst(&chars)
 }

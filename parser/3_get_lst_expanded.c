@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 18:01:34 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:09:21 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ void		get_lst_expanded(t_node **tokens, t_env *vars)
 		iterator = iterator->next;
 	}
 	delete_useless_tokens(tokens, USELESS);
+	set_tokens_subflags(tokens);
 }

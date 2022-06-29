@@ -1,54 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra_tools.c                                      :+:      :+:    :+:   */
+/*   utils_lst_delete.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/28 23:45:23 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 17:59:57 by lrandria         ###   ########.fr       */
+/*   Created: 2022/06/28 21:00:01 by lrandria          #+#    #+#             */
+/*   Updated: 2022/06/29 20:51:39 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	get_word_size(t_node *current, int type)
+void	delete_node(t_node *node)
 {
-	size_t	size;
-	t_node	*iterator;
-
-	size = 0;
-	iterator = current;
-	while (iterator && iterator->type == type)
+	if (node->word)
 	{
-		iterator = iterator->next;
-		size++;
+		// printf("Deleting word [%s]\n", node->word);
+		free(node->word);
+		node->word = NULL;
 	}
-	return (size);
+	if (node)
+	{
+		free(node);
+		node = NULL;
+	}
 }
 
-char			*create_word(t_node *current, int type)
+void	delete_lst(t_node **head)
 {
-	size_t	i;
-	size_t	size;
-	char	*word;
-	t_node	*iterator;
+	t_node	*tmp;
 
-	size = get_word_size(current, type);
-	word = (char *)malloc(sizeof(char) * (size + 1));
-	if (!word)
-		return (NULL);
-	iterator = current;
-	i = 0;
-	while (i < size)
+	if (!(*head))
+		return ;
+	while (*head)
 	{
-		word[i] = iterator->charac;
-		if (iterator)
-			iterator = iterator->next;
-		i++;
+		tmp = *head;
+		*head = (*head)->next;
+		delete_node(tmp);
+		tmp = NULL;
 	}
-	word[i] = '\0';
-	return (word);
 }
 
 void	delete_useless_tokens(t_node **tokens, int type)

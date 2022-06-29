@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_nodes_var.c                                  :+:      :+:    :+:   */
+/*   utils_lst_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/27 12:53:21 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:21:07 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,3 @@ t_env	*add_bottom_node_var(char **keyvalue, t_env *current_last)
 	}
 	return (bottom);
 }
-
-// t_env	*add_top_node_var(char **keyvalue, t_env *current_top)
-// {
-// 	t_env	*top;
-
-// 	top = create_node_var(keyvalue);
-// 	if (!top)
-// 		return (NULL);
-// 	if (current_top)
-// 	{
-// 		current_top->prev = top;
-// 		top->next = current_top;
-// 		top->prev = NULL;
-// 	}
-// 	return (top);
-// }

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 18:03:26 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 22:57:49 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ static void	parsing(t_shell *sh)
 	get_lst_chars(sh->cmdline, &sh->chars);
 	get_lst_tokens(sh->chars, &sh->tokens);
 	get_lst_expanded(&sh->tokens, sh->env_var);
-	t_node *iterator = sh->tokens;
-	while (iterator)
-	{
-		printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
-			iterator->word, iterator->in_squotes,
-				iterator->in_dquotes, iterator->type);
-		iterator = iterator->next;
-	}
+	get_lst_cmds(&sh->cmds, &sh->tokens, sh);
+	// t_node *iterator = sh->tokens;
+	// while (iterator)
+	// {
+	// 	printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
+	// 		iterator->word, iterator->in_squotes,
+	// 			iterator->in_dquotes, iterator->type);
+	// 	iterator = iterator->next;
+	// }
 	// if (syntax_errors(sh->tokens) == -1)
 	// 	return ;
 }
@@ -72,6 +73,7 @@ static void	mini_loop(t_shell *sh)
 			// exec_multi_cmds(sh->tokens);
 			delete_lst(&sh->chars);
 			delete_lst(&sh->tokens);
+			// delete_cmds_tab(sh->cmds);
 		}
 		if (sh->cmdline[0] == 'q')
 			break ;

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 12:40:16 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 22:50:26 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,16 @@ typedef struct		s_env
 
 typedef struct 			s_command
 {
-	char				**command;
-	char				*full_line;
+	t_node				*tokens;
+	size_t				index;
 	char				*exec_path;
+	char				**command;
 	char				**outfiles;
 	int					fdin;
 	int					fdout;
 	// t_bool				is_piped;
-	struct s_command	*next;
-}						t_command;
+	// struct s_command	*next;
+}						t_cmd;
 
 							/* SHELL DATA */
 
@@ -111,9 +112,9 @@ typedef struct		s_shell
 	t_env			*env_var;
 	t_node			*chars;
 	t_node			*tokens;
-	// t_exec			*cmds;
-	size_t			nb_cmds;
+	t_cmd			*cmds;
 	size_t			nb_redir;
+	size_t			nb_cmds;
 }					t_shell;
 
 							/* HRDOC */

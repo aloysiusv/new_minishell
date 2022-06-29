@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:34:47 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 12:45:21 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 22:57:49 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	free_shell(t_shell *sh)
 		delete_lst(&sh->chars);
 	if (sh->tokens)
 		delete_lst(&sh->tokens);
-	// if (sh->cmds)
-	// 	delete_lst_cmd(&sh->cmds);
+	if (sh->cmds)
+		delete_cmds_tab(sh->cmds, sh->nb_cmds);
 	free(sh);
 }
