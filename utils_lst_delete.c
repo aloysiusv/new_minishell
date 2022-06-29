@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:00:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 23:09:00 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 23:48:16 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	delete_node(t_node *node)
 {
 	if (node->word)
 	{
-		printf("Deleting word [%s]\n", node->word);
 		free(node->word);
 		node->word = NULL;
 	}
