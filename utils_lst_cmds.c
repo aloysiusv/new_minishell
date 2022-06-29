@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 20:50:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 22:58:55 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 23:28:48 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 static void	delete_cmd(t_cmd cmd)
 {
 	if (cmd.tokens)
+	{
+		printf("Deleting cmd[%zu] tokens\n", cmd.index);
 		delete_lst(&cmd.tokens);
+	}
 	if (cmd.exec_path)
 		free(cmd.exec_path);
 	if (cmd.command)
@@ -24,17 +27,20 @@ static void	delete_cmd(t_cmd cmd)
 		free_tab(cmd.outfiles);
 }
 
-void	delete_cmds_tab(t_cmd *cmds, size_t	nb_cmds)
+void	delete_cmds_tab(t_cmd **cmds)
 {
 	size_t	i;
+	size_t	nb;
 
-	if (!cmds)
+	if (!*cmds)
 		return ;
+	nb = (*cmds)->nb_cmds;
 	i = 0;
-	while (i < nb_cmds)
+	while (i < nb)
 	{
-		delete_cmd(cmds[i]);
+		delete_cmd((*cmds)[i]);
 		i++;
 	}
-	free(cmds);
+	free(*cmds);
+	*cmds = NULL;
 }

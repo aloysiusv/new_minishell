@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:45 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 22:54:19 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 23:13:48 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,23 @@ static  size_t  get_nb_cmds(t_node *tokens)
 	return (nb_cmds);
 }
 
-void	get_lst_cmds(t_cmd **cmds, t_node **tokens, t_shell *sh)
+void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
 {
 	t_node	*iterator;
+	size_t	nb_cmds;
 	size_t	i;
 
-    sh->nb_cmds = get_nb_cmds(*tokens);
-	*cmds = ft_calloc(sh->nb_cmds, sizeof(t_cmd) + 1);
+    nb_cmds = get_nb_cmds(*tokens);
+	printf("nb_cmds = [%zu]\n", nb_cmds);
+	*cmds = ft_calloc(nb_cmds, sizeof(t_cmd) + 1);
 	if (!*cmds)
 		return ;
 	i = 0;
 	iterator = *tokens;
-	while (i < sh->nb_cmds)
+	while (i < nb_cmds)
 	{
+		(*cmds)[i].index = i;
+		(*cmds)[i].nb_cmds = nb_cmds;
 		while (iterator && iterator->type != PIPE)
 		{
 			push_back(&(*cmds)[i].tokens, create_node(0, ft_strdup(iterator->word), iterator->type));

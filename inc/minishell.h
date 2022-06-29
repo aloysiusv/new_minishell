@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 22:57:49 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 23:27:17 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	    get_lst_expanded(t_node **tokens, t_env *vars);
 void		set_chars_subflags(t_node **chars);
 void		set_expansion_flags(t_node **head);
 void    	set_tokens_subflags(t_node **tokens);
-void		get_lst_cmds(t_cmd **cmds, t_node **tokens, t_shell *sh);
+void		get_lst_cmds(t_cmd **cmds, t_node **tokens);
 int			syntax_errors(t_node *tokens);
-void		delete_cmds_tab(t_cmd *cmds, size_t nb_cmds);
+void		delete_cmds_tab(t_cmd **cmds);
 
 /*=================================ENV======================================== */
 	

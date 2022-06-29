@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 22:50:26 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 23:12:15 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct 			s_command
 	char				**outfiles;
 	int					fdin;
 	int					fdout;
+	size_t				nb_cmds;
 	// t_bool				is_piped;
 	// struct s_command	*next;
 }						t_cmd;
@@ -114,7 +115,6 @@ typedef struct		s_shell
 	t_node			*tokens;
 	t_cmd			*cmds;
 	size_t			nb_redir;
-	size_t			nb_cmds;
 }					t_shell;
 
 							/* HRDOC */
