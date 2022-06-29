@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 12:39:39 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 17:17:20 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@
 # define FIRST		0
 # define NEXT		1
 
-/* Modes to specify when deleting nodes */
-# define HEAD		0
-# define TAIL		1
-
 # define ALL_SPACES " 	\x20\x08\x09\x0a\x0b\x0c\x0d"
 
 extern int	g_exit_code;
@@ -47,7 +43,6 @@ extern int	g_exit_code;
 void		get_lst_chars(char *cmdline, t_node **chars);
 void		get_lst_tokens(t_node *chars, t_node **tokens);
 void	    get_lst_expanded(t_node **tokens, t_env *vars);
-void		get_final_lst(t_node **tokens);
 void		set_chars_subflags(t_node **chars);
 void		set_expansion_flags(t_node **head);
 void    	set_tokens_subflags(t_node **tokens);

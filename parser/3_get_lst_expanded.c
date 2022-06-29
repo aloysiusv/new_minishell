@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 12:38:44 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:01:34 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,10 @@ void		expand_word(t_node **iterator, t_env *vars)
 		free((*iterator)->word);
 		(*iterator)->word = ft_strdup(to_print);
 		(*iterator)->type = LITERAL;
-		printf("word[%s] type[%d]\n", (*iterator)->word, (*iterator)->type);
 		free(to_print);
 	}
 	else
-	{
 		(*iterator)->type = USELESS;
-		printf("useless word[%s] type[%d]\n", (*iterator)->word, (*iterator)->type);
-	}
 }
 
 void		get_lst_expanded(t_node **tokens, t_env *vars)
@@ -73,10 +69,8 @@ void		get_lst_expanded(t_node **tokens, t_env *vars)
 	while (iterator)
 	{
 		if (iterator->type == DOLLAR)
-		{
 			expand_word(&iterator, vars);
-			delete_useless_tokens(tokens, USELESS);
-		}
 		iterator = iterator->next;
 	}
+	delete_useless_tokens(tokens, USELESS);
 }
