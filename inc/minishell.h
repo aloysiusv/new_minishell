@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 23:52:28 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:39:39 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,13 @@ extern int	g_exit_code;
 
 void		get_lst_chars(char *cmdline, t_node **chars);
 void		get_lst_tokens(t_node *chars, t_node **tokens);
-void	    get_lst_expanded(t_node **expanded, t_node **tokens, t_env *vars);
+void	    get_lst_expanded(t_node **tokens, t_env *vars);
 void		get_final_lst(t_node **tokens);
 void		set_chars_subflags(t_node **chars);
 void		set_expansion_flags(t_node **head);
 void    	set_tokens_subflags(t_node **tokens);
 int			syntax_errors(t_node *tokens);
 char		*create_word(t_node *current, int type);
-void		delete_useless_tokens(t_node **tokens);
 
 /*=================================ENV======================================== */
 	
@@ -89,8 +88,9 @@ t_env		*add_top_node_var(char **keyvalue, t_env *current_top);
 /*=================================UTILS====================================== */
 
 /* utils.c */
-size_t	get_tab_size(char **tab);
-char	**lst_to_tab(t_node *lst);
+size_t		get_tab_size(char **tab);
+char		**lst_to_tab(t_node *lst);
+void		delete_useless_tokens(t_node **tokens, int type);
 /* utils_errors.c */
 void	oops_crash(t_shell *shell, char *error_message, int exit_code);
 int		print_error(char *error_message, int exit_code);

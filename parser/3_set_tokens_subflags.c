@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:40:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 18:45:20 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:44:22 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,19 @@ static void    set_input_filetype(t_node **tokens)
 	iterator = *tokens;
 	while (iterator)
 	{
-		if (iterator->type == RD_INPUT && iterator->next)
+		if (iterator->type == RD_INPUT)
 		{
-			iterator = iterator->next;
-			while (iterator && iterator->type == USELESS)
-				iterator = iterator->next;
+			iterator = iterator->prev;
+			while (iterator && iterator->type == BLANK)
+				iterator = iterator->prev;
 			iterator->type = INFILE;
 		}
 	    else if (iterator->type == HRDOC && iterator->next)
 		{
 			iterator = iterator->next;
-			while (iterator && iterator->type == USELESS)
+			while (iterator && iterator->type == BLANK)
 				iterator = iterator->next;
-			if (iterator->type == DOLLAR)
-                iterator->type = DOLLAR_HDOC;
-            else
-                iterator->type = LIMITER;
+            iterator->type = LIMITER;
 		}
         iterator = iterator->next;
     }
@@ -50,14 +47,14 @@ static void    set_output_filetype(t_node **tokens)
         if (iterator->type == RD_OUTPUT && iterator->next)
 		{
 			iterator = iterator->next;
-			while (iterator->type == USELESS)
+			while (iterator->type == BLANK)
 				iterator = iterator->next;
 			iterator->type = OUTFILE;
 		}
 		else if (iterator->type == APPEND && iterator->next)
 		{
 			iterator = iterator->next;
-			while (iterator->type == USELESS)
+			while (iterator->type == BLANK)
 				iterator = iterator->next;
 			iterator->type = OUTFILE_A;
 		}
@@ -91,14 +88,14 @@ static void    set_arg_type(t_node **tokens)
         if (iterator->type == RD_OUTPUT && iterator->next)
 		{
 			iterator = iterator->next;
-			while (iterator->type == USELESS)
+			while (iterator->type == BLANK)
 				iterator = iterator->next;
 			iterator->type = OUTFILE;
 		}
 		else if (iterator->type == APPEND && iterator->next)
 		{
 			iterator = iterator->next;
-			while (iterator->type == USELESS)
+			while (iterator->type == BLANK)
 				iterator = iterator->next;
 			iterator->type = OUTFILE_A;
 		}

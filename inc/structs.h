@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 22:16:22 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:40:16 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ enum e_type
 	HRDOC,
 	PIPE,
 	DOLLAR,
-	DOLLAR_HDOC,
 	DOLLAR_TRAIL,
-	DOLLAR_SPECIAL,
 	EQUAL,
 };
 
@@ -113,7 +111,6 @@ typedef struct		s_shell
 	t_env			*env_var;
 	t_node			*chars;
 	t_node			*tokens;
-	t_node			*expanded;
 	// t_exec			*cmds;
 	size_t			nb_cmds;
 	size_t			nb_redir;

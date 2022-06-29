@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 23:26:38 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 11:56:09 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,3 @@ void	get_lst_tokens(t_node *chars, t_node **tokens)
 		curr = curr->next;
 	}
 }
-
-// int main(void)
-// {
-// 	char	*cmdline = "  \"COOOL\" CO |'||'| \\ ? <<<' > ";
-// 	t_node	*src;
-// 	t_node	*dest;
-
-// 	src = NULL;
-// 	dest = NULL;
-// 	characters_to_lst(cmdline, &src);
-// 	printf("==================================================================\n");
-// 	words_to_lst(src, &dest);
-// 	delete_lst(&src);
-// 	delete_lst(&dest);
-// 	return (0);
-// }

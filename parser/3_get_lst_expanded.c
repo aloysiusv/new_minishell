@@ -6,27 +6,11 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 00:13:46 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:38:44 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	has_expansions(t_node *tokens)
-{
-	t_node *iterator;
-
-	if (!tokens)
-		return (0);
-	iterator = tokens;
-	while (iterator)
-	{
-		if (iterator->type == DOLLAR)
-			return (1);
-		iterator = iterator->next;
-	}
-	return (0);
-}
 
 static char	*find_matching_var(t_node *current, t_env *vars)
 {
@@ -48,76 +32,51 @@ static char	*find_matching_var(t_node *current, t_env *vars)
 	return (expanded);
 }
 
-void		make_expands(t_node **tokens, t_env *vars)
+void		expand_word(t_node **iterator, t_env *vars)
 {
-	t_node	*iterator;
 	char	*to_print;
 
-	iterator = *tokens;
-	if (!iterator || !iterator->next)
+	if (!*iterator || !(*iterator)->next)
 		return ;
-	while (iterator)
+	to_print = NULL;
+	(*iterator)->type = USELESS;
+	*iterator = (*iterator)->next;
+	if (ft_strncmp((*iterator)->word, "?", 2) == 0)
 	{
-		if (iterator->type == DOLLAR && iterator->next)
-		{
-			iterator->type = USELESS;
-			iterator = iterator->next;
-			to_print = find_matching_var(iterator, vars);
-			if (to_print)
-			{
-				free(iterator->word);
-				iterator->word = ft_strdup(to_print);
-				iterator->type = LITERAL;
-				printf("word[%s] type[%d]\n", iterator->word, iterator->type);
-				free(to_print);
-			}
-			else
-			{
-				iterator->type = USELESS;
-				printf("useless word[%s] type[%d]\n", iterator->word, iterator->type);
-			}
-		}
-		iterator = iterator->next;
+		free((*iterator)->word);
+		(*iterator)->word = ft_itoa(g_exit_code);
+		return ;
+	}
+	to_print = find_matching_var(*iterator, vars);
+	if (to_print)
+	{
+		free((*iterator)->word);
+		(*iterator)->word = ft_strdup(to_print);
+		(*iterator)->type = LITERAL;
+		printf("word[%s] type[%d]\n", (*iterator)->word, (*iterator)->type);
+		free(to_print);
+	}
+	else
+	{
+		(*iterator)->type = USELESS;
+		printf("useless word[%s] type[%d]\n", (*iterator)->word, (*iterator)->type);
 	}
 }
 
-t_node		*init_real_word(t_node **tokens, t_node *curr, int mode)
+void		get_lst_expanded(t_node **tokens, t_env *vars)
 {
-	char	*word;
-
-	if (!*tokens)
-		return (NULL);
-	word = ft_strdup((*tokens)->word);
-	printf("init real word: [%s]\n", word);
-	if (!word)
-		return (NULL);
-	if (mode == FIRST)
-		return (create_node(0, word, (*tokens)->type));
-	else if (mode == NEXT)
-		return(add_bottom_node(curr, 0, word, (*tokens)->type));
-	return (NULL);
-}
-
-void		get_lst_expanded(t_node **expanded, t_node **tokens, t_env *vars)
-{
-	t_node	*curr;
+	t_node	*iterator;
 
 	if (!tokens)
 		return ;
-	if (has_expansions(*tokens) == 1)
+	iterator = *tokens;
+	while (iterator)
 	{
-		make_expands(tokens, vars);
-		delete_useless_tokens(tokens);
-		*expanded = init_real_word(tokens, NULL, FIRST);
-		*tokens = (*tokens)->next;
-		curr = *expanded;
-		while (*tokens)
+		if (iterator->type == DOLLAR)
 		{
-			curr->next = init_real_word(tokens, curr, NEXT);
-			if (ft_lstsize_2(*expanded) == 1)
-				return ;
-			*tokens = (*tokens)->next;
-			curr = curr->next;
+			expand_word(&iterator, vars);
+			delete_useless_tokens(tokens, USELESS);
 		}
+		iterator = iterator->next;
 	}
 }

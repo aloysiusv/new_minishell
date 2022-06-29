@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 23:35:14 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:40:36 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	parsing(t_shell *sh)
 {
 	get_lst_chars(sh->cmdline, &sh->chars);
 	get_lst_tokens(sh->chars, &sh->tokens);
-	get_lst_expanded(&sh->expanded, &sh->tokens, sh->env_var);
-	t_node *iterator = sh->expanded;
+	get_lst_expanded(&sh->tokens, sh->env_var);
+	t_node *iterator = sh->tokens;
 	while (iterator)
 	{
 		printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
@@ -72,7 +72,6 @@ static void	mini_loop(t_shell *sh)
 			// exec_multi_cmds(sh->tokens);
 			delete_lst(&sh->chars);
 			delete_lst(&sh->tokens);
-			delete_lst(&sh->expanded);
 		}
 		if (sh->cmdline[0] == 'q')
 			break ;
@@ -90,7 +89,7 @@ int		main(int ac, char *av[], char *envp[])
 	sh = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	if (!sh)
 		return (EXIT_FAILURE);
-	// sh->envp = get_envp(envp);
+	sh->envp = get_envp(envp);
 	sh->env_var = create_lst_env(envp);
 	mini_loop(sh);
 	free_shell(sh);

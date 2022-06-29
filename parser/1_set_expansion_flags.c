@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:28:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 20:22:19 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:33:56 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int is_it_weird(t_node **iterator)
 	}
 	else if ((*iterator)->next && ft_isset((*iterator)->next->charac, "?_"))
 	{
-		(*iterator)->next->type = DOLLAR_SPECIAL;
+		(*iterator)->next->type = DOLLAR_TRAIL;
 		return (1);
 	}
 	return (0);

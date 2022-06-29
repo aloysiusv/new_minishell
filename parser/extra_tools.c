@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 23:45:23 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 00:57:14 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/29 02:48:58 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,45 +51,26 @@ char			*create_word(t_node *current, int type)
 	return (word);
 }
 
-void			delete_useless_tokens(t_node **tokens)
+void	delete_useless_tokens(t_node **tokens, int type)
 {
+	t_node	*curr;
 	t_node	*tmp;
-	t_node	*iterator;
 
-	if (!*tokens)
-		return ;
-	iterator = *tokens;
-	while (iterator)
+	while (*tokens && (*tokens)->type == type)
 	{
-		printf("iterator is => [%s]\n", iterator->word);
-		if (iterator->type == USELESS)
+		curr = *tokens;
+		*tokens = (*tokens)->next;
+		delete_node(curr);
+	}
+	curr = *tokens;
+	while (curr && curr->next)
+	{
+		if (curr->next->type == type)
 		{
-			tmp = iterator;
-			if (tmp->prev && tmp->next)
-			{
-				tmp->prev->next = tmp->next;
-				tmp->next->prev = tmp->prev;
-				// tmp->prev = NULL;
-				// tmp->next = NULL;
-			}
-			else if (tmp->prev && !tmp->next)
-				tmp->prev->next = NULL;
-			else if (!tmp->prev && tmp->next)
-				tmp->next->prev = NULL;
-			iterator = iterator->next;
-			printf("deleting => [%s]\n", tmp->word);
+			tmp = curr->next;
+			curr->next = tmp->next;
 			delete_node(tmp);
 		}
-		iterator = iterator->next;
+		curr = curr->next;
 	}
-	printf("NEW TOKEN LIST IS: \n");
-	t_node *ite = *tokens;
-	while (ite)
-	{
-		printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
-			ite->word, ite->in_squotes,
-				ite->in_dquotes, ite->type);
-		ite = ite->next;
-	}
-	printf("END\n");
 }
