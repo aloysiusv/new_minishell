@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:36:15 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 12:29:51 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:39:16 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	set_literals(t_node **head)
 		{
 			if (iterator->type == DOLLAR && iterator->in_dquotes)
 				iterator->type = DOLLAR;
-			else if (iterator->type == BLANK)
-				iterator->type = BLANK;
+			// else if (iterator->type == BLANK)
+			// 	iterator->type = LITERAL; /*used to be blank /!\*/
 			else
 				iterator->type = LITERAL;
 		}

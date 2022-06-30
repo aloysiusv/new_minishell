@@ -2,3 +2,7 @@ cat < Makefile < Coucou | grep "kaka" > yo > youpi | << STOP > yolo > yili > yal
 
 
 cat < Makefile < Coucou | grep "oh la la$USER bbibi " >> yeah
+
+ cat < "   $HEY    " "lol       xd"
+
+ cat < Makefile > kiki > kaka > koko | grep bouh

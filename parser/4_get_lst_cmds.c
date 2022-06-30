@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:45 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 14:39:01 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:58:38 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,27 @@ static void	get_io_files(t_cmd *cmd)
 	}
 }
 
+static void	set_filetype(t_node **tok, int mode, int ignore, int assign)
+{
+	t_node	*iterator;
+
+	if (!*tok)
+		return ;
+	iterator = *tok;
+	while (iterator && iterator->next)
+	{
+		if (iterator->type == mode)
+		{
+			iterator = iterator->next;
+			while (iterator && iterator->type == ignore)
+				iterator = iterator->next;
+            iterator->type = assign;
+		}
+		if (iterator)
+			iterator = iterator->next;
+	}
+}
+
 static void	push_back(t_node **alst, t_node *new)
 {
 	t_node	*new_alst;
@@ -194,11 +215,15 @@ void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
 				new->in_dquotes = true;
 			iterator = iterator->next;
 		}
+		setup_final_lst(&(*cmds)[i].tokens);
+		delete_useless_tokens(&(*cmds)[i].tokens, USELESS);
+		set_filetype(&(*cmds)[i].tokens, RD_INPUT, BLANK, INFILE);
+		set_filetype(&(*cmds)[i].tokens, RD_OUTPUT, BLANK, OUTFILE);
+		set_filetype(&(*cmds)[i].tokens, HRDOC, BLANK, LIMITER);
+		set_filetype(&(*cmds)[i].tokens, APPEND, BLANK, OUTFILE_A);
 		get_io_files(&(*cmds)[i]);
 		set_filename_flags(&(*cmds)[i].tokens);
 		delete_useless_tokens(&(*cmds)[i].tokens, FILENAME);
-		setup_final_lst(&(*cmds)[i].tokens);
-		delete_useless_tokens(&(*cmds)[i].tokens, USELESS);
 		(*cmds)[i].command = lst_to_tab((*cmds)[i].tokens);
 		printf("Char ** of cmd[%zu]\n", i);
 		print_str_tab((*cmds)[i].command);

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 00:41:13 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:12:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include "structs.h"
 
 // # define PROMPT "\x1b[1;35m~mini$hell~>\x1b[m "
-# define PROMPT "~mini$hell~> "
+# define PROMPT "===========~mini$hell~>=========== "
 
 
 /* Modes to specify when creating nodes */
