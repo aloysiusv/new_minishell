@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:45 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 07:18:07 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 07:26:53 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ static void	set_final_flags(t_node **tokens)
 		// printf("in set flags: iterator[%s], type[%d], in dquotes[%d]\n", iterator->word, iterator->type, iterator->in_dquotes);
 		if (iterator->type == BLANK && (iterator->in_squotes || iterator->in_dquotes))
 			iterator->type = LITERAL;
+		else if (iterator->type == BLANK)
+			iterator->type = USELESS;
 		else if (iterator->type == INFILE || iterator->type == LIMITER
 			|| iterator->type == OUTFILE || iterator->type == OUTFILE_A
 			|| iterator->type == RD_INPUT || iterator->type == RD_OUTPUT
