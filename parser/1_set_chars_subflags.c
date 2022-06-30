@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:36:15 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 04:22:49 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 07:06:49 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	set_useless_quotes(t_node **head)
 	while (iterator)
 	{
 		if (iterator->type == SQUOTE || iterator->type == DQUOTE)
+			// || (iterator->type == BLANK && !iterator->in_dquotes
+			// 	&& !iterator->in_squotes))
 			iterator->type = USELESS;
 		iterator = iterator->next;
 	}

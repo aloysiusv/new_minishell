@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 02:26:18 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 07:10:05 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	expand_word(t_node **iterator, t_env *vars)
 	{
 		free((*iterator)->word);
 		(*iterator)->word = ft_itoa(g_exit_code);
+		(*iterator)->type = LITERAL;
 		return ;
 	}
 	to_print = find_matching_var(*iterator, vars);

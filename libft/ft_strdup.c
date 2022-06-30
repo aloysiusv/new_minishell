@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 23:37:24 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:02:17 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 06:19:01 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s)
 	char	*str;
 	size_t	s_len;
 
+	if (!s)
+		return (NULL);
 	s_len = ft_strlen(s);
 	str = (char *)malloc(sizeof(char) * (s_len + 1));
 	if (str == 0)

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:45 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 02:44:19 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 07:18:07 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,22 @@ static void	print_cmds_tab(t_cmd *cmds)
 	i = 0;
 	while (i < cmds->nb_cmds)
 	{
-		printf("CMD[%zu] =>\n", i);
+		printf("CMD[%s] =>\n", cmds[i].command[0]);
 		print_files_tab(cmds[i].files, cmds[i].nb_files);
+		i++;
+	}
+}
+
+static void	print_str_tab(char **str)
+{
+	size_t	i;
+
+	if (!str)
+		return ;
+	i = 0;
+	while (str[i])
+	{
+		printf("[%s]\n", str[i]);
 		i++;
 	}
 }
@@ -43,7 +57,7 @@ static void	print_cmds_tab(t_cmd *cmds)
 // static void	print_list(t_node *tokens, size_t index)
 // {
 // 	t_node	*iterator;
-
+//
 // 	if (!tokens)
 // 		return ;
 // 	iterator = tokens;
@@ -54,6 +68,75 @@ static void	print_cmds_tab(t_cmd *cmds)
 // 		iterator = iterator->next;
 // 	}
 // }
+
+// static void	get_full_cmd(t_cmd *cmd)
+// {
+// 	size_t	i;
+// 	t_node	*iterator;
+// 
+// 	i = 0;
+// 	iterator = cmd->tokens;
+// 	if (!iterator)
+// 		return ;
+// 	cmd->com
+// 	while (iterator)
+// 	{
+// 		if (iterator->type == LITERAL)
+// 			cmd->files[i].name = ft_strdup(iterator->word);
+// 			cmd->files[i].type = iterator->type;
+// 			i++;
+// 		}
+// 		iterator = iterator->next;
+// 	}
+// }
+
+static void	get_final_lst(t_node **tokens)
+{
+	t_node	*iterator;
+	char	*copy;
+
+	if (!*tokens)
+		return ;
+	iterator = *tokens;
+	while (iterator)
+	{
+		// printf("in get_final_lst, iterator->word is: [%s] type [%d]\n", iterator->word, iterator->type);
+		if (iterator->type == LITERAL
+			&& iterator->next && iterator->next->type == LITERAL)
+		{
+			// free(iterator->next->word);
+			copy = ft_strdup(iterator->next->word);
+			free(iterator->next->word);
+			iterator->next->word = ft_strjoin(iterator->word, copy);
+			// printf("word joined is [%s]\n", iterator->next->word);
+			iterator->type = USELESS;
+			free(iterator->word);
+			free(copy);
+			iterator->word = NULL;
+		}
+		iterator = iterator->next;
+		
+	}
+}
+
+static void	set_final_flags(t_node **tokens)
+{
+    t_node	*iterator;
+
+	iterator = *tokens;
+	while (iterator && iterator->next)
+	{
+		// printf("in set flags: iterator[%s], type[%d], in dquotes[%d]\n", iterator->word, iterator->type, iterator->in_dquotes);
+		if (iterator->type == BLANK && (iterator->in_squotes || iterator->in_dquotes))
+			iterator->type = LITERAL;
+		else if (iterator->type == INFILE || iterator->type == LIMITER
+			|| iterator->type == OUTFILE || iterator->type == OUTFILE_A
+			|| iterator->type == RD_INPUT || iterator->type == RD_OUTPUT
+			|| iterator->type == APPEND || iterator->type == HRDOC)
+			iterator->type = USELESS;
+        iterator = iterator->next;
+    }
+}
 
 static size_t	how_many_redirs(t_node *tokens)
 {
@@ -67,13 +150,12 @@ static size_t	how_many_redirs(t_node *tokens)
 
 }
 
-static void	fill_cmds_fields(t_cmd *cmd)  // CAT < MAKEFILE
+static void	get_io_files(t_cmd *cmd)
 {
 	size_t	i;
 	t_node	*iterator;
 
 	cmd->nb_files = how_many_redirs(cmd->tokens);
-	printf("nb_files = [%zu]\n", cmd->nb_files);
 	cmd->files = ft_calloc(cmd->nb_files, sizeof(t_file));
 	if (!cmd)
 		return ;
@@ -112,6 +194,7 @@ static void	push_back(t_node **alst, t_node *new)
 void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
 {
 	t_node	*iterator;
+	t_node	*new;
 	size_t	nb_cmds;
 	size_t	i;
 
@@ -127,11 +210,24 @@ void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
 		(*cmds)[i].nb_cmds = nb_cmds;
 		while (iterator && iterator->type != PIPE)
 		{
-			push_back(&(*cmds)[i].tokens,
-				create_node(0, ft_strdup(iterator->word), iterator->type));
+			new = create_node(0, ft_strdup(iterator->word), iterator->type);
+			push_back(&(*cmds)[i].tokens, new);
+			if (iterator->in_squotes)
+				new->in_squotes = true;
+			else if (iterator->in_dquotes)
+				new->in_dquotes = true;
 			iterator = iterator->next;
 		}
-		fill_cmds_fields(&(*cmds)[i]);
+		get_io_files(&(*cmds)[i]);
+		set_final_flags(&(*cmds)[i].tokens);
+		delete_useless_tokens(&(*cmds)[i].tokens, USELESS);
+		get_final_lst(&(*cmds)[i].tokens);
+		delete_useless_tokens(&(*cmds)[i].tokens, USELESS);
+		(*cmds)[i].command = lst_to_tab((*cmds)[i].tokens);
+		printf("Char ** of cmd[%zu]\n", i);
+		print_str_tab((*cmds)[i].command);
+		printf("Command is [%s]\n", (*cmds)[i].command[0]);
+		// get_full_cmd(&(*cmds)[i]);
 		// print_list((*cmds)[i].tokens, i);
 		if (iterator && iterator->type == PIPE)
 			iterator = iterator->next;
@@ -139,3 +235,12 @@ void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
 	}
 	print_cmds_tab(*cmds);
 }
+
+	// t_node *iteratoor = *tokens;
+	// 	while (iteratoor)
+	// 	{
+	// 	printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
+	// 		iteratoor->word, iteratoor->in_squotes,
+	// 			iteratoor->in_dquotes, iteratoor->type);
+	// 	iteratoor = iteratoor->next;
+	// }

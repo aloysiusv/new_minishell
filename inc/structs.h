@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 01:13:45 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 02:56:34 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ enum e_type
 	USELESS,
 	BLANK,
 	LITERAL,
-	// FILENAME,
+	FILENAME,
 	// CMD,
 	// ARGS,
 	INFILE,
