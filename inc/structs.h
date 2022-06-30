@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 23:12:15 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 01:13:45 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ enum e_type
 	USELESS,
 	BLANK,
 	LITERAL,
-	CMD,
-	ARGS,
+	// FILENAME,
+	// CMD,
+	// ARGS,
 	INFILE,
 	LIMITER,
 	OUTFILE,
@@ -69,37 +70,23 @@ typedef struct		s_env
 
 							/* EXECUTION */
 
-// typedef struct 		s_path
-// {
-// 	char			**envp;
-// 	char			*find_path;
-// 	char			**option_cmd;
-// 	char			**my_path;
-// }					t_path;
+typedef struct s_file
+{
+	char	*name;
+	int		type;
+}			t_file;
 
-// typedef struct 		s_exec
-// {
-// 	size_t			i;
-// 	size_t			j;
-// 	int				count;
-// 	int				**fd;
-// 	int				fdin;
-// 	int				fdout;
-// 	t_node			*tokens;
-// }					t_exec;
-
-typedef struct 			s_command
+typedef struct s_command
 {
 	t_node				*tokens;
+	t_file				*files;
 	size_t				index;
 	char				*exec_path;
 	char				**command;
-	char				**outfiles;
 	int					fdin;
 	int					fdout;
 	size_t				nb_cmds;
-	// t_bool				is_piped;
-	// struct s_command	*next;
+	size_t				nb_files;
 }						t_cmd;
 
 							/* SHELL DATA */

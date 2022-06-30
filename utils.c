@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 11:39:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 20:22:09 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 02:19:14 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,22 @@ size_t	ft_lstsize_2(t_node *head)
 		size++;
 	}
 	return (size);
+}
+
+size_t  get_nb_types(t_node *tokens, int type)
+{
+    t_node  *iterator;
+    size_t  nb_types;
+
+    iterator = tokens;
+	nb_types = 0;
+    while (iterator)
+    {
+        if (iterator->type == type)
+			nb_types++;
+        iterator = iterator->next;
+    }
+	return (nb_types);
 }
 
 int	is_valid_input(char const *str)

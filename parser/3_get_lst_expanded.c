@@ -6,11 +6,61 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 18:09:21 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 02:26:18 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	set_input_filetype(t_node **tokens)
+{
+    t_node	*iterator;
+
+	iterator = *tokens;
+	while (iterator && iterator->next)
+	{
+		if (iterator->type == RD_INPUT)
+		{
+			iterator = iterator->next;
+			while (iterator && iterator->type == BLANK)
+				iterator = iterator->next;
+            iterator->type = INFILE;
+		}
+	    else if (iterator->type == HRDOC && iterator->next)
+		{
+			iterator = iterator->next;
+			while (iterator && iterator->type == BLANK)
+				iterator = iterator->next;
+            iterator->type = LIMITER;
+		}
+        iterator = iterator->next;
+    }
+}
+
+static void	set_output_filetype(t_node **tokens)
+{
+    t_node	*iterator;
+
+	iterator = *tokens;
+	while (iterator && iterator->next)
+	{
+        if (iterator->type == RD_OUTPUT && iterator->next)
+		{
+			iterator = iterator->next;
+			while (iterator->type == BLANK)
+				iterator = iterator->next;
+			iterator->type = OUTFILE;
+		}
+		else if (iterator->type == APPEND && iterator->next)
+		{
+			iterator = iterator->next;
+			while (iterator->type == BLANK)
+				iterator = iterator->next;
+			iterator->type = OUTFILE_A;
+		}
+		iterator = iterator->next;
+	}
+}
 
 static char	*find_matching_var(t_node *current, t_env *vars)
 {
@@ -32,7 +82,7 @@ static char	*find_matching_var(t_node *current, t_env *vars)
 	return (expanded);
 }
 
-void		expand_word(t_node **iterator, t_env *vars)
+void	expand_word(t_node **iterator, t_env *vars)
 {
 	char	*to_print;
 
@@ -59,7 +109,7 @@ void		expand_word(t_node **iterator, t_env *vars)
 		(*iterator)->type = USELESS;
 }
 
-void		get_lst_expanded(t_node **tokens, t_env *vars)
+void	get_lst_expanded(t_node **tokens, t_env *vars)
 {
 	t_node	*iterator;
 
@@ -73,5 +123,6 @@ void		get_lst_expanded(t_node **tokens, t_env *vars)
 		iterator = iterator->next;
 	}
 	delete_useless_tokens(tokens, USELESS);
-	set_tokens_subflags(tokens);
+	set_input_filetype(tokens);
+    set_output_filetype(tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:39:00 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 23:27:17 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 00:41:13 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,10 @@ t_env		*add_top_node_var(char **keyvalue, t_env *current_top);
 /*=================================UTILS====================================== */
 
 /* utils.c */
-size_t		get_tab_size(char **tab);
-char		**lst_to_tab(t_node *lst);
-void		delete_useless_tokens(t_node **tokens, int type);
+size_t	get_nb_types(t_node *tokens, int type);
+size_t	get_tab_size(char **tab);
+char	**lst_to_tab(t_node *lst);
+void	delete_useless_tokens(t_node **tokens, int type);
 /* utils_errors.c */
 void	oops_crash(t_shell *shell, char *error_message, int exit_code);
 int		print_error(char *error_message, int exit_code);
