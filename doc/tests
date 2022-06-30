@@ -1,1 +1,4 @@
 cat < Makefile < Coucou | grep "kaka" > yo > youpi | << STOP > yolo > yili > yala
+
+
+cat < Makefile < Coucou | grep "oh la la$USER bbibi " >> yeah

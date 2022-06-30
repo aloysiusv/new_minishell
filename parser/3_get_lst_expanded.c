@@ -6,59 +6,30 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 07:10:05 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 13:10:28 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	set_input_filetype(t_node **tokens)
+static void	set_filetype(t_node **tok, int mode, int ignore, int assign)
 {
-    t_node	*iterator;
+	t_node	*iterator;
 
-	iterator = *tokens;
+	if (!*tok)
+		return ;
+	iterator = *tok;
 	while (iterator && iterator->next)
 	{
-		if (iterator->type == RD_INPUT)
+		if (iterator->type == mode)
 		{
 			iterator = iterator->next;
-			while (iterator && iterator->type == BLANK)
+			while (iterator && iterator->type == ignore)
 				iterator = iterator->next;
-            iterator->type = INFILE;
+            iterator->type = assign;
 		}
-	    else if (iterator->type == HRDOC && iterator->next)
-		{
+		if (iterator)
 			iterator = iterator->next;
-			while (iterator && iterator->type == BLANK)
-				iterator = iterator->next;
-            iterator->type = LIMITER;
-		}
-        iterator = iterator->next;
-    }
-}
-
-static void	set_output_filetype(t_node **tokens)
-{
-    t_node	*iterator;
-
-	iterator = *tokens;
-	while (iterator && iterator->next)
-	{
-        if (iterator->type == RD_OUTPUT && iterator->next)
-		{
-			iterator = iterator->next;
-			while (iterator->type == BLANK)
-				iterator = iterator->next;
-			iterator->type = OUTFILE;
-		}
-		else if (iterator->type == APPEND && iterator->next)
-		{
-			iterator = iterator->next;
-			while (iterator->type == BLANK)
-				iterator = iterator->next;
-			iterator->type = OUTFILE_A;
-		}
-		iterator = iterator->next;
 	}
 }
 
@@ -124,6 +95,8 @@ void	get_lst_expanded(t_node **tokens, t_env *vars)
 		iterator = iterator->next;
 	}
 	delete_useless_tokens(tokens, USELESS);
-	set_input_filetype(tokens);
-    set_output_filetype(tokens);
+	set_filetype(tokens, RD_INPUT, BLANK, INFILE);
+	set_filetype(tokens, RD_OUTPUT, BLANK, OUTFILE);
+	set_filetype(tokens, HRDOC, BLANK, LIMITER);
+	set_filetype(tokens, APPEND, BLANK, OUTFILE_A);
 }

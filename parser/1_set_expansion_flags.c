@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:28:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 12:33:56 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:54:03 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,11 @@ void	set_expansion_flags(t_node **head)
 				iterator = iterator->next;
 				continue ;
 			}
-			else 
+			iterator = iterator->next;
+			while (iterator && iterator->type == LITERAL)
 			{
-				iterator = iterator->next;
-				while (iterator && iterator->type == LITERAL)
-				{
 				iterator->type = DOLLAR_TRAIL;
 				iterator = iterator->next;
-				}
 			}
 		}
 		if (iterator)

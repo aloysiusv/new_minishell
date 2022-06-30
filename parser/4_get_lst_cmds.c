@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:45 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 07:26:53 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 14:39:01 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,7 @@ static void	print_str_tab(char **str)
 // 	}
 // }
 
-// static void	get_full_cmd(t_cmd *cmd)
-// {
-// 	size_t	i;
-// 	t_node	*iterator;
-// 
-// 	i = 0;
-// 	iterator = cmd->tokens;
-// 	if (!iterator)
-// 		return ;
-// 	cmd->com
-// 	while (iterator)
-// 	{
-// 		if (iterator->type == LITERAL)
-// 			cmd->files[i].name = ft_strdup(iterator->word);
-// 			cmd->files[i].type = iterator->type;
-// 			i++;
-// 		}
-// 		iterator = iterator->next;
-// 	}
-// }
-
-static void	get_final_lst(t_node **tokens)
+static void	setup_final_lst(t_node **tokens)
 {
 	t_node	*iterator;
 	char	*copy;
@@ -100,42 +79,37 @@ static void	get_final_lst(t_node **tokens)
 	iterator = *tokens;
 	while (iterator)
 	{
-		// printf("in get_final_lst, iterator->word is: [%s] type [%d]\n", iterator->word, iterator->type);
 		if (iterator->type == LITERAL
 			&& iterator->next && iterator->next->type == LITERAL)
 		{
-			// free(iterator->next->word);
 			copy = ft_strdup(iterator->next->word);
 			free(iterator->next->word);
 			iterator->next->word = ft_strjoin(iterator->word, copy);
-			// printf("word joined is [%s]\n", iterator->next->word);
 			iterator->type = USELESS;
 			free(iterator->word);
 			free(copy);
 			iterator->word = NULL;
 		}
-		iterator = iterator->next;
-		
+		else if (iterator->type == BLANK)
+			iterator->type = USELESS;
+		iterator = iterator->next;	
 	}
 }
 
-static void	set_final_flags(t_node **tokens)
+static void	set_filename_flags(t_node **tokens)
 {
     t_node	*iterator;
 
 	iterator = *tokens;
-	while (iterator && iterator->next)
+	while (iterator)
 	{
-		// printf("in set flags: iterator[%s], type[%d], in dquotes[%d]\n", iterator->word, iterator->type, iterator->in_dquotes);
 		if (iterator->type == BLANK && (iterator->in_squotes || iterator->in_dquotes))
 			iterator->type = LITERAL;
-		else if (iterator->type == BLANK)
-			iterator->type = USELESS;
 		else if (iterator->type == INFILE || iterator->type == LIMITER
 			|| iterator->type == OUTFILE || iterator->type == OUTFILE_A
 			|| iterator->type == RD_INPUT || iterator->type == RD_OUTPUT
 			|| iterator->type == APPEND || iterator->type == HRDOC)
-			iterator->type = USELESS;
+			iterator->type = FILENAME;
         iterator = iterator->next;
     }
 }
@@ -221,9 +195,9 @@ void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
 			iterator = iterator->next;
 		}
 		get_io_files(&(*cmds)[i]);
-		set_final_flags(&(*cmds)[i].tokens);
-		delete_useless_tokens(&(*cmds)[i].tokens, USELESS);
-		get_final_lst(&(*cmds)[i].tokens);
+		set_filename_flags(&(*cmds)[i].tokens);
+		delete_useless_tokens(&(*cmds)[i].tokens, FILENAME);
+		setup_final_lst(&(*cmds)[i].tokens);
 		delete_useless_tokens(&(*cmds)[i].tokens, USELESS);
 		(*cmds)[i].command = lst_to_tab((*cmds)[i].tokens);
 		printf("Char ** of cmd[%zu]\n", i);
