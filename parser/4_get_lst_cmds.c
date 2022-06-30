@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:45 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 02:29:06 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 02:44:19 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	print_files_tab(t_file *files, size_t nb_files)
 	i = 0;
 	while (i < nb_files)
 	{
-		if (files[i].name)
-			printf("file[%zu] => [%s][%d]\n", i, files[i].name, files[i].type);
+		// if (files[i].name)
+		printf("file[%zu] => [%s][%d]\n", i, files[i].name, files[i].type);
 		i++;
 	}
 }
@@ -34,8 +34,8 @@ static void	print_cmds_tab(t_cmd *cmds)
 	i = 0;
 	while (i < cmds->nb_cmds)
 	{
-		printf("CMD[%zu] => ", i);
-		print_files_tab(cmds[i].files, cmds->nb_files);
+		printf("CMD[%zu] =>\n", i);
+		print_files_tab(cmds[i].files, cmds[i].nb_files);
 		i++;
 	}
 }
@@ -73,6 +73,7 @@ static void	fill_cmds_fields(t_cmd *cmd)  // CAT < MAKEFILE
 	t_node	*iterator;
 
 	cmd->nb_files = how_many_redirs(cmd->tokens);
+	printf("nb_files = [%zu]\n", cmd->nb_files);
 	cmd->files = ft_calloc(cmd->nb_files, sizeof(t_file));
 	if (!cmd)
 		return ;
