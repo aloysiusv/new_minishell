@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/01 04:35:08 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:19:26 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ static void	skip_blanks(t_node **iterator)
 		*iterator = (*iterator)->next;
 }
 
+// static int		check_valid_pipes(t_node *head)
+// {
+// 	t_node	*iterator;
+
+// 	iterator = head;
+// 	while (iterator)
+// 	{
+// 		if (iterator->type == PIPE)
+// }
+
 static int		check_ope_args(t_node *head)
 {
 	t_node	*iterator;
@@ -26,8 +36,7 @@ static int		check_ope_args(t_node *head)
 	while (iterator)
 	{
 		if (iterator->type == RD_INPUT || iterator->type == RD_OUTPUT
-			|| iterator->type == APPEND || iterator->type == HRDOC
-			|| )
+			|| iterator->type == APPEND || iterator->type == HRDOC)
 		{
 			if (!iterator->next)
 				return (-1);
@@ -86,29 +95,19 @@ static int     check_valid_operators(t_node *head)
 	return (0);
 }
 
-static int	check_closing_quotes(t_node *head)
-{
-	t_node  *iterator;
-
-	if (!head)
-		return (-1);
-	iterator = head;
-	while (iterator->next)
-		iterator = iterator->next;
-	if (iterator->in_squotes || iterator->in_dquotes)
-		return (-1);
-	return (0);
-}
-
 int	syntax_errors(t_node *tokens)
 {
 	if (!tokens)
 		return (-1);
-	if (check_closing_quotes(tokens) == -1)
-	{
-		print_error("unclosed quotes\n", 2);
-		return (-1);
-	}
+	
+	// t_node *iterator = tokens;
+	// while (iterator)
+	// {
+	// 	printf("[%s]	=> in_squotes [%d] || in_dquotes [%d] || type [%d]\n",
+	// 		iterator->word, iterator->in_squotes,
+	// 			iterator->in_dquotes, iterator->type);
+	// 	iterator = iterator->next;
+	// }
 	if (check_valid_operators(tokens) == -1)
 		return (-1);
 	if (check_ope_args(tokens) == -1)

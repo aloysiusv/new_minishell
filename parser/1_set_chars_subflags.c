@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:36:15 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/01 03:42:08 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:19:53 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,20 @@ static void	set_quote_flags(t_node **iterator, char quote)
 		*iterator = (*iterator)->next;
 }
 
+static int	check_closing_quotes(t_node *head)
+{
+	t_node  *iterator;
+
+	if (!head)
+		return (-1);
+	iterator = head;
+	while (iterator->next)
+		iterator = iterator->next;
+	if (iterator->in_squotes || iterator->in_dquotes)
+		return (-1);
+	return (0);
+}
+
 void	set_chars_subflags(t_node **head)
 {
 	t_node	*iterator;
@@ -62,6 +76,11 @@ void	set_chars_subflags(t_node **head)
 			set_quote_flags(&iterator, '\"');
 		if (iterator)
 			iterator = iterator->next;
+	}
+	if (check_closing_quotes(*head) == -1)
+	{
+		print_error("unclosed quotes\n", 2);
+		return ;
 	}
 	set_literals(head);
 	set_expansion_flags(head);
