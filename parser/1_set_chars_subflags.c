@@ -6,24 +6,11 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:36:15 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 17:39:16 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/01 03:42:08 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	set_useless_quotes(t_node **head)
-{
-	t_node	*iterator;
-
-	iterator = *head;
-	while (iterator)
-	{
-		if (iterator->type == SQUOTE || iterator->type == DQUOTE)			// || (iterator->type == BLANK && !iterator->in_dquotes
-			iterator->type = USELESS;
-		iterator = iterator->next;
-	}
-}
 
 static void	set_literals(t_node **head)
 {
@@ -36,8 +23,6 @@ static void	set_literals(t_node **head)
 		{
 			if (iterator->type == DOLLAR && iterator->in_dquotes)
 				iterator->type = DOLLAR;
-			// else if (iterator->type == BLANK)
-			// 	iterator->type = LITERAL; /*used to be blank /!\*/
 			else
 				iterator->type = LITERAL;
 		}
@@ -80,5 +65,4 @@ void	set_chars_subflags(t_node **head)
 	}
 	set_literals(head);
 	set_expansion_flags(head);
-	set_useless_quotes(head);
 }

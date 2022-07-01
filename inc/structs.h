@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 02:56:34 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:53:24 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ enum e_type
 	BLANK,
 	LITERAL,
 	FILENAME,
-	// CMD,
-	// ARGS,
 	INFILE,
 	LIMITER,
 	OUTFILE,
@@ -37,7 +35,6 @@ enum e_type
 	PIPE,
 	DOLLAR,
 	DOLLAR_TRAIL,
-	EQUAL,
 };
 
 typedef struct		s_node

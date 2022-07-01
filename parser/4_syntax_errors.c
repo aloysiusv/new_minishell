@@ -6,13 +6,19 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 17:44:40 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:35:08 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		check_redirs_args(t_node *head)
+static void	skip_blanks(t_node **iterator)
+{
+	while (*iterator && (*iterator)->type == BLANK)
+		*iterator = (*iterator)->next;
+}
+
+static int		check_ope_args(t_node *head)
 {
 	t_node	*iterator;
 
@@ -20,17 +26,14 @@ static int		check_redirs_args(t_node *head)
 	while (iterator)
 	{
 		if (iterator->type == RD_INPUT || iterator->type == RD_OUTPUT
-			|| iterator->type == APPEND || iterator->type == HRDOC)
+			|| iterator->type == APPEND || iterator->type == HRDOC
+			|| )
 		{
-			if (!iterator->next || (iterator->next->type != LITERAL
-				&& iterator->next->type != BLANK))
+			if (!iterator->next)
 				return (-1);
-			else if (iterator->next && iterator->type == BLANK)
-			{
-				iterator = iterator->next;
-				if (iterator->type != LITERAL)
-					return (-1);
-			}
+			skip_blanks(&iterator);
+			if (!iterator->next || iterator->next->type != LITERAL)
+				return (-1);
 		}
 		iterator = iterator->next;
 	}
@@ -64,19 +67,22 @@ static int     check_valid_operators(t_node *head)
   		{RD_INPUT, '<'},
 		{RD_OUTPUT, '>'},
 		{PIPE, '|'},
-		{EQUAL, '='}
 	};
 
     iterator = head;
     while (iterator)
     {
 		i = -1;
-		while (++i < 4)
+		while (++i < 3)
 			if (iterator->type == list[i].type)
 				if (is_it_valid(iterator->word, list[i].ope) == -1)
+				{
+					printf("minishell: error: syntax error near unexpected token `%s'\n", iterator->word);
 					return (-1);
+				}
         iterator = iterator->next;
     }
+
 	return (0);
 }
 
@@ -104,18 +110,13 @@ int	syntax_errors(t_node *tokens)
 		return (-1);
 	}
 	if (check_valid_operators(tokens) == -1)
+		return (-1);
+	if (check_ope_args(tokens) == -1)
 	{
-		print_error("invalid token\n", 2);
+		print_error("syntax error near unexpected token `newline'\n", 2);
 		return (-1);
 	}
-	if (check_redirs_args(tokens) == -1)
-	{
-		print_error("invalid filename\n", 2);
-		return (-1);
-	}
-	assign_word_types(tokens);
 	return (0);
-
 }
 
 // int main(void)

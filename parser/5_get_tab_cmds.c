@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4_get_lst_cmds.c                                   :+:      :+:    :+:   */
+/*   5_get_tab_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/28 16:31:45 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 18:58:38 by lrandria         ###   ########.fr       */
+/*   Created: 2022/06/30 19:39:48 by lrandria          #+#    #+#             */
+/*   Updated: 2022/06/30 19:51:23 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,7 @@ static void	print_str_tab(char **str)
 	}
 }
 
-// static void	print_list(t_node *tokens, size_t index)
-// {
-// 	t_node	*iterator;
-//
-// 	if (!tokens)
-// 		return ;
-// 	iterator = tokens;
-// 	while (iterator)
-// 	{
-// 		printf("list[%zu] => word [%s] type [%d]\n",
-// 			index, iterator->word, iterator->type);
-// 		iterator = iterator->next;
-// 	}
-// }
-
-static void	setup_final_lst(t_node **tokens)
+static void	join_literals(t_node **tokens)
 {
 	t_node	*iterator;
 	char	*copy;
@@ -123,7 +108,6 @@ static size_t	how_many_redirs(t_node *tokens)
 	redirs += get_nb_types(tokens, OUTFILE);
 	redirs += get_nb_types(tokens, OUTFILE_A);
 	return (redirs);
-
 }
 
 static void	get_io_files(t_cmd *cmd)
@@ -188,7 +172,7 @@ static void	push_back(t_node **alst, t_node *new)
 	new_alst->next = new;
 }
 
-void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
+void	get_tab_cmds(t_cmd **cmds, t_node **tokens)
 {
 	t_node	*iterator;
 	t_node	*new;
@@ -215,7 +199,7 @@ void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
 				new->in_dquotes = true;
 			iterator = iterator->next;
 		}
-		setup_final_lst(&(*cmds)[i].tokens);
+		join_literals(&(*cmds)[i].tokens);
 		delete_useless_tokens(&(*cmds)[i].tokens, USELESS);
 		set_filetype(&(*cmds)[i].tokens, RD_INPUT, BLANK, INFILE);
 		set_filetype(&(*cmds)[i].tokens, RD_OUTPUT, BLANK, OUTFILE);
@@ -228,8 +212,6 @@ void	get_lst_cmds(t_cmd **cmds, t_node **tokens)
 		printf("Char ** of cmd[%zu]\n", i);
 		print_str_tab((*cmds)[i].command);
 		printf("Command is [%s]\n", (*cmds)[i].command[0]);
-		// get_full_cmd(&(*cmds)[i]);
-		// print_list((*cmds)[i].tokens, i);
 		if (iterator && iterator->type == PIPE)
 			iterator = iterator->next;
 		i++;

@@ -6,13 +6,13 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:28:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 19:26:25 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:51:45 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int is_it_weird(t_node **iterator)
+static int special_expansions(t_node **iterator)
 {
 	if (!(*iterator)->next || ((*iterator)->next
 		&& ft_isset((*iterator)->next->charac, ALL_SPACES)))
@@ -49,7 +49,7 @@ void	set_expansion_flags(t_node **head)
 	{
 		if (iterator->type == DOLLAR)
 		{
-			if (is_it_weird(&iterator) == 1)
+			if (special_expansions(&iterator) == 1)
 			{
 				iterator = iterator->next;
 				continue ;

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:35:41 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/28 22:13:41 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:54:59 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ static void	get_next_char(char *str, size_t *i, t_node **curr)
 		(*curr)->next = add_bottom_node(*curr, '|', NULL, PIPE);
 	else if (str[*i] == '$')
 		(*curr)->next = add_bottom_node(*curr, '$', NULL, DOLLAR);
-	else if (str[*i] == '=')
-		(*curr)->next = add_bottom_node(*curr, '=', NULL, EQUAL);
 	else if (ft_isset(str[*i], ALL_SPACES) == 1)
 		(*curr)->next = add_bottom_node(*curr, ' ', NULL, BLANK);
 	else
@@ -48,8 +46,6 @@ static t_node	*get_first_char(char *str)
 		return(create_node('|', NULL, PIPE));
 	else if (str[0] == '$')
 		return(create_node('$', NULL, DOLLAR));
-	else if (str[0] == '=')
-		return(create_node('=', NULL, EQUAL));
 	else
 		return(create_node(str[0], NULL, LITERAL));
 }

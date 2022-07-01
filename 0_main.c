@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 23:25:11 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:31:16 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static void	parsing(t_shell *sh)
 	get_lst_chars(sh->cmdline, &sh->chars);
 	get_lst_tokens(sh->chars, &sh->tokens);
 	get_lst_expanded(&sh->tokens, sh->env_var);
-	get_lst_cmds(&sh->cmds, &sh->tokens);
+	if (syntax_errors(sh->tokens) == -1)
+		return ;
+	get_tab_cmds(&sh->cmds, &sh->tokens);
 	// t_node *iterator = sh->tokens;
 	// while (iterator)
 	// {
@@ -28,8 +30,6 @@ static void	parsing(t_shell *sh)
 	// 			iterator->in_dquotes, iterator->type);
 	// 	iterator = iterator->next;
 	// }
-	// if (syntax_errors(sh->tokens) == -1)
-	// 	return ;
 }
 
 static int	only_blanks(char *cmdline)

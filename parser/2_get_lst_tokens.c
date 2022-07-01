@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 22:35:19 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:53:42 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,4 @@ void	get_lst_tokens(t_node *chars, t_node **tokens)
 		chars = chars->next;
 		curr = curr->next;
 	}
-	// delete_lst(&chars)
 }
