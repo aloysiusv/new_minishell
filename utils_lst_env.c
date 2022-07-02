@@ -6,13 +6,13 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 20:21:07 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/01 18:26:34 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	delete_node_var(t_env *node)
+void	delete_node_env(t_env *node)
 {
 	if (node->key)
 		free(node->key);
@@ -22,7 +22,7 @@ void	delete_node_var(t_env *node)
 		free(node);
 }
 
-void	delete_specific_node_var(t_env **head, char *key)
+void	delete_specific_node_env(t_env **head, char *key)
 {
 	t_env	*iterator;
 
@@ -38,14 +38,14 @@ void	delete_specific_node_var(t_env **head, char *key)
 			}
 			else if (iterator->prev && !iterator->next)
 				iterator->prev->next = NULL;
-			delete_node_var(iterator);
+			delete_node_env(iterator);
 			return ;
 		}
 		iterator = iterator->next;
 	}
 }
 
-void	delete_lst_var(t_env **head)
+void	delete_lst_env(t_env **head)
 {
 	t_env	*tmp;
 
@@ -55,12 +55,12 @@ void	delete_lst_var(t_env **head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
-		delete_node_var(tmp);
+		delete_node_env(tmp);
 		tmp = NULL;
 	}
 }
 
-t_env	*create_node_var(char **keyvalue)
+t_env	*create_node_env(char **keyvalue)
 {
 	t_env	*new;
 
@@ -79,11 +79,11 @@ t_env	*create_node_var(char **keyvalue)
 	return (new);
 }
 
-t_env	*add_bottom_node_var(char **keyvalue, t_env *current_last)
+t_env	*add_bottom_node_env(char **keyvalue, t_env *current_last)
 {
 	t_env	*bottom;
 
-	bottom = create_node_var(keyvalue);
+	bottom = create_node_env(keyvalue);
 	if (!bottom)
 		return (NULL);
 	if (current_last)

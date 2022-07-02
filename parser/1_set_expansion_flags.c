@@ -6,13 +6,13 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:28:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 21:51:45 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 14:38:53 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int special_expansions(t_node **iterator)
+static int	special_expansions(t_node **iterator)
 {
 	if (!(*iterator)->next || ((*iterator)->next
 		&& ft_isset((*iterator)->next->charac, ALL_SPACES)))

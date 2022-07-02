@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:34:47 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 23:27:27 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 14:50:12 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void    free_prev(char **tab, size_t nb_words)
 	i = 0;
     if (!tab)
     {
-        return ;
-    }
+		return ;
+	}
 	while (i < nb_words)
 		free(tab[i]);
 	free(tab);
@@ -49,7 +49,7 @@ void	free_shell(t_shell *sh)
 	if (sh->all_paths)
 		free_tab(sh->all_paths);
 	if (sh->env_var)
-		delete_lst_var(&sh->env_var);
+		delete_lst_env(&sh->env_var);
 	if (sh->chars)
 		delete_lst(&sh->chars);
 	if (sh->tokens)

@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 19:09:23 by lrandria          #+#    #+#              #
-#    Updated: 2022/06/30 22:18:28 by lrandria         ###   ########.fr        #
+#    Updated: 2022/07/02 14:57:58 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SRCS		=	0_main.c \
 				utils_tab_cmds.c \
 				utils_lst_delete.c utils_lst_nodes.c utils_lst_env.c \
 				utils_errors.c utils_free.c \
-				#parser/4_syntax_errors.c \
 
 all:			$(LFT) $(NAME)
 

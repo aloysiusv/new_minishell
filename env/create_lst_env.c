@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:02:23 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/26 02:16:59 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/01 18:26:34 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ static t_env	*init_var(char *var, t_env *curr, int mode)
 	if (!keyvalue)
 		return (NULL);
 	if (mode == FIRST)
-		return (create_node_var(keyvalue));
+		return (create_node_env(keyvalue));
 	else if (mode == NEXT)
-		return(add_bottom_node_var(keyvalue, curr));
+		return(add_bottom_node_env(keyvalue, curr));
 	return (NULL);
 }
 
@@ -110,7 +110,7 @@ t_env		*create_lst_env(char **env)
 // 		printf("%s=%s\n", iterator->key, iterator->value);
 // 		iterator = iterator->next;
 // 	}
-// 	delete_specific_node_var(&head, "LS_COLORS");
+// 	delete_specific_node_env(&head, "LS_COLORS");
 // 	printf("=========AFTER DELETING LS COLORS=========\n");
 // 	iterator = head;
 // 	while (iterator)
@@ -118,6 +118,6 @@ t_env		*create_lst_env(char **env)
 // 		printf("%s=%s\n", iterator->key, iterator->value);
 // 		iterator = iterator->next;
 // 	}
-// 	delete_lst_var(&head);
+// 	delete_lst_env(&head);
 // 	return (0);
 // }

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 19:39:48 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 19:51:23 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:20:21 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,10 +215,8 @@ void	get_tab_cmds(t_cmd **cmds, t_node **tokens)
 		if (iterator && iterator->type == PIPE)
 			iterator = iterator->next;
 		i++;
-	}
 	print_cmds_tab(*cmds);
-}
-
+	}
 	// t_node *iteratoor = *tokens;
 	// 	while (iteratoor)
 	// 	{
@@ -227,3 +225,4 @@ void	get_tab_cmds(t_cmd **cmds, t_node **tokens)
 	// 			iteratoor->in_dquotes, iteratoor->type);
 	// 	iteratoor = iteratoor->next;
 	// }
+}

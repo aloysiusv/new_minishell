@@ -6,13 +6,20 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/01 04:31:16 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 14:18:05 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int g_exit_code = 0;
+
+static void	exec(t_shell *sh)
+{
+	exec_builtin(sh->cmds, sh);
+	// exec_simple_cmd(sh->tokens);
+	// exec_multi_cmds(sh->tokens);
+}
 
 static void	parsing(t_shell *sh)
 {
@@ -30,6 +37,8 @@ static void	parsing(t_shell *sh)
 	// 			iterator->in_dquotes, iterator->type);
 	// 	iterator = iterator->next;
 	// }
+	// if (syntax_errors(sh->tokens) == -1)
+	// 	return ;
 }
 
 static int	only_blanks(char *cmdline)
@@ -68,9 +77,7 @@ static void	mini_loop(t_shell *sh)
 		{
 			add_history(sh->cmdline);
 			parsing(sh);
-			// exec_builtin(sh->tokens, sh->env_var);
-			// exec_simple_cmd(sh->tokens);
-			// exec_multi_cmds(sh->tokens);
+			exec(sh);
 			delete_lst(&sh->chars);
 			delete_lst(&sh->tokens);
 			delete_cmds_tab(&sh->cmds);

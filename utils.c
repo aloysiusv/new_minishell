@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 11:39:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 06:18:27 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:14:19 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ size_t	get_tab_size(char **tab)
 {
 	size_t	i;
 
-	i = 0;
 	if (!tab)
-	{
 		return (0);
-	}
+	i = 0;
 	while (tab[i])
 		i++;
 	return (i);

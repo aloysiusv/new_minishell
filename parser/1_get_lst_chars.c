@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:35:41 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/01 04:54:59 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 14:22:12 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ static char	*trim_spaces(char const *str)
 	return (new_s);
 }
 
-void	get_lst_chars(char *cmdline, t_node **chars)
+int	get_lst_chars(char *cmdline, t_node **chars)
 {
 	size_t	i;
 	t_node	*curr;
 	char	*str;
 
 	if (!cmdline)
-		return ;
+		return (-1);
 	str = trim_spaces(cmdline);
 	*chars = get_first_char(str);
 	curr = *chars;
@@ -87,5 +87,7 @@ void	get_lst_chars(char *cmdline, t_node **chars)
 		i++;
 	}
 	free(str);
-	set_chars_subflags(chars);
+	if (set_chars_subflags(chars) == -1)
+		return (-1);
+	return (0);
 }
