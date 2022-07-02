@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:35:41 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 14:22:12 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:42:14 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static char	*trim_spaces(char const *str)
 	size_t	i;
 	size_t	j;
 
-	if (!str || !*str)
-		return (NULL);
 	i = 0;
 	while (str[i] && ft_isset(str[i], ALL_SPACES) == 1)
 		i++;
@@ -74,7 +72,7 @@ int	get_lst_chars(char *cmdline, t_node **chars)
 	t_node	*curr;
 	char	*str;
 
-	if (!cmdline)
+	if (!cmdline || !*cmdline)
 		return (-1);
 	str = trim_spaces(cmdline);
 	*chars = get_first_char(str);
@@ -83,6 +81,8 @@ int	get_lst_chars(char *cmdline, t_node **chars)
 	while (str[i])
 	{
 		get_next_char(str, &i, &curr);
+		if (!curr)
+			return (-1);
 		curr = curr->next;
 		i++;
 	}

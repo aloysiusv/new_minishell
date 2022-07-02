@@ -6,11 +6,23 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:28:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 14:38:53 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:38:46 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	set_dollar_trail_flags(t_node **iterator)
+{
+	while (*iterator && (*iterator)->type == LITERAL)
+	{
+		if (ft_isset((*iterator)->charac, " 	\'\"|<>"))
+			return ;
+		(*iterator)->type = DOLLAR_TRAIL;
+		if (*iterator)
+			*iterator = (*iterator)->next;
+	}
+}
 
 static int	special_expansions(t_node **iterator)
 {
@@ -51,19 +63,16 @@ void	set_expansion_flags(t_node **head)
 		{
 			if (special_expansions(&iterator) == 1)
 			{
-				iterator = iterator->next;
+				if (iterator)
+					iterator = iterator->next;
 				continue ;
 			}
-			iterator = iterator->next;
-			while (iterator && iterator->type == LITERAL)
-			{
-				if (ft_isset(iterator->charac, " 	\'\"|<>"))
-					break ;
-				iterator->type = DOLLAR_TRAIL;
+			if (iterator)
 				iterator = iterator->next;
-			}
+			set_dollar_trail_flags(&iterator);
 		}
 		else
-			iterator = iterator->next;
+			if (iterator)
+				iterator = iterator->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 15:10:19 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:16:40 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int		check_ope_args(t_node *head)
 		{
 			if (!iterator->next)
 				return (-1);
-			iterator = iterator->next;
+			if (iterator)
+				iterator = iterator->next;
 			skip_blanks(&iterator);
 			if (iterator && iterator->type != LITERAL)
 				return (-1);
@@ -82,7 +83,8 @@ static int	check_valid_operators(t_node *head)
 					printf("minishell: error: syntax error near unexpected token `%s'\n", iterator->word);
 					return (-1);
 				}
-		iterator = iterator->next;
+		if (iterator)
+			iterator = iterator->next;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 14:37:10 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:07:46 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ void	get_lst_tokens(t_node *chars, t_node **tokens)
 		if (ft_lstsize_2(*tokens) == 1)
 			return ;
 		set_qflags_and_skip_chars(&chars, &curr->next);
-		chars = chars->next;
-		curr = curr->next;
+		if (chars)
+			chars = chars->next;
+		if (curr)
+			curr = curr->next;
 	}
 }

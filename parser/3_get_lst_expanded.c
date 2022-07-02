@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 14:43:41 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:07:18 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ static void	set_useless_quotes(t_node **head) /* new */
 		if (iterator->type == SQUOTE || iterator->type == DQUOTE
 			|| iterator->type == DOLLAR)
 			iterator->type = USELESS;
-		iterator = iterator->next;
+		if (iterator)
+			iterator = iterator->next;
 	}
 }
 
@@ -101,7 +102,8 @@ void	get_lst_expanded(t_node **tokens, t_env *vars)
 			else
 				expand_word(&iterator, vars);
 		}
-		iterator = iterator->next;
+		if (iterator)
+			iterator = iterator->next;
 	}
 	set_useless_quotes(tokens); /* new */
 	delete_useless_tokens(tokens, USELESS);

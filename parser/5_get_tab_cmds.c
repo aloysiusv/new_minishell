@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 19:39:48 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 15:20:21 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:12:27 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ static void	join_literals(t_node **tokens)
 		}
 		else if (iterator->type == BLANK)
 			iterator->type = USELESS;
-		iterator = iterator->next;	
+		if (iterator)
+			iterator = iterator->next;	
 	}
 }
 
@@ -95,7 +96,8 @@ static void	set_filename_flags(t_node **tokens)
 			|| iterator->type == RD_INPUT || iterator->type == RD_OUTPUT
 			|| iterator->type == APPEND || iterator->type == HRDOC)
 			iterator->type = FILENAME;
-        iterator = iterator->next;
+		if (iterator)
+        	iterator = iterator->next;
     }
 }
 
@@ -130,7 +132,8 @@ static void	get_io_files(t_cmd *cmd)
 			cmd->files[i].type = iterator->type;
 			i++;
 		}
-		iterator = iterator->next;
+		if (iterator)
+			iterator = iterator->next;
 	}
 }
 
@@ -155,21 +158,21 @@ static void	set_filetype(t_node **tok, int mode, int ignore, int assign)
 	}
 }
 
-static void	push_back(t_node **alst, t_node *new)
+static void	push_back(t_node **tokens, t_node *new)
 {
-	t_node	*new_alst;
+	t_node	*new_token;
 
-	if (alst == 0 || new == 0)
+	if (!tokens || !new)
 		return ;
-	if (*alst == 0)
+	if (*tokens == NULL)
 	{
-		*alst = new;
+		*tokens = new;
 		return ;
 	}
-	new_alst = *alst;
-	while (new_alst->next != NULL)
-		new_alst = new_alst->next;
-	new_alst->next = new;
+	new_token = *tokens;
+	while (new_token->next)
+		new_token = new_token->next;
+	new_token->next = new;
 }
 
 void	get_tab_cmds(t_cmd **cmds, t_node **tokens)
@@ -179,7 +182,7 @@ void	get_tab_cmds(t_cmd **cmds, t_node **tokens)
 	size_t	nb_cmds;
 	size_t	i;
 
-    nb_cmds = get_nb_types(*tokens, PIPE) + 1;
+	nb_cmds = get_nb_types(*tokens, PIPE) + 1;
 	*cmds = ft_calloc(nb_cmds, sizeof(t_cmd) + 1);
 	if (!*cmds)
 		return ;
@@ -197,7 +200,8 @@ void	get_tab_cmds(t_cmd **cmds, t_node **tokens)
 				new->in_squotes = true;
 			else if (iterator->in_dquotes)
 				new->in_dquotes = true;
-			iterator = iterator->next;
+			if (iterator)
+				iterator = iterator->next;
 		}
 		join_literals(&(*cmds)[i].tokens);
 		delete_useless_tokens(&(*cmds)[i].tokens, USELESS);
