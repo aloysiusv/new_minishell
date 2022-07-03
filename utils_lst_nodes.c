@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/29 21:01:03 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 04:17:53 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,10 @@ t_node	*add_bottom_node(t_node *current_last, char value, char *word, int type)
 		bottom->next = NULL;
 	}
 	return (bottom);
+}
+
+void	skip_blanks(t_node **iterator)
+{
+	while (*iterator && (*iterator)->type == BLANK)
+		*iterator = (*iterator)->next;
 }

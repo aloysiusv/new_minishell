@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 11:39:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 15:14:19 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 14:39:40 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,27 @@ size_t	get_tab_size(char **tab)
 	while (tab[i])
 		i++;
 	return (i);
+}
+
+char	*lst_to_str(t_node *lst)
+{
+	char	*line;
+	t_node	*iterator;
+
+	iterator = lst;
+	if (ft_lstsize_2(lst) == 1)
+		line = ft_strdup(iterator->word);
+	else
+	{
+		while (iterator && iterator->next)
+		{
+			line = ft_strjoin(iterator->word, iterator->next->word);
+			if (!line)
+				return (delete_lst(&lst), NULL);
+			iterator = iterator->next;
+		}
+	}
+	return (line);
 }
 
 char	**lst_to_tab(t_node *lst)
@@ -44,16 +65,6 @@ char	**lst_to_tab(t_node *lst)
 	}
 	tab[i] = NULL;
 	return (tab);
-}
-
-t_node	*get_lst_tail(t_node *head)
-{
-	t_node	*tail;
-
-	tail = head;
-	while (tail->next)
-		tail = tail->next;
-	return (tail);
 }
 
 size_t	ft_lstsize_2(t_node *head)
@@ -87,20 +98,4 @@ size_t  get_nb_types(t_node *tokens, int type)
         iterator = iterator->next;
     }
 	return (nb_types);
-}
-
-int	is_valid_input(char const *str)
-{
-	size_t	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (ft_isalpha(str[i]))
-			return (1);
-		i++;
-	}
-	return (0);
 }

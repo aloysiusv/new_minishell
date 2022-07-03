@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:58:40 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 14:18:05 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 14:47:13 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,25 @@ int g_exit_code = 0;
 static void	exec(t_shell *sh)
 {
 	exec_builtin(sh->cmds, sh);
+	exec_hrdoc(sh->cmds, sh);
 	// exec_simple_cmd(sh->tokens);
 	// exec_multi_cmds(sh->tokens);
 }
 
-static void	parsing(t_shell *sh)
+static int	parsing(t_shell *sh)
 {
-	get_lst_chars(sh->cmdline, &sh->chars);
+	if (get_lst_chars(sh->cmdline, &sh->chars) == -1)
+		return (delete_lst(&sh->chars), -1);
 	get_lst_tokens(sh->chars, &sh->tokens);
 	get_lst_expanded(&sh->tokens, sh->env_var);
 	if (syntax_errors(sh->tokens) == -1)
-		return ;
+	{
+		delete_lst(&sh->chars);
+		delete_lst(&sh->tokens);
+		return (-1);
+	}
 	get_tab_cmds(&sh->cmds, &sh->tokens);
+	return (0);
 	// t_node *iterator = sh->tokens;
 	// while (iterator)
 	// {
@@ -65,8 +72,8 @@ static void	mini_loop(t_shell *sh)
 {
 	while (1)
 	{
-		signal(SIGINT, handle_signals);
-		signal(SIGQUIT, handle_signals);
+		signal(SIGINT, handle_signal);
+		signal(SIGQUIT, SIG_IGN);
 		sh->cmdline = readline(PROMPT);
 		if (!*sh->cmdline || only_blanks(sh->cmdline) == 1)
 		{
@@ -76,7 +83,8 @@ static void	mini_loop(t_shell *sh)
 		if (ft_strlen(sh->cmdline) > 0)
 		{
 			add_history(sh->cmdline);
-			parsing(sh);
+			if (parsing(sh) == -1)
+				continue ;
 			exec(sh);
 			delete_lst(&sh->chars);
 			delete_lst(&sh->tokens);

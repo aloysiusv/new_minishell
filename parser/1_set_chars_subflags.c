@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:36:15 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 15:33:30 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 16:43:47 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ static void	set_literals(t_node **head)
 	iterator = *head;
 	while (iterator)
 	{
-		if (iterator->in_squotes || iterator->in_dquotes)
+		if ((iterator->in_squotes || iterator->in_dquotes)
+			&& (iterator->type != SQUOTE && iterator->type != DQUOTE))
 		{
 			if (iterator->type == DOLLAR && iterator->in_dquotes)
 				iterator->type = DOLLAR;
 			else
 				iterator->type = LITERAL;
 		}
-		iterator = iterator->next;
+		if (iterator)
+			iterator = iterator->next;
 	}
 }
 
@@ -47,15 +49,33 @@ static void	set_quote_flags(t_node **iterator, char quote)
 		*iterator = (*iterator)->next;
 }
 
+static int	check_closing_quotes2(t_node **head, int type)
+{
+	*head = (*head)->next;
+	while (*head && (*head)->type != type)
+		*head = (*head)->next;
+	if (!*head || (*head)->type != type)
+		return (-1);
+	return (0);
+}
+
 static int	check_closing_quotes(t_node *head)
 {
 	t_node  *iterator;
 
 	iterator = head;
-	while (iterator->next)
-		iterator = iterator->next;
-	if (iterator->in_squotes || iterator->in_dquotes)
+	if (ft_lstsize_2(head) == 1 && 
+		(iterator->type == SQUOTE || iterator->type == DQUOTE))
 		return (-1);
+	while (iterator)
+	{
+		if (iterator->type == SQUOTE || iterator->type == DQUOTE)
+		{
+			if (check_closing_quotes2(&iterator, iterator->type) == -1)
+				return (-1);
+		}
+		iterator = iterator->next;
+	}
 	return (0);
 }
 
@@ -63,8 +83,6 @@ int	set_chars_subflags(t_node **head)
 {
 	t_node	*iterator;
 
-	if (!head || !*head)
-		return (-1);
 	iterator = *head;
 	while (iterator)
 	{

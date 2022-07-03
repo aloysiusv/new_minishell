@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 19:09:23 by lrandria          #+#    #+#              #
-#    Updated: 2022/07/02 14:57:58 by lrandria         ###   ########.fr        #
+#    Updated: 2022/07/03 14:14:35 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS		=	0_main.c \
 				parser/1_set_chars_subflags.c \
 				parser/1_set_expansion_flags.c \
 				parser/2_get_lst_tokens.c \
+				parser/3_get_expansions.c \
 				parser/3_get_lst_expanded.c \
 				parser/4_syntax_errors.c \
 				parser/5_get_tab_cmds.c \
@@ -31,6 +32,7 @@ SRCS		=	0_main.c \
 				exec/exec_builtin.c \
 				builtins/ft_echo.c \
 				signals.c \
+				heredoc.c heredoc_expand1.c heredoc_expand2.c heredoc_expand3.c \
 				utils.c \
 				utils_tab_cmds.c \
 				utils_lst_delete.c utils_lst_nodes.c utils_lst_env.c \

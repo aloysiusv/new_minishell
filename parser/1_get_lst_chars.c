@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:35:41 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 15:42:14 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 04:48:37 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static t_node	*get_first_char(char *str)
 		return(create_node('|', NULL, PIPE));
 	else if (str[0] == '$')
 		return(create_node('$', NULL, DOLLAR));
+	else if (ft_isset(str[0], ALL_SPACES) == 1)
+		return(create_node(' ', NULL, BLANK));
 	else
 		return(create_node(str[0], NULL, LITERAL));
 }
@@ -66,15 +68,15 @@ static char	*trim_spaces(char const *str)
 	return (new_s);
 }
 
-int	get_lst_chars(char *cmdline, t_node **chars)
+int	get_lst_chars(char *line, t_node **chars)
 {
 	size_t	i;
 	t_node	*curr;
 	char	*str;
 
-	if (!cmdline || !*cmdline)
+	if (!line || !*line)
 		return (-1);
-	str = trim_spaces(cmdline);
+	str = trim_spaces(line);
 	*chars = get_first_char(str);
 	curr = *chars;
 	i = 1;

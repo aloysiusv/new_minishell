@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:39:35 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 02:56:34 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 15:56:39 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ enum e_type
 	BLANK,
 	LITERAL,
 	FILENAME,
-	// CMD,
-	// ARGS,
 	INFILE,
 	LIMITER,
 	OUTFILE,
@@ -73,24 +71,26 @@ typedef struct		s_env
 typedef struct s_file
 {
 	char	*name;
-	int		type;
+	int	type;
+	bool	quote;
 }			t_file;
 
 typedef struct s_command
 {
-	t_node				*tokens;
-	t_file				*files;
-	size_t				index;
-	char				*exec_path;
-	char				**command;
-	int					fdin;
-	int					fdout;
-	size_t				nb_cmds;
-	size_t				nb_files;
-}						t_cmd;
+	t_node	*tokens;
+	t_file	*files;
+	size_t	index;
+	size_t	nb_cmds;
+	size_t	nb_files;
+	char	*exec_path;
+	char	**command;
+	pid_t	pid;
+	int	status;
+	int	fdin;
+	int	fdout;
+}			t_cmd;
 
 							/* SHELL DATA */
-
 
 typedef struct		s_shell
 {
@@ -106,7 +106,6 @@ typedef struct		s_shell
 
 							/* HRDOC */
 
-
 typedef struct 		s_hdoc
 {
 	t_shell			*data;
@@ -115,8 +114,6 @@ typedef struct 		s_hdoc
 	int				fds[2];
 	char			*limiter;
 	char			*line;
-	// char	*buffer;
-	// char	*eof;
 }					t_hdoc;
 
 

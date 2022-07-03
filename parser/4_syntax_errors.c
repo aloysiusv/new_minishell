@@ -6,17 +6,11 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 16:16:40 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 04:19:20 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	skip_blanks(t_node **iterator)
-{
-	while (*iterator && (*iterator)->type == BLANK)
-		*iterator = (*iterator)->next;
-}
 
 static int		check_ope_args(t_node *head)
 {

@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 12:11:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 23:29:21 by lrandria         ###   ########.fr       */
+/*   Created: 2022/07/02 17:36:18 by lrandria          #+#    #+#             */
+/*   Updated: 2022/07/02 22:35:54 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	handle_signal(int sig)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	if (sig == SIGINT)
+	size_t			i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (-1);
+	while (s1[i] || s2[i])
 	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_exit_code = 130;
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
 	}
+	return (0);
 }

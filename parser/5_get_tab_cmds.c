@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 19:39:48 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 16:12:27 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:17:41 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,10 @@ static void	get_io_files(t_cmd *cmd)
 		{
 			cmd->files[i].name = ft_strdup(iterator->word);
 			cmd->files[i].type = iterator->type;
+			if (iterator->in_squotes)
+				cmd->files[i].quote = true;
+			else if (iterator->in_dquotes)
+				cmd->files[i].quote = true;
 			i++;
 		}
 		if (iterator)

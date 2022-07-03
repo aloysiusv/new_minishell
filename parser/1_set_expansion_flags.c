@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:28:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 15:38:46 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/02 20:15:06 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	special_expansions(t_node **iterator)
 		(*iterator)->next->type = USELESS;
 		return (1);
 	}
-	else if ((*iterator)->next && ft_isset((*iterator)->next->charac, "?_"))
+	else if ((*iterator)->next && ft_isset((*iterator)->next->charac, "?"))
 	{
 		(*iterator)->next->type = DOLLAR_TRAIL;
 		return (1);

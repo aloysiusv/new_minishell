@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_find_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 12:11:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 23:29:21 by lrandria         ###   ########.fr       */
+/*   Created: 2022/07/03 14:38:55 by lrandria          #+#    #+#             */
+/*   Updated: 2022/07/03 14:41:23 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	handle_signal(int sig)
+size_t	find_char(char *s, char c)
 {
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_exit_code = 130;
-	}
+	size_t	i = 0;
+
+	while (s[i])
+		if (s[i++] == c)
+			return (1);
+	return (0);
 }
