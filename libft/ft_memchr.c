@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 20:53:04 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:00:56 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:18:08 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:18:08 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	i;
+	size_t				i;
 
 	i = 0;
 	while (i < n)
 	{
-		if (((unsigned char *)(s))[i] == (unsigned char)c)
-			return ((void *)s + i);
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return ((unsigned char *)s + i);
 		i++;
 	}
 	return (0);

@@ -5,28 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/28 12:00:48 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 18:12:22 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:16:58 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:16:58 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list	*node;
-	t_list	*to_del;
+	t_list			*tmp;
+	t_list			*node;
 
-	if (lst == 0)
-		return ;
 	node = *lst;
-	while (node)
+	while (node != NULL)
 	{
-		to_del = node;
+		tmp = node;
 		node = node->next;
-		if (del)
-			del(to_del->content);
-		free(to_del);
+		ft_lstdelone(tmp, del);
 	}
-	*lst = NULL;
+	*lst = 0;
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 21:50:22 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:01:19 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:18:05 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:18:05 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	size_t	i;
+	size_t				i;
 
 	i = 0;
 	while (i < n)

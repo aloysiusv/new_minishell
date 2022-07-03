@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/28 12:00:53 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 14:03:39 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:17:36 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:17:36 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (lst == 0 || f == 0)
-		return ;
-	while (lst)
+	while (lst != NULL)
 	{
-		(*f)(lst->content);
+		f(lst->content);
 		lst = lst->next;
 	}
 }

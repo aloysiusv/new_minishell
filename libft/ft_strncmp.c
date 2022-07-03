@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 01:21:26 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:03:42 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:20:11 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:20:11 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t	i;
+	size_t			i;
 
 	i = 0;
 	while ((s1[i] || s2[i]) && i < n)

@@ -5,44 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/21 15:28:28 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:07:06 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:20:46 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:20:46 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	slen(unsigned int start, size_t len, size_t size)
+static char	*sub(unsigned int start, size_t len, size_t len_s)
 {
-	if (size < start)
-		return (0);
-	else if (size - start < len)
-		return (size - start);
+	char	*str;
+
+	if (len_s < start)
+		str = (char *)malloc(1);
+	else if (len_s - start < len)
+		str = (char *)malloc(len_s - start + 1);
 	else
-		return (len);
+		str = (char *)malloc(len + 1);
+	return (str);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*new_str;
-	size_t	i;
-	size_t	size;
+	char			*str;
+	size_t			len_s;
+	size_t			i;
 
 	if (s == 0)
 		return (0);
-	size = ft_strlen(s);
-	new_str = (char *)malloc(sizeof(char) * (slen(start, len, size) + 1));
-	if (new_str == 0)
-		return (NULL);
+	len_s = ft_strlen(s);
+	str = sub(start, len, len_s);
+	if (str == 0)
+		return (0);
 	i = 0;
-	if (start < size)
+	if (start < len_s)
 	{
 		while (s[i + start] && i < len)
 		{
-			new_str[i] = s[i + start];
+			str[i] = s[i + start];
 			i++;
 		}
 	}
-	new_str[i] = 0;
-	return (new_str);
+	str[i] = 0;
+	return (str);
 }

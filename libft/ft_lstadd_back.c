@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/07 18:16:32 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 13:58:50 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:16:51 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:16:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 
 void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	t_list	*new_alst;
+	t_list			*node;
 
-	if (alst == 0 || new == 0)
-		return ;
-	if (*alst == 0)
+	if (*alst == NULL)
 	{
 		*alst = new;
 		return ;
 	}
-	new_alst = *alst;
-	while (new_alst->next != NULL)
-		new_alst = new_alst->next;
-	new_alst->next = new;
+	node = *alst;
+	while (node->next != NULL)
+		node = node->next;
+	node->next = new;
 }

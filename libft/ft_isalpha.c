@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 23:36:37 by lrandria          #+#    #+#             */
-/*   Updated: 2021/05/16 23:55:35 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:15:13 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:15:13 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 int	ft_isalpha(int c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	return (ft_islower(c) || ft_isupper(c));
 }

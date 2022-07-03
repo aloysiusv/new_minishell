@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 23:37:24 by lrandria          #+#    #+#             */
-/*   Updated: 2022/06/30 06:19:01 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:19:29 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:19:29 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 char	*ft_strdup(const char *s)
 {
-	char	*str;
-	size_t	s_len;
+	char			*d;
 
-	if (!s)
-		return (NULL);
-	s_len = ft_strlen(s);
-	str = (char *)malloc(sizeof(char) * (s_len + 1));
-	if (str == 0)
-		return (NULL);
-	ft_strlcpy(str, s, s_len + 1);
-	return (str);
+	d = (char *)malloc(ft_strlen(s) + 1);
+	if (d == 0)
+		return (0);
+	ft_strcpy(d, s);
+	return (d);
 }

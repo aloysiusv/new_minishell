@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 23:53:04 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:05:06 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:15:00 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:15:00 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	ft_isalnum(int c)
 {
-	return (ft_isalpha(c) || ft_isdigit(c));
+	return (ft_isdigit(c) || ft_isalpha(c));
 }

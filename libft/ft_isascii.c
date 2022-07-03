@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 23:53:07 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:05:22 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:16:15 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:16:15 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int 	ft_isascii(int c)
+int	ft_isascii(int c)
 {
 	return (c >= 0 && c <= 127);
 }

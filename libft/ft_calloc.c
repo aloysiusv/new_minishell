@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 20:14:57 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 19:49:47 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:14:47 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:14:47 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void	*res;
+	void			*s;
+	size_t			n;
 
-	res = malloc(nmemb * size);
-	if (res == 0)
-		return (NULL);
-	ft_memset(res, 0, nmemb * size);
-	return (res);
+	n = nmemb * size;
+	s = malloc(n);
+	if (s == 0)
+		return (0);
+	return (ft_memset(s, 0, n));
 }

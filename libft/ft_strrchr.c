@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 01:16:01 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:03:16 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:21:00 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:21:00 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	size_t	i;
+	size_t			n;
 
-	i = ft_strlen(s);
-	if (s[i] == (char)c)
-		return ((char *)s + i);
-	while (i--)
-		if (s[i] == (char)c)
-			return ((char *)s + i);
+	n = ft_strlen(s) + 1;
+	while (n--)
+		if (s[n] == (unsigned char)c)
+			return ((char *)s + n);
 	return (0);
 }

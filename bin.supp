@@ -1,0 +1,12 @@
+{
+   <usr>
+   Memcheck:Leak
+   ...
+   obj:/usr/bin/*
+}
+{
+   <bin>
+   Memcheck:Leak
+   ...
+   obj:/bin/*
+}

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/28 12:00:55 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/09 15:43:10 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:17:34 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:17:34 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	if (lst == 0)
-		return (0);
-	while (lst->next)
+	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
 }

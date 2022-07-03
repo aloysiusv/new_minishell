@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 14:09:19 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:03:05 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:19:42 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:19:42 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const	char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t	dst_len;
-	size_t	i;
+	size_t			dst_len;
+	size_t			i;
 
 	dst_len = ft_strlen(dst);
 	i = 0;
@@ -24,9 +24,10 @@ size_t	ft_strlcat(char *dst, const	char *src, size_t size)
 		dst[i + dst_len] = src[i];
 		i++;
 	}
-	if (size > 0)
-		dst[i + dst_len] = '\0';
-	if (size < dst_len)
-		return (size + ft_strlen(src));
-	return (dst_len + ft_strlen(src));
+	if (size != 0)
+		dst[i + dst_len] = 0;
+	if (size <= dst_len)
+		return (ft_strlen(src) + size);
+	else
+		return (ft_strlen(src) + dst_len);
 }

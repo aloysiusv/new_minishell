@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/28 12:01:02 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/09 15:42:39 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:17:19 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:17:19 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	int	size;
+	size_t			i;
 
-	if (lst == 0)
-		return (0);
-	size = 0;
-	while (lst)
+	i = 0;
+	while (lst != NULL)
 	{
 		lst = lst->next;
-		size++;
+		i++;
 	}
-	return (size);
+	return ((int)i);
 }

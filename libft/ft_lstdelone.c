@@ -5,18 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/28 12:00:50 by lrandria          #+#    #+#             */
-/*   Updated: 2021/06/10 20:46:58 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:17:39 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:17:39 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
-{	
-	if (lst == 0)
-		return ;
-	if (del)
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
+{
+	if (del != NULL)
 		del(lst->content);
 	free(lst);
 }

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 23:53:01 by lrandria          #+#    #+#             */
-/*   Updated: 2021/05/16 23:57:03 by lrandria         ###   ########.fr       */
+/*   Created: 2021/04/15 21:16:12 by lrandria          #+#    #+#             */
+/*   Updated: 2021/04/15 21:16:12 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int 	ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
