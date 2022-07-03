@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 19:39:48 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:40:04 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 20:32:55 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ size_t	get_tab_cmds(t_cmd **cmds, t_node **tokens)
 	iterator = *tokens;
 	while (i < nb_cmds)
 	{
-		(*cmds)[i].index = i;
-		(*cmds)[i].nb_cmds = nb_cmds;
+		(*cmds)[i].fdin = 0;
+		(*cmds)[i].fdout = 1;
 		(*cmds)[i].index_files = 0;
 		while (iterator && iterator->type != PIPE)
 			split_cmd_tokens(&new, &iterator, cmds, &i);

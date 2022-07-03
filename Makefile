@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/03 20:18:49 by lrandria          #+#    #+#              #
-#    Updated: 2022/07/03 21:16:36 by lrandria         ###   ########.fr        #
+#    Updated: 2022/07/03 20:31:50 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRCS		=	srcs/main.c \
 				srcs/exec/builtin.c srcs/exec/command.c \
 				srcs/exec/redirect.c srcs/exec/files.c srcs/exec/path.c \
 				srcs/heredoc/heredoc.c \
-				srcs/heredoc/heredoc_expand1.c srcs/heredoc/heredoc_expand2.c srcs/heredoc/heredoc_expand2.c \
+				srcs/heredoc/heredoc_expand1.c srcs/heredoc/heredoc_expand2.c srcs/heredoc/heredoc_expand3.c \
 				srcs/signal/signal.c \
 				srcs/utils/utils.c \
 				srcs/utils/utils_errors.c \
