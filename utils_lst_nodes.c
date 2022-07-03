@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:39:17 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 04:17:53 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:48:05 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,21 @@ void	skip_blanks(t_node **iterator)
 {
 	while (*iterator && (*iterator)->type == BLANK)
 		*iterator = (*iterator)->next;
+}
+
+void	push_back(t_node **tokens, t_node *new)
+{
+	t_node	*new_token;
+
+	if (!tokens || !new)
+		return ;
+	if (*tokens == NULL)
+	{
+		*tokens = new;
+		return ;
+	}
+	new_token = *tokens;
+	while (new_token->next)
+		new_token = new_token->next;
+	new_token->next = new;
 }

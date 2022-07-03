@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 19:09:23 by lrandria          #+#    #+#              #
-#    Updated: 2022/07/03 14:14:35 by lrandria         ###   ########.fr        #
+#    Updated: 2022/07/03 18:04:21 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS		=	0_main.c \
 				parser/3_get_lst_expanded.c \
 				parser/4_syntax_errors.c \
 				parser/5_get_tab_cmds.c \
+				parser/5_set_tab_flags.c \
 				env/create_lst_env.c \
 				env/get_envp.c \
 				exec/exec_builtin.c \
