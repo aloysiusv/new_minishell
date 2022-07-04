@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:36:15 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:10:31 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 01:52:18 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	set_chars_subflags(t_node **head)
 	}
 	if (check_closing_quotes(*head) == -1)
 	{
-		print_error(NULL, "unclosed quotes\n", 2);
+		ft_putstr_fd("minishell: error: unclosed quotes\n", 2);
 		return (-1);
 	}
 	set_literals(head);

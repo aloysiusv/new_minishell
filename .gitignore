@@ -1,8 +1,5 @@
 *.out
-*.output
-*.input
-*.log
+*.o
 
-objs/
-scripts/
-.vscode/
+minishell
+libft/libft.a

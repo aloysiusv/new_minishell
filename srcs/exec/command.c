@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:00:21 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 19:42:32 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 21:12:00 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,32 +60,32 @@ static void	wait_commands(size_t nb_cmds, t_cmd *cmds)
 		g_exit = cmds[nb_cmds - 1].status;
 }
 
-int	launch_commands(size_t nb_cmds, t_cmd *cmds, t_env **env)
+int	launch_commands(t_shell *sh, t_env **env)
 {
 	size_t	i;
 	pid_t	pid;
 
 	i = 0;
-	while (i < nb_cmds)
+	while (i < sh->nb_cmds)
 	{
-		if (pipe_command(nb_cmds, cmds, i))
+		if (pipe_command(sh->nb_cmds, sh->cmds, i))
 			return (EXIT_FAILURE);
-		if (handle_redirect(cmds + i, env))
+		if (handle_redirect(sh->cmds + i, env))
 			return (EXIT_FAILURE);
 		pid = fork();
 		if (pid == -1)
 			return (EXIT_FAILURE);
 		else if (pid == 0)
 		{
-			if (redirect_command(cmds[i].fdin, cmds[i].fdout) == -1)
+			if (redirect_command(sh->cmds[i].fdin, sh->cmds[i].fdout) == -1)
 				return (EXIT_FAILURE);
-			close_fds(nb_cmds, cmds);
-			execute_command(cmds + i, env);
+			close_fds(sh->nb_cmds, sh->cmds);
+			execute_command(sh, i, env);
 		}
-		cmds[i].pid = pid;
+		sh->cmds[i].pid = pid;
 		i++;
 	}
-	close_fds(nb_cmds, cmds);
-	wait_commands(nb_cmds, cmds);
+	close_fds(sh->nb_cmds, sh->cmds);
+	wait_commands(sh->nb_cmds, sh->cmds);
 	return (EXIT_SUCCESS);
 }

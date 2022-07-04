@@ -6,35 +6,37 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 19:33:10 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:59:23 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	line_expanded(char **line, t_env *env)
+static char	*line_expanded(char *line, t_env *env)
 {
 	t_node	*chars;
 	t_node	*tokens;
+	char	*new_line;
 
-	if (hrdoc_get_lst_chars(*line, &chars) == -1)
+	if (hrdoc_get_lst_chars(line, &chars) == -1)
 	{
 		t_node_delete_lst(&chars);	
-		return ;
+		return (line);
 	}
 	hrdoc_get_lst_tokens(chars, &tokens);
 	hrdoc_get_lst_expanded(&tokens, env);
-	free(*line);
-	*line = lst_to_str(tokens);
+	new_line = lst_to_str(tokens);
 	t_node_delete_lst(&chars);
 	t_node_delete_lst(&tokens);
+	if (new_line)
+		return (free(line), new_line);
+	return (line);
 }
 
-static void	execute_heredoc(char *limiter, bool quote, t_env **env, t_fds pipefds)
+static void	execute_heredoc(char *limiter, t_cmd *cmd, t_env **env, t_fds pipefds)
 {
 	char	*line;
 
-	(void)env;
 	close(pipefds[0]);
 	signal(SIGINT, SIG_DFL);
 	line = readline(PROMPT_HEREDOC);
@@ -42,19 +44,21 @@ static void	execute_heredoc(char *limiter, bool quote, t_env **env, t_fds pipefd
 	{
 		if (line)
 		{
-			if (find_char(line, '$') == 1 && quote == false)
-				line_expanded(&line, *env);
+			if (*env && find_char(line, '$') == 1
+				&& cmd->files[cmd->index_files].quote == false)
+				line = line_expanded(line, *env);
 			write(pipefds[1], line, ft_strlen(line));
 		}
 		write(pipefds[1], "\n", 1);
-		free(line);
+		if (line)
+			free(line);
 		line = readline(PROMPT_HEREDOC);
 	}
 	free(line);
-	exit(EXIT_SUCCESS);
+	delete_fork(cmd->sh, env, 0);
 }
 
-int	heredoc(char *limiter, bool quote, t_env **env)
+int	heredoc(char *limiter, t_cmd *cmd, t_env **env)
 {
 	t_fds	pipefds;
 	pid_t	pid;
@@ -66,7 +70,7 @@ int	heredoc(char *limiter, bool quote, t_env **env)
 	if (pid == -1)
 		return (-1);
 	else if (pid == 0)
-		execute_heredoc(limiter, quote, env, pipefds);
+		execute_heredoc(limiter, cmd, env, pipefds);
 	close(pipefds[1]);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);

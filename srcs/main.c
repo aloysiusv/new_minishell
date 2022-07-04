@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:10:56 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:58:59 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 03:16:07 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,60 @@ static int	only_blanks(char *cmdline)
 	return (0);
 }
 
-static void	parsing(t_shell *sh)
+static int	parsing(t_shell *sh)
 {
 	if (get_lst_chars(sh->cmdline, &sh->chars) == -1)
-		return ;
+		return (t_node_delete_lst(&sh->chars), -1);
 	get_lst_tokens(sh->chars, &sh->tokens);
-	get_lst_expanded(&sh->tokens, sh->env_var);
+	get_lst_expanded(&sh->tokens, *sh->env_var);
 	if (syntax_errors(sh->tokens) == -1)
-		return ;
-	sh->nb_cmds = get_tab_cmds(&sh->cmds, &sh->tokens);
+	{
+		t_node_delete_lst(&sh->chars);
+		t_node_delete_lst(&sh->tokens);
+		return (-1);
+	}
+	sh->nb_cmds = get_tab_cmds(sh);
+	return (0);
 }
 
-static void	minishell(t_env **env)
+static int	minishell(t_env **env)
 {
 	t_shell		sh;
 	t_builtinp	builtin;
+	bool		exit;
 
+	exit = false;
+	sh.env_var = env;
 	sh.cmdline = readline(PROMPT);
 	while (sh.cmdline)
 	{
 		if (!only_blanks(sh.cmdline))
 		{
 			add_history(sh.cmdline);
-			parsing(&sh);
+			if (parsing(&sh) == -1)
+			{
+				free(sh.cmdline);
+				sh.cmdline = readline(PROMPT);
+				continue ;
+			}
 			builtin = is_builtin(sh.cmds);
 			if (sh.nb_cmds == 1 && builtin)
+			{
 				launch_builtin(sh.cmds, env, builtin);
+				exit = (*sh.cmds).exit;
+			}
 			else
-				launch_commands(sh.nb_cmds, sh.cmds, env);
+				launch_commands(&sh, env);
 			t_node_delete_lst(&sh.chars);
 			t_node_delete_lst(&sh.tokens);
-			delete_cmds_tab(&sh.cmds);
+			delete_cmds_tab(&sh);
 		}
 		free(sh.cmdline);
+		if (exit)
+			return (1);
 		sh.cmdline = readline(PROMPT);
 	}
+	return (0);
 }
 
 int	main(int ac, char *av[], char *ep[])
@@ -80,7 +99,8 @@ int	main(int ac, char *av[], char *ep[])
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
 	env_ptr = create_lst_env(ep);
-	minishell(&env_ptr);
+	if (!minishell(&env_ptr))
+		ft_putstr_fd("exit\n", 2);
 	delete_lst_env(&env_ptr);
 	rl_clear_history();
 	return (g_exit);

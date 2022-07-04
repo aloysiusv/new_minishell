@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 20:52:26 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 06:45:35 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ t_node	*init_word(t_node *src, t_node *curr, int mode)
 	word = create_word(src, src->type);
 	if (!word)
 		return (NULL);
-	if (ft_strncmp(word, "<<", 3) == 0)
+	if (ft_strcmp(word, "\"\"") == 0 || ft_strcmp(word, "\'\'") == 0)
+	{
+		free(word);
+		word = ft_strdup("");
+		src->type = LITERAL;
+	}
+	else if (ft_strncmp(word, "<<", 3) == 0)
 		src->type = HRDOC;
 	else if (ft_strncmp(word, ">>", 3) == 0)
 		src->type = APPEND;

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 20:47:34 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 06:48:43 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ static void	set_useless_quotes(t_node **head) /* new */
 	iterator = *head;
 	while (iterator)
 	{
-		if (iterator->type == SQUOTE || iterator->type == DQUOTE
-			|| iterator->type == DOLLAR)
+		if (iterator->type == SQUOTE || iterator->type == DQUOTE) //|| iterator->type == DOLLAR
 			iterator->type = USELESS;
 		if (iterator)
 			iterator = iterator->next;
@@ -44,7 +43,7 @@ void	get_lst_expanded(t_node **tokens, t_env *vars)
 {
 	t_node	*iterator;
 
-	if (!tokens)
+	if (!tokens || !*tokens)
 		return ;
 	iterator = *tokens;
 	while (iterator)
@@ -56,9 +55,9 @@ void	get_lst_expanded(t_node **tokens, t_env *vars)
 			while (iterator && (iterator->type == BLANK
 				|| iterator->type == SQUOTE || iterator->type == DQUOTE))
 				iterator = iterator->next;
-			if (iterator->type == DOLLAR
+			if (iterator && (iterator->type == DOLLAR
 				|| (iterator->type == DOLLAR && (iterator->in_squotes
-				|| iterator->in_dquotes)))
+				|| iterator->in_dquotes))))
 					not_expand(&iterator);
 		}
 		else if (iterator->type == DOLLAR)

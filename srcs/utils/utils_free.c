@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 11:54:29 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:42:30 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 23:04:32 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ void    free_prev(char **tab, size_t nb_words)
 // 	if (sh->tokens)
 // 		delete_lst(&sh->tokens);
 // 	if (sh->cmds)
-// 		delete_cmds_tab(&sh->cmds);
+// 		delete_cmds_tab(sh);
 // 	free(sh);
 // }

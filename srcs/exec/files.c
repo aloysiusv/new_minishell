@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:32:09 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 16:18:33 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handle_limiter(t_cmd *cmd, t_env **env, char *limiter)
 {
 	if (cmd->fdin != STDIN_FILENO)
 		close(cmd->fdin);
-	cmd->fdin = heredoc(limiter, cmd->files[cmd->index_files].quote, env);
+	cmd->fdin = heredoc(limiter, cmd, env);
 	cmd->index_files++;
 	if (cmd->fdin == -1)
 	{

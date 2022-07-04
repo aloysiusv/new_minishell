@@ -6,81 +6,88 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 00:16:05 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 19:44:04 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_empty_command(t_cmd *cmd, t_env **env)
+void	delete_fork(t_shell *sh, t_env **env, size_t status)
 {
-	if (cmd->command == NULL)
-	{
-		delete_lst_env(env);
-		// rl_clear_history();
-		exit(0);
-	}
+	t_node_delete_lst(&sh->chars);
+	t_node_delete_lst(&sh->tokens);
+	delete_cmds_tab(sh);
+	delete_lst_env(env);
+	rl_clear_history();
+	exit(status);
 }
 
-static void	execute_builtin(t_cmd *cmd, t_env **env)
+static void	handle_empty_command(t_shell *sh, size_t i, t_env **env)
+{
+	if (sh->cmds[i].command == NULL || sh->cmds[i].command[0] == NULL)
+		delete_fork(sh, env, g_exit);
+}
+
+static void	execute_builtin(t_shell *sh, size_t i, t_env **env)
 {
 	t_builtinp	builtin;
 	int			status;
 
-	builtin = is_builtin(cmd);
+	builtin = is_builtin(sh->cmds + i);
 	if (builtin)
 	{
-		status = builtin(cmd, env);
-		delete_lst_env(env);
-		exit(status);
+		status = builtin(sh->cmds + i, env);
+		delete_fork(sh, env, status);
 	}
 }
 
-static char	*resolve_command(char *command_name, char *path_value, t_env **env)
+static char	*resolve_command(t_shell *sh, size_t i, char *path, t_env **env)
 {
 	char	*command;
 	t_stat	buf;
 
-	if (path_value && !ft_strnstr(command_name, "/", ft_strlen(command_name)))
+	if (path && !ft_strnstr(
+		sh->cmds[i].command[0], "/", ft_strlen(sh->cmds[i].command[0])))
 	{
-		command = resolve_path(command_name, path_value);
+		command = resolve_path(sh->cmds[i].command[0], path);
 		if (command == NULL)
 		{
-			print_error(command_name, "command not found", 0);
-			delete_lst_env(env);
-			exit(127);
+			print_error(sh->cmds[i].command[0], "command not found", 0);
+			delete_fork(sh, env, 127);
 		}
 	}
 	else
 	{
-		command = command_name;
+		command = sh->cmds[i].command[0];
 		if (!stat(command, &buf) && S_ISDIR(buf.st_mode))
 		{
-			print_error(command_name, NULL, EISDIR);
-			delete_lst_env(env);
-			exit(126);
+			print_error(sh->cmds[i].command[0], NULL, EISDIR);
+			delete_fork(sh, env, 126);
 		}
 	}
 	return (command);
 }
 
-void	execute_command(t_cmd *cmd, t_env **env)
+void	execute_command(t_shell *sh, size_t i, t_env **env)
 {
 	char	*command;
 	char	**envp;
 
-	handle_empty_command(cmd, env);
-	execute_builtin(cmd, env);
-	command = resolve_command(cmd->command[0], find_env(*env, "PATH"), env);
+	handle_empty_command(sh, i, env);
+	execute_builtin(sh, i, env);
+	command = resolve_command(sh, i, find_env(*env, "PATH"), env);
 	envp = convert_env(*env);
-	if (execve(command, cmd->command, envp) == -1)
+	if (execve(command, sh->cmds[i].command, envp) == -1)
 	{
 		print_error(command, NULL, errno);
-		if (command != cmd->command[0])
+		if (command != sh->cmds[i].command[0])
 			free(command);
 		ft_free_strs(envp);
+		t_node_delete_lst(&sh->chars);
+		t_node_delete_lst(&sh->tokens);
+		delete_cmds_tab(sh);
 		delete_lst_env(env);
-		// rl_clear_history();
+		rl_clear_history();
 		if (errno == ENOENT)
 			exit(127);
 		exit(126);

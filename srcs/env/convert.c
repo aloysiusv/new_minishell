@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 23:56:16 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 19:54:04 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**convert_env(t_env *vars)
 	i = 0;
 	while (i < size)
 	{
-		env[i] = ft_strsjoin((char *[]){vars->value, vars->key, NULL}, "=");
+		env[i] = ft_strsjoin((char *[]){vars->key, vars->value, NULL}, "=");
 		if (env[i] == NULL)
 			return (ft_free_strs(env), NULL);
 		vars = vars->next;

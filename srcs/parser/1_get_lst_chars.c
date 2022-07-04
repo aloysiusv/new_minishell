@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:35:41 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 20:52:01 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 06:48:19 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int	get_lst_chars(char *line, t_node **chars)
 	t_node	*curr;
 	char	*str;
 
-	if (!line || !*line)
+	if (!line)
 		return (-1);
 	str = trim_spaces(line);
 	*chars = get_first_char(str);
 	curr = *chars;
 	i = 1;
-	while (str[i])
+	while (*str && str[i])
 	{
 		get_next_char(str, &i, &curr);
 		if (!curr)

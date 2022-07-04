@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 03:17:55 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:13:14 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 01:33:53 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	check_valid_operators(t_node *head)
 			if (iterator->type == list[i].type)
 				if (is_it_valid(iterator->word, list[i].ope) == -1)
 				{
-					printf("minishell: error: syntax error near unexpected token `%s'\n", iterator->word);
+					printf("minishell: syntax error near unexpected token `%s'\n", iterator->word);
 					return (-1);
 				}
 		if (iterator)
@@ -91,7 +91,8 @@ int	syntax_errors(t_node *tokens)
 		return (-1);
 	if (check_ope_args(tokens) == -1)
 	{
-		print_error(NULL, "syntax error near unexpected token `newline'\n", 2);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 		return (-1);
 	}
 	return (0);

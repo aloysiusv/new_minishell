@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 11:39:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:44:41 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 06:48:57 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ char	**lst_to_tab(t_node *lst)
 char	*lst_to_str(t_node *lst)
 {
 	char	*line;
+	char	*tmp;
 	t_node	*iterator;
 
+	line = NULL;
 	iterator = lst;
 	if (ft_lstsize_2(lst) == 1)
 		line = ft_strdup(iterator->word);
@@ -58,9 +60,14 @@ char	*lst_to_str(t_node *lst)
 	{
 		while (iterator && iterator->next)
 		{
-			line = ft_strjoin(iterator->word, iterator->next->word);
-			if (!line)
-				return (t_node_delete_lst(&lst), NULL);
+			if (iterator->word && iterator->next->word)
+			{
+				tmp = line;
+				line = ft_strjoin(iterator->word, iterator->next->word);
+				free(tmp);
+				if (!line)
+					return (NULL);
+			}
 			iterator = iterator->next;
 		}
 	}

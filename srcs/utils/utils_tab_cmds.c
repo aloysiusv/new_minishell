@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 11:58:51 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:43:26 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 23:06:42 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	free_tab_files(t_file *files, size_t len)
 	free(files);
 }
 
-static void	delete_cmd(t_cmd cmd)
+void	delete_cmd(t_cmd cmd)
 {
 	if (cmd.tokens)
 		t_node_delete_lst(&cmd.tokens);
@@ -36,20 +36,16 @@ static void	delete_cmd(t_cmd cmd)
 		free_tab_files(cmd.files, cmd.nb_files);
 }
 
-void	delete_cmds_tab(t_cmd **cmds)
+void	delete_cmds_tab(t_shell *sh)
 {
 	size_t	i;
-	size_t	nb;
 
-	if (!*cmds)
-		return ;
-	nb = (*cmds)->nb_cmds;
 	i = 0;
-	while (i < nb)
+	while (i < sh->nb_cmds)
 	{
-		delete_cmd((*cmds)[i]);
+		delete_cmd(sh->cmds[i]);
 		i++;
 	}
-	free(*cmds);
-	*cmds = NULL;
+	free(sh->cmds);
+	sh->cmds = NULL;
 }

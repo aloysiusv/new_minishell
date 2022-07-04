@@ -6,7 +6,7 @@
 #    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/03 20:18:49 by lrandria          #+#    #+#              #
-#    Updated: 2022/07/03 20:31:50 by lrandria         ###   ########.fr        #
+#    Updated: 2022/07/03 23:29:47 by lrandria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ SRCS		=	srcs/main.c \
 				srcs/parser/4_syntax_errors.c \
 				srcs/parser/5_get_tab_cmds.c \
 				srcs/parser/5_set_tab_flags.c \
-				srcs/builtin/test.c \
 				srcs/builtin/echo.c \
 				srcs/builtin/pwd.c srcs/builtin/cd.c \
 				srcs/builtin/env.c srcs/builtin/export.c srcs/builtin/unset.c \

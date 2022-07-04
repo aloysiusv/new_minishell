@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 19:39:48 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 20:32:55 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,39 +57,42 @@ static void	fill_cmd_tab(t_cmd **cmds, size_t *i) /* if segfault, check here */
 	(*cmds)[*i].command = lst_to_tab((*cmds)[*i].tokens);
 }
 
-static void	split_cmd_tokens(t_node **new, t_node **t, t_cmd **cmd, size_t *i)
+static void	split_cmd_tokens(t_node **t, t_cmd **cmd, size_t *i)
 {
-	*new = t_node_create(0, ft_strdup((*t)->word), (*t)->type);
-	t_node_push_new(&(*cmd)[*i].tokens, *new); /* if segfault, check here */
+	t_node	*new;
+
+	new = t_node_create(0, ft_strdup((*t)->word), (*t)->type);
+	t_node_push_new(&(*cmd)[*i].tokens, new); /* if segfault, check here */
 	if ((*t)->in_squotes)
-		(*new)->in_squotes = true;
+		(new)->in_squotes = true;
 	else if ((*t)->in_dquotes)
-		(*new)->in_dquotes = true;
+		(new)->in_dquotes = true;
 	if (*t)
 		*t = (*t)->next;
 }
 
-size_t	get_tab_cmds(t_cmd **cmds, t_node **tokens)
+size_t	get_tab_cmds(t_shell *sh)
 {
 	t_node	*iterator;
-	t_node	*new;
 	size_t	nb_cmds;
 	size_t	i;
 
-	nb_cmds = get_nb_types(*tokens, PIPE) + 1;
-	*cmds = ft_calloc(nb_cmds, sizeof(t_cmd) + 1);
-	if (!*cmds)
+	nb_cmds = get_nb_types(sh->tokens, PIPE) + 1;
+	sh->cmds = ft_calloc(nb_cmds, sizeof(t_cmd) + 1);
+	if (!sh->cmds)
 		return (0);
 	i = 0;
-	iterator = *tokens;
+	iterator = sh->tokens;
 	while (i < nb_cmds)
 	{
-		(*cmds)[i].fdin = 0;
-		(*cmds)[i].fdout = 1;
-		(*cmds)[i].index_files = 0;
+		sh->cmds[i].index_files = 0;
+		sh->cmds[i].fdin = 0;
+		sh->cmds[i].fdout = 1;
+		sh->cmds[i].exit = false;
+		sh->cmds[i].sh = sh;
 		while (iterator && iterator->type != PIPE)
-			split_cmd_tokens(&new, &iterator, cmds, &i);
-		fill_cmd_tab(cmds, &i);
+			split_cmd_tokens(&iterator, &sh->cmds, &i);
+		fill_cmd_tab(&sh->cmds, &i);
 		if (iterator && iterator->type == PIPE)
 			iterator = iterator->next;
 		i++;

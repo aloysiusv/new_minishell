@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 19:07:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:36:04 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ typedef struct s_file
 	bool			quote;
 }					t_file;
 
+struct s_shell;
+
 /* Stock every cmds with their args, redirs, path... */
-typedef struct s_command
+typedef struct s_cmd
 {
 	t_node			*tokens;
 	t_file			*files;
@@ -90,6 +92,8 @@ typedef struct s_command
 	int				status;
 	int				fdin;
 	int				fdout;
+	bool			exit;
+	struct s_shell	*sh;	
 }					t_cmd;
 
 							/* SHELL DATA */
@@ -99,7 +103,7 @@ typedef struct s_shell
 	char			*cmdline;
 	char			**envp;
 	char			**all_paths;
-	t_env			*env_var;
+	t_env			**env_var;
 	t_node			*chars;
 	t_node			*tokens;
 	t_cmd			*cmds;

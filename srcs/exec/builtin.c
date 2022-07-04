@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 17:32:53 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 12:13:47 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 01:56:25 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ t_builtinp	is_builtin(t_cmd *cmd)
 {
 	size_t			i;
 	const t_builtin	builtins[] = {
-	{builtin_test, "echo"}, {builtin_cd, "cd"}, {builtin_pwd, "pwd"},
+	{builtin_echo, "echo"}, {builtin_cd, "cd"}, {builtin_pwd, "pwd"},
 	{builtin_export, "export"}, {builtin_unset, "unset"},
-	{builtin_env, "env"}, {builtin_test, "exit"}};
+	{builtin_env, "env"}, {builtin_exit, "exit"}};
 
-	if (!cmd || !cmd->command)
+	if (!cmd || !cmd->command || !cmd->command[0])
 		return (NULL);
 	i = 0;
 	while (i < 7)

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:09:02 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 22:07:22 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 # define PROGRAM_NAME	"minishell"
 # define PROMPT	"~=mini$hell=~> "
-# define PROMPT_HEREDOC	">"
+# define PROMPT_HEREDOC	"> "
 # define ALL_SPACES " 	\x20\x08\x09\x0a\x0b\x0c\x0d"
 
 /* Modes to specify when creating nodes */
@@ -47,7 +47,7 @@ extern unsigned short	g_exit;
 int			get_lst_chars(char *cmdline, t_node **chars);
 void		get_lst_tokens(t_node *chars, t_node **tokens);
 void		get_lst_expanded(t_node **tokens, t_env *vars);
-size_t		get_tab_cmds(t_cmd **cmds, t_node **tokens);
+size_t		get_tab_cmds(t_shell *sh);
 int			set_chars_subflags(t_node **chars);
 void		set_expansion_flags(t_node **chars);
 void    	set_tokens_subflags(t_node **tokens);
@@ -57,7 +57,7 @@ void		get_io_files(t_cmd *cmd);
 
 int			syntax_errors(t_node *lst);
 void		delete_lst(t_node **lst);
-void		delete_cmds_tab(t_cmd **cmds);
+void		delete_cmds_tab(t_shell *sh);
 
 /*=================================EXPANSION================================== */
 
@@ -84,12 +84,12 @@ void		delete_lst_env(t_env **head);
 t_env		*create_node_env(char **keyvalue);
 t_env		*add_bottom_node_env(char **keyvalue, t_env *last);
 t_env		*add_top_node_env(char **keyvalue, t_env *current_top);
-
+void	    delete_fork(t_shell *sh, t_env **env, size_t status);
 
 /*=================================EXEC======================================= */
 
-int			launch_commands(size_t nb_cmds, t_cmd *cmd, t_env **env);
-void		execute_command(t_cmd *cmd, t_env **env);
+int			launch_commands(t_shell *sh, t_env **env);
+void		execute_command(t_shell *sh, size_t i, t_env **env);
 
 int			handle_redirect(t_cmd *cmd, t_env **env);
 int			redirect_command(int fdin, int fdout);
@@ -102,7 +102,7 @@ char		*resolve_path(char *command_name, char *path_value);
 
 /*=================================HRDOC====================================== */
 
-int			heredoc(char *limiter, bool quote, t_env **env);
+int			heredoc(char *limiter, t_cmd *cmd, t_env **env);
 int			hrdoc_get_lst_chars(char *line, t_node **chars);
 void		hrdoc_get_lst_tokens(t_node *chars, t_node **tokens);
 void		hrdoc_get_lst_expanded(t_node **tokens, t_env *vars);
@@ -112,7 +112,7 @@ void		hrdoc_get_lst_expanded(t_node **tokens, t_env *vars);
 int			launch_builtin(t_cmd *cmd, t_env **env, t_builtinp builtin);
 t_builtinp	is_builtin(t_cmd *cmd);
 
-void		builtin_echo(t_cmd *c);
+int			builtin_echo(t_cmd *cmd, t_env **env);
 int			builtin_test(t_cmd *cmd, t_env **env);
 int			builtin_cd(t_cmd *cmd, t_env **env);
 int			builtin_pwd(t_cmd *cmd, t_env **env);

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:00:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:40:51 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/03 22:57:30 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,18 @@ void	t_node_delete_node(t_node *node)
 void	t_node_delete_lst(t_node **head)
 {
 	t_node	*tmp;
+	t_node	*curr;
 
 	if (!(*head))
 		return ;
-	while (*head)
+	curr = *head;
+	while (curr)
 	{
-		tmp = *head;
-		*head = (*head)->next;
+		tmp = curr;
+		curr = curr->next;
 		t_node_delete_node(tmp);
-		tmp = NULL;
 	}
+	*head = NULL;
 }
 
 void	t_node_delete_useless_tokens(t_node **tokens, int type)
