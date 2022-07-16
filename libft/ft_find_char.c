@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:46:13 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 18:46:48 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 08:56:18 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 size_t	find_char(char *s, char c)
 {
-	size_t	i = 0;
+	size_t	i;
 
+	i = 0;
 	while (s[i])
 		if (s[i++] == c)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 19:33:10 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 09:11:27 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*line_expanded(char *line, t_env *env)
 
 	if (hrdoc_get_lst_chars(line, &chars) == -1)
 	{
-		t_node_delete_lst(&chars);	
+		t_node_delete_lst(&chars);
 		return (line);
 	}
 	hrdoc_get_lst_tokens(chars, &tokens);
@@ -33,14 +33,14 @@ static char	*line_expanded(char *line, t_env *env)
 	return (line);
 }
 
-static void	execute_heredoc(char *limiter, t_cmd *cmd, t_env **env, t_fds pipefds)
+static void	execute_heredoc(char *limit, t_cmd *cmd, t_env **env, t_fds pipefds)
 {
 	char	*line;
 
 	close(pipefds[0]);
 	signal(SIGINT, SIG_DFL);
 	line = readline(PROMPT_HEREDOC);
-	while (!line || ft_strcmp(line, limiter))
+	while (!line || ft_strcmp(line, limit))
 	{
 		if (line)
 		{

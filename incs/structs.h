@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 19:07:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 13:31:34 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdlib.h>
 
 								/* TOKENISATION */
+
+struct					s_shell;
+
 enum e_type
 {
 	USELESS,
@@ -75,8 +78,6 @@ typedef struct s_file
 	bool			quote;
 }					t_file;
 
-struct s_shell;
-
 /* Stock every cmds with their args, redirs, path... */
 typedef struct s_cmd
 {
@@ -100,38 +101,41 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	char			*cmdline;
-	char			**envp;
-	char			**all_paths;
-	t_env			**env_var;
-	t_node			*chars;
-	t_node			*tokens;
-	t_cmd			*cmds;
-	size_t			nb_cmds;
-}					t_shell;
+	char				*cmdline;
+	char				**envp;
+	char				**all_paths;
+	t_env				**env_var;
+	t_node				*chars;
+	t_node				*tokens;
+	t_cmd				*cmds;
+	size_t				nb_cmds;
+}						t_shell;
 
 							/* UTILS_EXEC */
 
 /* Identify built-ins */
 typedef struct s_builtin
 {
-	int				(*builtin)(t_cmd *, t_env **);
-	char			*name;
-}					t_builtin;
+	int					(*builtin)(t_cmd *, t_env **);
+	char				*name;
+}						t_builtin;
 
 /* Manipulate file list */
-typedef struct s_type 
+typedef struct s_type
 {
-	int				(*handler)(t_cmd *, t_env **, char *);
-	int				type;
-}					t_type; 
+	int					(*handler)(t_cmd *, t_env **, char *);
+	int					type;
+}						t_type;
 
-							/* ALIASES */
-
+/* ALIASES */
 typedef DIR*			t_dirp;
+
 typedef struct dirent*	t_direntp;
+
 typedef struct stat		t_stat;
+
 typedef int				t_fds[2];
+
 typedef int				(*t_builtinp)(t_cmd *, t_env **);
 
 #endif

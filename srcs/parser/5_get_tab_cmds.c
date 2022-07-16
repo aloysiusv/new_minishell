@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   5_get_tab_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 19:39:48 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 18:58:36 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ static void	join_literals(t_node **tokens)
 		else if (iterator->type == BLANK)
 			iterator->type = USELESS;
 		if (iterator)
-			iterator = iterator->next;	
+			iterator = iterator->next;
 	}
 }
 
-static void	fill_cmd_tab(t_cmd **cmds, size_t *i) /* if segfault, check here */
+static void	fill_cmd_tab(t_cmd **cmds, size_t *i)
 {
 	join_literals(&(*cmds)[*i].tokens);
 	t_node_delete_useless_tokens(&(*cmds)[*i].tokens, USELESS);
@@ -62,7 +62,7 @@ static void	split_cmd_tokens(t_node **t, t_cmd **cmd, size_t *i)
 	t_node	*new;
 
 	new = t_node_create(0, ft_strdup((*t)->word), (*t)->type);
-	t_node_push_new(&(*cmd)[*i].tokens, new); /* if segfault, check here */
+	t_node_push_new(&(*cmd)[*i].tokens, new);
 	if ((*t)->in_squotes)
 		(new)->in_squotes = true;
 	else if ((*t)->in_dquotes)

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 14:10:19 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:18:49 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 09:04:23 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static void	hrdoc_get_next_char(char *str, size_t *i, t_node **curr)
 static t_node	*hrdoc_get_first_char(char *str)
 {
 	if (str[0] == '$')
-		return(t_node_create('$', NULL, DOLLAR));
+		return (t_node_create('$', NULL, DOLLAR));
 	else if (ft_isset(str[0], ALL_SPACES) == 1)
-		return(t_node_create(' ', NULL, BLANK));
+		return (t_node_create(' ', NULL, BLANK));
 	else
-		return(t_node_create(str[0], NULL, LITERAL));
+		return (t_node_create(str[0], NULL, LITERAL));
 }
 
 int	hrdoc_get_lst_chars(char *line, t_node **chars)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 00:16:05 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:57:56 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*resolve_command(t_shell *sh, size_t i, char *path, t_env **env)
 	t_stat	buf;
 
 	if (path && !ft_strnstr(
-		sh->cmds[i].command[0], "/", ft_strlen(sh->cmds[i].command[0])))
+			sh->cmds[i].command[0], "/", ft_strlen(sh->cmds[i].command[0])))
 	{
 		command = resolve_path(sh->cmds[i].command[0], path);
 		if (command == NULL)
@@ -73,6 +73,7 @@ void	execute_command(t_shell *sh, size_t i, t_env **env)
 	char	*command;
 	char	**envp;
 
+	signal(SIGINT, SIG_DFL);
 	handle_empty_command(sh, i, env);
 	execute_builtin(sh, i, env);
 	command = resolve_command(sh, i, find_env(*env, "PATH"), env);

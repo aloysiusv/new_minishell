@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_get_lst_expanded.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:18:30 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 06:48:43 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:22:58 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static void	not_expand(t_node **iterator)
 		*iterator = (*iterator)->next;
 }
 
-static void	set_useless_quotes(t_node **head) /* new */
+static void	set_useless_quotes(t_node **head)
 {
 	t_node	*iterator;
 
 	iterator = *head;
 	while (iterator)
 	{
-		if (iterator->type == SQUOTE || iterator->type == DQUOTE) //|| iterator->type == DOLLAR
+		if (iterator->type == SQUOTE || iterator->type == DQUOTE)
 			iterator->type = USELESS;
 		if (iterator)
 			iterator = iterator->next;
@@ -52,19 +52,18 @@ void	get_lst_expanded(t_node **tokens, t_env *vars)
 		{
 			if (iterator->next)
 				iterator = iterator->next;
-			while (iterator && (iterator->type == BLANK
-				|| iterator->type == SQUOTE || iterator->type == DQUOTE))
+			while (iterator && (iterator->type == 1 || iterator->type == 8
+					|| iterator->type == 9))
 				iterator = iterator->next;
-			if (iterator && (iterator->type == DOLLAR
-				|| (iterator->type == DOLLAR && (iterator->in_squotes
-				|| iterator->in_dquotes))))
-					not_expand(&iterator);
+			if (iterator && (iterator->type == 15 || (iterator->type == 15
+						&& (iterator->in_squotes || iterator->in_dquotes))))
+				not_expand(&iterator);
 		}
 		else if (iterator->type == DOLLAR)
 			expand_word(&iterator, vars);
 		if (iterator)
 			iterator = iterator->next;
 	}
-	set_useless_quotes(tokens); /* new */
+	set_useless_quotes(tokens);
 	t_node_delete_useless_tokens(tokens, USELESS);
 }

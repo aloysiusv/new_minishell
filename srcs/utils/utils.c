@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 11:39:01 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 06:48:57 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 10:18:35 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ char	*lst_to_str(t_node *lst)
 size_t	ft_lstsize_2(t_node *head)
 {
 	size_t	size;
-    t_node  *iterator;
+	t_node	*iterator;
 
 	if (!head)
 		return (0);
-    iterator = head;
+	iterator = head;
 	size = 0;
 	while (iterator)
 	{
@@ -91,18 +91,18 @@ size_t	ft_lstsize_2(t_node *head)
 	return (size);
 }
 
-size_t  get_nb_types(t_node *tokens, int type)
+size_t	get_nb_types(t_node *tokens, int type)
 {
-    t_node  *iterator;
-    size_t  nb_types;
+	t_node	*iterator;
+	size_t	nb_types;
 
-    iterator = tokens;
+	iterator = tokens;
 	nb_types = 0;
-    while (iterator)
-    {
-        if (iterator->type == type)
+	while (iterator)
+	{
+		if (iterator->type == type)
 			nb_types++;
-        iterator = iterator->next;
-    }
+		iterator = iterator->next;
+	}
 	return (nb_types);
 }

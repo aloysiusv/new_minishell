@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 14:10:27 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:18:42 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 09:05:45 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static size_t	hrdoc_get_word_size(t_node *current, int type)
 	return (size);
 }
 
-static char		*hrdoc_create_word(t_node *current, int type)
+static char	*hrdoc_create_word(t_node *current, int type)
 {
 	size_t	i;
 	size_t	size;
@@ -61,7 +61,7 @@ static t_node	*hrdoc_init_word(t_node *src, t_node *curr, int mode)
 	if (mode == FIRST)
 		return (t_node_create(0, word, src->type));
 	else if (mode == NEXT)
-		return(t_node_addlast(curr, 0, word, src->type));
+		return (t_node_addlast(curr, 0, word, src->type));
 	return (NULL);
 }
 
@@ -70,7 +70,7 @@ static void	hrdoc_skip_chars(t_node **src, t_node **head)
 	size_t	to_skip;
 
 	to_skip = ft_strlen((*head)->word);
-	if (to_skip > 1 )
+	if (to_skip > 1)
 	{
 		while (--to_skip)
 			if (*src)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:00:21 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 21:12:00 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:03:27 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	pipe_command(size_t nb_cmds, t_cmd *cmds, size_t i)
+static int	pipe_cmd(size_t nb_cmds, t_cmd *cmds, size_t i)
 {
 	t_fds	pipefd;
 
@@ -53,39 +53,42 @@ static void	wait_commands(size_t nb_cmds, t_cmd *cmds)
 		if (WIFEXITED(status))
 			cmds[i].status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
+		{
 			cmds[i].status = WTERMSIG(status);
+			if (!i)
+				write(1, "\n", 1);
+		}
 		i++;
 	}
 	if (nb_cmds)
 		g_exit = cmds[nb_cmds - 1].status;
 }
 
-int	launch_commands(t_shell *sh, t_env **env)
+int	launch_commands(t_shell *s, t_env **e)
 {
 	size_t	i;
 	pid_t	pid;
 
-	i = 0;
-	while (i < sh->nb_cmds)
+	i = -1;
+	while (++i < s->nb_cmds)
 	{
-		if (pipe_command(sh->nb_cmds, sh->cmds, i))
-			return (EXIT_FAILURE);
-		if (handle_redirect(sh->cmds + i, env))
+		if (pipe_cmd(s->nb_cmds, s->cmds, i) || handle_redirect(s->cmds + i, e))
 			return (EXIT_FAILURE);
 		pid = fork();
 		if (pid == -1)
 			return (EXIT_FAILURE);
 		else if (pid == 0)
 		{
-			if (redirect_command(sh->cmds[i].fdin, sh->cmds[i].fdout) == -1)
+			if (redirect_command(s->cmds[i].fdin, s->cmds[i].fdout) == -1)
 				return (EXIT_FAILURE);
-			close_fds(sh->nb_cmds, sh->cmds);
-			execute_command(sh, i, env);
+			close_fds(s->nb_cmds, s->cmds);
+			execute_command(s, i, e);
 		}
-		sh->cmds[i].pid = pid;
-		i++;
+		s->cmds[i].pid = pid;
 	}
-	close_fds(sh->nb_cmds, sh->cmds);
-	wait_commands(sh->nb_cmds, sh->cmds);
+	close_fds(s->nb_cmds, s->cmds);
+	signal(SIGINT, SIG_IGN);
+	wait_commands(s->nb_cmds, s->cmds);
+	signal(SIGINT, handle_signal);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:43:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 06:45:35 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 10:06:13 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static size_t	get_word_size(t_node *current, int type)
 	return (size);
 }
 
-static char		*create_word(t_node *current, int type)
+static char	*create_word(t_node *current, int type)
 {
 	size_t	i;
 	size_t	size;
@@ -71,11 +71,11 @@ t_node	*init_word(t_node *src, t_node *curr, int mode)
 	if (mode == FIRST)
 		return (t_node_create(0, word, src->type));
 	else if (mode == NEXT)
-		return(t_node_addlast(curr, 0, word, src->type));
+		return (t_node_addlast(curr, 0, word, src->type));
 	return (NULL);
 }
 
-static void		set_qflags_and_skip_chars(t_node **src, t_node **head)
+static void	set_qflags_and_skip_chars(t_node **src, t_node **head)
 {
 	size_t	to_skip;
 
@@ -84,7 +84,7 @@ static void		set_qflags_and_skip_chars(t_node **src, t_node **head)
 	else if ((*src)->in_squotes == true)
 		(*head)->in_squotes = true;
 	to_skip = ft_strlen((*head)->word);
-	if (to_skip > 1 )
+	if (to_skip > 1)
 	{
 		while (--to_skip)
 			if (*src)

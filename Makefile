@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+         #
+#    By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/03 20:18:49 by lrandria          #+#    #+#              #
-#    Updated: 2022/07/03 23:29:47 by lrandria         ###   ########.fr        #
+#    Updated: 2022/07/04 16:06:49 by wmachrou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS		=	-Wall -Wextra -Werror -g3
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	./incs/minishell.h
 LFT			= 	libft/libft.a
@@ -54,19 +54,19 @@ $(LFT):
 %.o:		%.c $(HDR)
 			$(CC) $(CFLAGS) $(INC) -c -o $@ $< 
 
-# valgrind:		all
-# 				/bin/valgrind \
-# 		--leak-check=full \
-# 		--show-leak-kinds=all \
-# 		--trace-children=yes \
-# 		--track-origins=yes \
-# 		--track-fds=yes \
-# 		--error-limit=no \
-# 		--gen-suppressions=all \
-# 		--suppressions=bin.supp \
-# 		--suppressions=readline.supp \
-# 		--log-file=valgrind.log \
-# 		./$(NAME)
+valgrind:		all
+				/bin/valgrind \
+		--leak-check=full \
+		--show-leak-kinds=all \
+		--trace-children=yes \
+		--track-origins=yes \
+		--track-fds=yes \
+		--error-limit=no \
+		--gen-suppressions=all \
+		--suppressions=bin.supp \
+		--suppressions=readline.supp \
+		--log-file=valgrind.log \
+		./$(NAME)
 
 clean:
 			rm -rf $(OBJS)

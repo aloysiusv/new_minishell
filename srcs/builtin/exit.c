@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:23:34 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 03:15:51 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:13:33 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ int	builtin_exit(t_cmd *cmd, t_env **env)
 		print_error("exit", "too many arguments", 0);
 		return (1);
 	}
-	return (ft_atoi(cmd->command[1]));
+	cmd->exit = true;
+	return ((unsigned char)ft_atoi(cmd->command[1]));
 }

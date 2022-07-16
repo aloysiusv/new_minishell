@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:37:12 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 15:18:30 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 18:54:22 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	builtin_cd(t_cmd *cmd, t_env **env)
 		return (1);
 	if (arg[0] == '/')
 	{
-		if (chdir(cmd->command[1]) == -1)
-			return (print_error("cd", cmd->command[1], errno), 1);
+		if (chdir(arg) == -1)
+			return (print_error("cd", arg, errno), 1);
 	}
 	else
 	{

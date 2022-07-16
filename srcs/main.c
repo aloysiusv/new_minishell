@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:10:56 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 03:16:07 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 19:00:31 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,26 @@ static int	parsing(t_shell *sh)
 	return (0);
 }
 
+bool	built(t_shell *sh, t_env **env)
+{
+	t_builtinp	builtin;
+	bool		exit;
+
+	exit = false;
+	builtin = is_builtin(sh->cmds);
+	if (sh->nb_cmds == 1 && builtin)
+	{
+		launch_built(sh->cmds, env, builtin);
+		exit = (*sh->cmds).exit;
+	}
+	else
+		launch_commands(sh, env);
+	return (exit);
+}
+
 static int	minishell(t_env **env)
 {
 	t_shell		sh;
-	t_builtinp	builtin;
 	bool		exit;
 
 	exit = false;
@@ -66,21 +82,11 @@ static int	minishell(t_env **env)
 			add_history(sh.cmdline);
 			if (parsing(&sh) == -1)
 			{
-				free(sh.cmdline);
-				sh.cmdline = readline(PROMPT);
+				free_cmdline(&sh);
 				continue ;
 			}
-			builtin = is_builtin(sh.cmds);
-			if (sh.nb_cmds == 1 && builtin)
-			{
-				launch_builtin(sh.cmds, env, builtin);
-				exit = (*sh.cmds).exit;
-			}
-			else
-				launch_commands(&sh, env);
-			t_node_delete_lst(&sh.chars);
-			t_node_delete_lst(&sh.tokens);
-			delete_cmds_tab(&sh);
+			exit = built(&sh, env);
+			delete_all(&sh);
 		}
 		free(sh.cmdline);
 		if (exit)

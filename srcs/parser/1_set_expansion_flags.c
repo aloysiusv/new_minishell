@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:28:49 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/02 20:15:06 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 09:13:15 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	set_dollar_trail_flags(t_node **iterator)
 static int	special_expansions(t_node **iterator)
 {
 	if (!(*iterator)->next || ((*iterator)->next
-		&& ft_isset((*iterator)->next->charac, ALL_SPACES)))
+			&& ft_isset((*iterator)->next->charac, ALL_SPACES)))
 	{
 		(*iterator)->type = LITERAL;
 		return (1);

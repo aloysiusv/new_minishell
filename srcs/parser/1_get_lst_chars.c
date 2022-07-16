@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:35:41 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 06:48:19 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 10:04:59 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	get_next_char(char *str, size_t *i, t_node **curr)
 	if (str[*i] == '\'')
 		(*curr)->next = t_node_addlast(*curr, '\'', NULL, SQUOTE);
 	else if (str[*i] == '\"')
-		(*curr)->next = t_node_addlast(*curr, '\"',NULL,  DQUOTE);
+		(*curr)->next = t_node_addlast(*curr, '\"', NULL, DQUOTE);
 	else if (str[*i] == '<')
 		(*curr)->next = t_node_addlast(*curr, '<', NULL, RD_INPUT);
 	else if (str[*i] == '>')
@@ -35,21 +35,21 @@ static void	get_next_char(char *str, size_t *i, t_node **curr)
 static t_node	*get_first_char(char *str)
 {
 	if (str[0] == '\'')
-		return(t_node_create('\'', NULL, SQUOTE));
+		return (t_node_create('\'', NULL, SQUOTE));
 	else if (str[0] == '\"')
-		return(t_node_create('\"', NULL, DQUOTE));
+		return (t_node_create('\"', NULL, DQUOTE));
 	else if (str[0] == '<')
-		return(t_node_create('<', NULL, RD_INPUT));
+		return (t_node_create('<', NULL, RD_INPUT));
 	else if (str[0] == '>')
-		return(t_node_create('>', NULL, RD_OUTPUT));
+		return (t_node_create('>', NULL, RD_OUTPUT));
 	else if (str[0] == '|')
-		return(t_node_create('|', NULL, PIPE));
+		return (t_node_create('|', NULL, PIPE));
 	else if (str[0] == '$')
-		return(t_node_create('$', NULL, DOLLAR));
+		return (t_node_create('$', NULL, DOLLAR));
 	else if (ft_isset(str[0], ALL_SPACES) == 1)
-		return(t_node_create(' ', NULL, BLANK));
+		return (t_node_create(' ', NULL, BLANK));
 	else
-		return(t_node_create(str[0], NULL, LITERAL));
+		return (t_node_create(str[0], NULL, LITERAL));
 }
 
 static char	*trim_spaces(char const *str)

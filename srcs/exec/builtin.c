@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 17:32:53 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 01:56:25 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 15:54:30 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	redirect_reset(int fdin, int fdout)
 	return (0);
 }
 
-int	launch_builtin(t_cmd *cmd, t_env **env, t_builtinp builtin)
+int	launch_built(t_cmd *cmd, t_env **env, t_builtinp builtin)
 {
 	t_fds	stdfds;
 

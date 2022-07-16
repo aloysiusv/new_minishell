@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:36:15 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/04 01:52:18 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/16 11:50:57 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static void	set_literals(t_node **head)
 	iterator = *head;
 	while (iterator)
 	{
-		if ((iterator->in_squotes || iterator->in_dquotes)
-			&& (iterator->type != SQUOTE && iterator->type != DQUOTE))
+		if (iterator->in_squotes || iterator->in_dquotes)
 		{
 			if (iterator->type == DOLLAR && iterator->in_dquotes)
 				iterator->type = DOLLAR;
@@ -45,7 +44,7 @@ static void	set_quote_flags(t_node **iterator, char quote)
 			(*iterator)->in_dquotes = true;
 		*iterator = (*iterator)->next;
 	}
-	if (*iterator)
+	if (*iterator && (*iterator)->type != SQUOTE && (*iterator)->type != DQUOTE)
 		*iterator = (*iterator)->next;
 }
 
@@ -61,11 +60,11 @@ static int	check_closing_quotes2(t_node **head, int type)
 
 static int	check_closing_quotes(t_node *head)
 {
-	t_node  *iterator;
+	t_node	*iterator;
 
 	iterator = head;
-	if (ft_lstsize_2(head) == 1 && 
-		(iterator->type == SQUOTE || iterator->type == DQUOTE))
+	if (ft_lstsize_2(head) == 1
+		&& (iterator->type == SQUOTE || iterator->type == DQUOTE))
 		return (-1);
 	while (iterator)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   5_set_tab_flags.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wmachrou <wmachrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:40:03 by lrandria          #+#    #+#             */
-/*   Updated: 2022/07/03 18:04:03 by lrandria         ###   ########.fr       */
+/*   Updated: 2022/07/04 10:41:17 by wmachrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ void	get_io_files(t_cmd *cmd)
 				cmd->files[i].quote = true;
 			i++;
 		}
-		// if (iterator)
-			iterator = iterator->next;
+		iterator = iterator->next;
 	}
 }
 
-void set_filename_flags(t_node **tokens)
+void	set_filename_flags(t_node **tokens)
 {
-    t_node	*iterator;
+	t_node	*iterator;
 
 	iterator = *tokens;
 	while (iterator)
@@ -68,8 +67,8 @@ void set_filename_flags(t_node **tokens)
 			|| iterator->type == APPEND || iterator->type == HRDOC)
 			iterator->type = FILENAME;
 		if (iterator)
-        	iterator = iterator->next;
-    }
+			iterator = iterator->next;
+	}
 }
 
 void	set_filetype(t_node **tok, int mode, int ignore, int assign)
@@ -86,7 +85,7 @@ void	set_filetype(t_node **tok, int mode, int ignore, int assign)
 			iterator = iterator->next;
 			while (iterator && iterator->type == ignore)
 				iterator = iterator->next;
-            iterator->type = assign;
+			iterator->type = assign;
 		}
 		if (iterator)
 			iterator = iterator->next;
